@@ -1,0 +1,9 @@
+<picture class="lozad" id="seasonslogo" style="display: block; min-height: 1rem">
+    <source srcset="/images/avif/4seasons/FourSeasonsLogoWhite.avif">
+    <source srcset="/images/webp/4seasons/FourSeasonsLogoWhite.webp">
+</picture>
+
+{{ $seasons := resources.Get "js/seasons.js" }}
+{{ $secureJS := $seasons | resources.Fingerprint "sha512" }}
+
+<script src="{{ $secureJS.Permalink }}" integrity="{{ $secureJS.Data.Integrity }}" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
