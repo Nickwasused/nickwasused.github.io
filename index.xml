@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Nickwasused</title>
+    <link>https://nickwasused.com/</link>
+    <description>Recent content on Nickwasused</description>
+    <image>
+      <url>https://nickwasused.com/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://nickwasused.com/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 27 Mar 2022 19:00:00 +0100</lastBuildDate><atom:link href="https://nickwasused.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How to fix the PS4 Time after replacing the CMOS Battery on Firmware version 9.0?</title>
+      <link>https://nickwasused.com/posts/2022-03-27-ps4-time-wrong-after-cmos-change-900/</link>
+      <pubDate>Sun, 27 Mar 2022 19:00:00 +0100</pubDate>
+      
+      <guid>https://nickwasused.com/posts/2022-03-27-ps4-time-wrong-after-cmos-change-900/</guid>
+      <description>This Guide will show you how to fix the PS4 time after replacing the CMOS on firmware 9.0.</description>
+    </item>
+    
+    <item>
+      <title>How to install 32-bit BOINC on my 64-bit Raspberry Pi?</title>
+      <link>https://nickwasused.com/posts/2022-03-16-boinc-32bit-on-64bit-pi-dietpi/</link>
+      <pubDate>Wed, 16 Mar 2022 19:00:00 +0100</pubDate>
+      
+      <guid>https://nickwasused.com/posts/2022-03-16-boinc-32bit-on-64bit-pi-dietpi/</guid>
+      <description>This Guide will show you how to install a 32-bit BOINC version on the 64-bit raspberry-pi.</description>
+    </item>
+    
+    <item>
+      <title>How do I block all the Twitter advertisers I&#39;ve seen? </title>
+      <link>https://nickwasused.com/posts/2022-03-15-twitter-block-advertisers/</link>
+      <pubDate>Tue, 15 Mar 2022 17:30:00 +0100</pubDate>
+      
+      <guid>https://nickwasused.com/posts/2022-03-15-twitter-block-advertisers/</guid>
+      <description>This Guide will show you how to block all Twitter advertising Accounts that have &amp;#34;engaged&amp;#34; or &amp;#34;impressed&amp;#34; you.</description>
+    </item>
+    
+    <item>
+      <title>How to install OpenWrt on the TP-Link Archer C7 V5 in 2022?</title>
+      <link>https://nickwasused.com/posts/2022-03-12-tp-link-archer-c7-v5-openwrt/</link>
+      <pubDate>Sat, 12 Mar 2022 15:30:00 +0100</pubDate>
+      
+      <guid>https://nickwasused.com/posts/2022-03-12-tp-link-archer-c7-v5-openwrt/</guid>
+      <description>This Updated Guide will show you how to install Openwrt on the TP-Link Archer V7-V5.</description>
+    </item>
+    
+    <item>
+      <title>Install Tor Snowflake on the Raspberry PI with DietPi.</title>
+      <link>https://nickwasused.com/posts/2022-03-12-tor-snowflake/</link>
+      <pubDate>Sat, 12 Mar 2022 14:24:26 +0100</pubDate>
+      
+      <guid>https://nickwasused.com/posts/2022-03-12-tor-snowflake/</guid>
+      <description>This Guide will show you how to build an run a Tor Snowflake on your Raspberry Pi 3B with DietPi.</description>
+    </item>
+    
+    <item>
+      <title>How to install OpenWrt on the TP-Link Archer C7 V5 in 2021?</title>
+      <link>https://nickwasused.com/posts/2021-04-08-tp-link-archer-c7-v5-openwrt/</link>
+      <pubDate>Thu, 08 Apr 2021 14:00:00 +0100</pubDate>
+      
+      <guid>https://nickwasused.com/posts/2021-04-08-tp-link-archer-c7-v5-openwrt/</guid>
+      <description>This Guide will show you how to install Openwrt on the TP-Link Archer V7-V5.</description>
+    </item>
+    
+    <item>
+      <title>Contact</title>
+      <link>https://nickwasused.com/contact/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://nickwasused.com/contact/</guid>
+      <description>Email: contact.nickwasused.fa6c8@simplelogin.co Public Key -----BEGIN PGP PUBLIC KEY BLOCK----- Version: OpenPGP.js v4.10.10 Comment: https://openpgpjs.org  xjMEYVLrbhYJKwYBBAHaRw8BAQdACzQtnO0Dm9xapmWDpJXLl1/CbMEFpMFY m0LwovLK54zNRW5pY2t3YXN1c2VkLnNvY2lhbEBwcm90b25tYWlsLmNvbSA8 bmlja3dhc3VzZWQuc29jaWFsQHByb3Rvbm1haWwuY29tPsKPBBAWCgAgBQJh UutuBgsJBwgDAgQVCAoCBBYCAQACGQECGwMCHgEAIQkQ9JdDwngZsb0WIQQ8 liJbA8qC6/dxD5b0l0PCeBmxvYoWAP9bbI48ZJa199y3gL9swazbdmKvMsVx 8s1WLpW0Qc670gEAl9Oykrfmumbc0CdzhuX2QcwTV8sQ7KcYYvwJBKtwzw7O OARhUutuEgorBgEEAZdVAQUBAQdAVAclHLXZ8As1/ujY+bCemP7x5bPDotD/ Iu9Ao+E4KjADAQgHwngEGBYIAAkFAmFS624CGwwAIQkQ9JdDwngZsb0WIQQ8 liJbA8qC6/dxD5b0l0PCeBmxvYTuAP4sL/dkW2x3DsDUbcD8m54kn+RF8QiJ Ig/PNh7xjAQT9wEAqMwyd+Zq7EMSRWlcUtcOeBmFdI2V7I65zAjd0VBLBwk= =Maej -----END PGP PUBLIC KEY BLOCK----- Twitter Mastodon </description>
+    </item>
+    
+    <item>
+      <title>Four Seasons | Elca Gaming</title>
+      <link>https://nickwasused.com/recommendations/4seasons/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://nickwasused.com/recommendations/4seasons/</guid>
+      <description>Four Seasons is a fan created Avatar: the last Airbender Game. It is created by a small team, but it got started by Elca Gaming.
+Facts The facts below are taken from the Four Seasons Press kit.
+ The Game follows the plot of Avatar: the last Airbender Aang and Momo are playable characters The Game will have RPG elements like leveling and an item system with its own currency (coins) It is semi open world with large levels, e.</description>
+    </item>
+    
+    <item>
+      <title>My Recommendations</title>
+      <link>https://nickwasused.com/recommendations/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://nickwasused.com/recommendations/</guid>
+      <description>This Page contains a list of projects that I recommend to check out.
+List  Four Seasons SWBF2Phoenix  </description>
+    </item>
+    
+    <item>
+      <title>Projects</title>
+      <link>https://nickwasused.com/projects/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://nickwasused.com/projects/</guid>
+      <description>FreeGamesonSteam This is a Script that is checking the Steam Store for Free Games after that it will redeem all Games using ArchiSteamFarm. The Script is written in Python3.
+alt:V Image Downloader A Script to download all Ped, Vehicle, and Weapon Images from the alt:V Documentation. The Script is written in Python3.
+alt:V Freeroam Server A alt:V Server. The source code is not public. There are currently 0 players online.</description>
+    </item>
+    
+    
+    <item>
+      <title>SWBF2Phoenix | Ben1138</title>
+      <link>https://nickwasused.com/recommendations/swbf2phoenix/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://nickwasused.com/recommendations/swbf2phoenix/</guid>
+      <description>SWBF2Phoenix is a reimplementation of the old Star Wars Battlefront (2005) game using the Unity game engine.
+Facts  Implement a Clone that mirrors the game engine behavior Load game data at runtime and convert it to Unity friendly formats Game Code is written in Lua 5.0 (64 Bit version) The engine is using a custom animation system 1024 Characters have been shown in game with all of them playing animations at the same time Vehicles are implemented with Gunner seats Doors are working Simple Mod maps are supported by the implementation The Game size (without Assets) is about 85 MB.</description>
+    </item>
+    
+  </channel>
+</rss>
