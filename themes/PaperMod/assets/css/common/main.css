@@ -4,6 +4,7 @@
     max-width: calc(var(--main-width) + var(--gap) * 2);
     margin: auto;
     padding: var(--gap);
+    font-family: "Helvetica Neue";
 }
 
 .page-header h1 {
