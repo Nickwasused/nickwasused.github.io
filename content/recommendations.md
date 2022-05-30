@@ -1,6 +1,6 @@
 ---
 layout: page
-title: My Recommendations
+title: My Recommendations ⭐
 permalink: /recommendations/
 ShowToc: false
 ---
