@@ -1,6 +1,7 @@
 title = "Nickwasused"
 author = "Nickwasused"
 theme = "contrast-hugo"
+baseURL = "https://nickwasused.com"
 
 [params]
   minimal = false
