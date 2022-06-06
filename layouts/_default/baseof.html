@@ -10,11 +10,7 @@
 <link rel="stylesheet" href="{{ .Site.BaseURL }}css/{{ if .Site.Params.minimal }}minimal.css{{ else }}index.css{{ end }}">
 <link rel="canonical" href="{{ .Permalink }}">
 <link rel="alternate" type="application/rss+xml" href="{{ with .OutputFormats.Get "RSS" }}{{ .RelPermalink }}{{ end }}" title="{{ .Site.Title }}">
-{{- if or .Params.math .Site.Params.math }}
-<link rel="stylesheet" href="{{ .Site.BaseURL }}katex/katex.min.css">
-<script defer src="{{ .Site.BaseURL }}katex/katex.min.js"></script>
-<script defer src="{{ .Site.BaseURL }}katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body)"></script>
-{{- end }}
+
 
 <meta name=robots content="index, follow">
 <meta name=keywords content="Blog,Portfolio,PaperMod">
