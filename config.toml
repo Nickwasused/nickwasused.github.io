@@ -1,0 +1,21 @@
+title = "Nickwasused"
+author = "Nickwasused"
+theme = "contrast-hugo"
+
+[params]
+  minimal = false
+  excerpts = false
+  description = "my page"
+
+[menu]
+  [[menu.main]]
+    identifier = "contact"
+    name = "Contact"
+    url = "/contact/"
+    weight = 10
+
+  [[menu.main]]
+    identifier = "projects"
+    name = "Projects"
+    url = "/projects/"
+    weight = 10
