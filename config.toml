@@ -10,13 +10,22 @@ baseURL = "https://nickwasused.com/"
 
 [menu]
   [[menu.main]]
+    identifier = "search"
+    name = "Search"
+    url = "/search/"
+    weight = 10
+
+  [[menu.main]]
     identifier = "contact"
     name = "Contact"
     url = "/contact/"
-    weight = 10
+    weight = 20
 
   [[menu.main]]
     identifier = "projects"
     name = "Projects"
     url = "/projects/"
-    weight = 10
+    weight = 30
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
