@@ -27,69 +27,69 @@ Reconnect to the pi and run ```go version```. This should be higher than 1.13.
 It is important that you install Go Version 13 or above.
 
 Start by creating some directories and downloading go:
-```bash
+```Shell
 mkdir ~/src && cd ~/src
 ```
-```bash
+```Shell
 wget https://go.dev/dl/go1.17.8.linux-arm64.tar.gz
 ```
 
 Now extract the package.
-```bash
+```Shell
 tar -C /usr/local -xzf go1.17.8.linux-arm64.tar.gz
 ```
 
 After that, you can delete the downloaded archive.
-```bash
+```Shell
 rm go1.17.8.linux-arm64.tar.gz
 ```
 
 The last step is to add go to your Path.
-```bash
+```Shell
 nano ~/.profile
 ```
 
 Add the following in that file:
-```bash
+```Shell
 PATH=$PATH:/usr/local/go/bin
 GOPATH=$HOME/go
 ```
 
 You can now reload the file with:
-```bash
+```Shell
 source ~/.profile
 ```
 
 Test the installation by running:
-```bash
+```Shell
 go version
 ```
 
 The output should look like this:
-```bash
+```Shell
 go version go1.17.8 linux/arm64
 ```
 
 ## Build Tor Snowflake
 
 First, we need to install some essentials:
-```bash
+```Shell
 apt install git
 ```
 
 After that you can clone the repo:
-```bash
+```Shell
 git clone https://git.torproject.org/pluggable-transports/snowflake.git
 ```
 
 Now go in the directory and start the build.
-```bash
+```Shell
 cd snowflake/proxy
 go build
 ```
 
 To start the snowflake make the build file executable and start it.
-```bash
+```Shell
 chmod +x ./proxy
 ./proxy
 ```
@@ -99,7 +99,7 @@ chmod +x ./proxy
 (This is the part where the installation location and User matter!)
 
 Create a new Service file.
-```bash
+```Shell
 nano /etc/systemd/system/snowflake.service
 ```
 

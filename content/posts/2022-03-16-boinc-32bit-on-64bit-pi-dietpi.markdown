@@ -15,32 +15,48 @@ description: "This Guide will show you how to install a 32-bit BOINC version on 
 
 - 64-bit raspberry pi e.g. DietPi
 
-Type ```uname -a``` the output should contain the following: ```aarch64``` if there is ```armhf``` in the output then you can skip to the [Install](#Install 32-bit Boinc) section.
+Type:
+
+```Shell
+uname -a
+``` 
+the output should contain the following: ```aarch64``` if there is ```armhf``` in the output then you can skip to the 
+[Install]({{< ref "#install-32-bit-boinc" >}} "Install") section.
 Example output: ```Linux raspberrypi-1 5.10.103-v8+ #1530 SMP PREEMPT Tue Mar 8 13:06:35 GMT 2022 aarch64 GNU/Linux```
 
 ## Architecture
 
 First, we need to add the 32-bit Architecture to our system with the following command:
 
-```sudo dpkg --add-architecture armhf```
+```Shell
+sudo dpkg --add-architecture armhf
+```
 
 Now you need to update the package list:
 
-```sudo apt update```
+```Shell
+sudo apt update
+```
 
 
 ## Remove 64-bit Boinc
 
 To remove the 64-bit version of the Boinc-Client type:
 
-```sudo apt remove boinc-client -y```
+```Shell
+sudo apt remove boinc-client -y
+```
 
 ## Install 32-bit Boinc
 
 If the output of ```uname -a``` is ```armhf``` then type:
 
-```sudo apt install boinc-client```
+```Shell
+sudo apt install boinc-client
+```
 
 To install the 32-bit version of the Boinc-Client type:
 
-```sudo apt install boinc-client:armhf -y```
+```Shell
+sudo apt install boinc-client:armhf -y
+```
