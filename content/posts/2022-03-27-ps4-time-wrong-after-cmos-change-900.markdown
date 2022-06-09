@@ -8,7 +8,7 @@ description: "This Guide will show you how to fix the PS4 time after replacing t
 ---
 ## The Problem
 
-After I replaced the CMOS Battery on my Base Model PS4, I noticed that it couldn't keep the time after a power loss. The PS4 is on firmware Version 9.0 where the [CMOS Time Bomb](https://www.ps4storage.com/functional-cmos-battery-is-inevitably-required-by-ps4-and-ps5-system/) was fixed. I mean it was fixed but e.g. Grand Theft Auto V (Version 1.38) with the [No Intro](https://github.com/illusion0001/illusion0001.github.io/blob/04223072dd1ba6cb5deb4ee7953bfc2e1430745f/_patch0/orbis/GTA5-Orbis.yml) were not able to start correctly (stuck at 90% Loading and heavy flickering).
+After I replaced the CMOS Battery on my Base Model PS4, I noticed that it couldn't keep the time after a power loss. The PS4 is on firmware Version 9.0 where the [CMOS Time Bomb](https://web.archive.org/web/20220609110029/https://www.ps4storage.com/functional-cmos-battery-is-inevitably-required-by-ps4-and-ps5-system/) was fixed. I mean it was fixed but e.g. Grand Theft Auto V (Version 1.38) with the [No Intro](https://github.com/illusion0001/illusion0001.github.io/blob/04223072dd1ba6cb5deb4ee7953bfc2e1430745f/_patch0/orbis/GTA5-Orbis.yml) were not able to start correctly (stuck at 90% Loading and heavy flickering).
 
 ## The Fix
 
