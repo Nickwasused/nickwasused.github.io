@@ -6,7 +6,7 @@ categories: tp-link archer-c7 openwrt tplink firmware linux open-source
 description: "This Updated Guide will show you how to install Openwrt on the TP-Link Archer V7-V5."
 ---
 # The Technical Details
-[Techdata: TP-Link Archer C7 AC1750 v5](https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5)
+[Techdata: TP-Link Archer C7 AC1750 v5](https://web.archive.org/web/20220609111144/https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5)
 
 (If you don´t want to read all of this in short it means that the Router should have enough power to run current OpenWrt versions.)
 
