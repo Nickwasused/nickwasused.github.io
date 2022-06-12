@@ -1,4 +1,5 @@
 <picture class="lozad" style="display: block; min-height: 1rem" data-alt="{{ .Text }}" data-placeholder-background="black" data-iesrc="/images/png/{{ .Destination | safeURL }}.png">
+    <source srcset="/images/jxl/{{ .Destination | safeURL }}.jxl">
     <source srcset="/images/avif/{{ .Destination | safeURL }}.avif">
     <source srcset="/images/webp/{{ .Destination | safeURL }}.webp">
     <noscript><img src="/images/png/{{ .Destination | safeURL }}.png" /></noscript>
