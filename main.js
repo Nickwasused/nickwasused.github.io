@@ -8,7 +8,7 @@ blog({
   lang: "en",
   dateStyle: "long",
   links: [
-    { title: "Email", url: "mailto:contact.nickwasused.fa6c8@simplelogin.co" },
+    { title: "Email", url: "mailto:contact@nickwasused.com" },
     { title: "GitHub", url: "https://github.com/Nickwasused" },
   ],
   background: "#fff",
