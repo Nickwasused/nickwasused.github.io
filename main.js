@@ -10,7 +10,7 @@ blog({
   links: [
     { title: "Email", url: "mailto:contact@nickwasused.com" },
     { title: "GitHub", url: "https://github.com/Nickwasused", target: "_blank" },
-    { title: "Mastodon", url: "https://mastodon.social/web/@nickwasused" }
+    { title: "Mastodon", url: "https://mastodon.social/web/@nickwasused", target: "_blank" }
   ],
   background: "#fff",
   middlewares: [],
