@@ -1,7 +1,8 @@
 ---
-title: "How do I block all the Twitter advertisers I've seen? "
+title: "Block all Twitter advertising accounts from your timeline."
 publish_date: 2022-03-15
 background: white
+description: This guide allows you to block all Twitter adverting accounts that have been in your timeline.
 ---
 ## Requirements
 For following this Guide you need the following:

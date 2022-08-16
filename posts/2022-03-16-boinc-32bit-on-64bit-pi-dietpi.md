@@ -1,17 +1,18 @@
 ---
-title: "How to install 32-bit BOINC on my 64-bit Raspberry Pi?"
+title: "Install 32-bit BOINC on a 64-bit Raspberry Pi."
 publish_date: 2022-03-16
 background: white
+description: This guide helps you to install the 32-Bit Boinc version instead of the 64-Bit one.
 ---
 ## Why would you do this?
 
 - Projects like UNIVERSE@HOME have no aarch64 Tasks.
 - A Raspberry Pi 3b can´t run ROSETTA@HOME because it doesn't have enough ram.
-- DietPi, a popular OS for the raspberry pi, uses 64Bit.
+- DietPi, a popular OS for the Raspberry Pi, uses 64Bit.
 
 ## Requirements
 
-- 64-bit raspberry pi e.g. DietPi
+- 64-bit Raspberry Pi e.g. DietPi
 
 Type:
 

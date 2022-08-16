@@ -9,7 +9,8 @@ blog({
   dateStyle: "long",
   links: [
     { title: "Email", url: "mailto:contact@nickwasused.com" },
-    { title: "GitHub", url: "https://github.com/Nickwasused" },
+    { title: "GitHub", url: "https://github.com/Nickwasused", target: "_blank" },
+    { title: "Mastodon", url: "https://mastodon.social/web/@nickwasused" }
   ],
   background: "#fff",
   middlewares: [],
