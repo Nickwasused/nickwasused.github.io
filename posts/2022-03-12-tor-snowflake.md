@@ -118,7 +118,12 @@ StandardOutput=syslog
 StandardError=syslog
 ExecStart=/root/snowflake/proxy/proxy
 Restart=on-failure
-WorkingDirectory=/root/snowflake/proxy/
+PrivateTmp=true
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=false
+ReadOnlyDirectories=/
+ReadWriteDirectories=/root/snowflake/
 
 [Install]
 WantedBy=multi-user.target
