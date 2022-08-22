@@ -2,7 +2,9 @@
 title: "Installing the signal-cli on the Raspberry Pi."
 publish_date: 2022-08-21
 background: white
-description: This is a guide for installing the signal-cli on the Raspberry Pi.
+snippet: This is a guide for installing the signal-cli on the Raspberry Pi.
+tags: ["Raspberry Pi", "Signal"]
+author: Nickwasused
 ---
 
 At the time of writing this, the signal-cli is at version: `0.10.11` with the libsignal-client being at version: `0.19.3`.  

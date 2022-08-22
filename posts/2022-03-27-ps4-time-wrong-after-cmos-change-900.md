@@ -2,7 +2,9 @@
 title: "Fix the PS4 Time after replacing the CMOS Battery on Firmware version 9.0."
 publish_date: 2022-03-27
 background: white
-description: This is a quick fix for the time problem on the PS4 after a CMOS change.
+snippet: This is a quick fix for the time problem on the PS4 after a CMOS change.
+tags: ["PS4"]
+author: Nickwasused
 ---
 ## The Problem
 

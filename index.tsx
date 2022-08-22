@@ -1,4 +1,6 @@
-import blog from "https://deno.land/x/blog@0.4.2/blog.tsx";
+/** @jsx h */
+
+import blog, {h} from "https://deno.land/x/blog@0.4.2/blog.tsx";
 
 blog({
   title: "Nickwasused",
@@ -12,6 +14,6 @@ blog({
     { title: "GitHub", url: "https://github.com/Nickwasused", target: "_blank" },
     { title: "Mastodon", url: "https://mastodon.social/web/@nickwasused", target: "_blank" }
   ],
-  background: "#fff",
-  middlewares: [],
+  theme: "dark",
+  middlewares: []
 });
