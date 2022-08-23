@@ -1,6 +1,6 @@
 {
   "tasks": {
     "dev": "deno run --allow-net --allow-read --allow-env=NODE_DEBUG --watch --no-check index.tsx --dev",
-    "build": "deno compile --allow-net --allow-read --allow-env=NODE_DEBUG index.tsx"
+    "build": "deno compile --allow-net --allow-read --allow-env=NODE_DEBUG --no-check index.tsx"
   }
 }
