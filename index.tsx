@@ -7,7 +7,7 @@ const author = "Nickwasused";
 blog({
   title: author,
   author: author,
-  avatar: "./source.png",
+  avatar: "./source.webp",
   avatarClass: "rounded-full",
   lang: "en",
   dateStyle: "long",
