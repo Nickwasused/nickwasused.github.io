@@ -4,7 +4,6 @@ publish_date: 2022-03-15
 background: white
 snippet: This guide allows you to block all Twitter adverting accounts that have been in your timeline.
 tags: ["Twitter", "Python3"]
-author: Nickwasused
 ---
 ## Requirements
 For following this Guide you need the following:

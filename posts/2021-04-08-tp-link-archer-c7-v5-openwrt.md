@@ -4,8 +4,6 @@ publish_date: 2021-04-08
 background: white
 snippet: This guide is outdated.
 tags: ["OpenWrt", "TP-Link Archer C7 V5"]
-author: Nickwasused
-coverHtml: <h1>test</h1>
 ---
 # Disclaimer
 
