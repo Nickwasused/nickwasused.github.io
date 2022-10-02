@@ -6,7 +6,7 @@ snippet: This is a guide for installing the signal-cli on the Raspberry Pi.
 tags: ["Raspberry Pi", "Signal"]
 ---
 
-At the time of writing this, the signal-cli is at version: `0.10.11` with the libsignal-client being at version: `0.19.3`.  
+At the time of writing this, the signal-cli is at version: `0.11.0` with the libsignal-client being at version: `0.20.0`.  
 The OS that I use is [DietPi](https://github.com/MichaIng/DietPi).
 
 # Automatic install
@@ -16,7 +16,7 @@ For an automatic install, I provide the following script:
 #!/bin/bash
 
 # set version of signal-cli here
-export VERSION=0.10.11
+export VERSION=0.11.0
 # set cpu core count here: notice set this to 1 when the device has 1 GB of ram or less
 export CORE_COUNT=1
 
@@ -98,7 +98,7 @@ For this guide, `curl` and `zip` is required. Install it with:
 First, we need to set the Version of the signal-cli we are installing. You can find the Version code [here](https://github.com/AsamK/signal-cli/releases).  
  
 Set the signal-cli version with:   
-`export VERSION=0.10.11`.  
+`export VERSION=0.11.0`.  
 After that, we download the signal-cli version:  
 `curl --proto '=https' --tlsv1.2 -o signal-cli-"${VERSION}"-Linux.tar.gz https://github.com/AsamK/signal-cli/releases/download/v"${VERSION}"/signal-cli-"${VERSION}"-Linux.tar.gz`  
 and unpack it to `/opt`:  

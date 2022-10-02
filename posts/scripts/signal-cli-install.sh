@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # set version of signal-cli here
-export VERSION=0.10.11
+export VERSION=0.11.0
 # set cpu core count here: notice set this to 1 when the device has 1 GB of ram or less
 export CORE_COUNT=1
 
