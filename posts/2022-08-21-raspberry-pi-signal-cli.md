@@ -6,7 +6,7 @@ snippet: This is a guide for installing the signal-cli on the Raspberry Pi.
 tags: ["Raspberry Pi", "Signal"]
 ---
 
-At the time of writing this, the signal-cli is at version: `0.11.0` with the libsignal-client being at version: `0.20.0`.  
+At the time of writing this, the signal-cli is at version: `0.11.2` with the libsignal-client being at version: `0.20.0`.  
 The OS that I use is [DietPi](https://github.com/MichaIng/DietPi).
 
 # Automatic install
@@ -16,7 +16,7 @@ For an automatic install, I provide the following script:
 #!/bin/bash
 
 # set version of signal-cli here
-export VERSION=0.11.0
+export VERSION=0.11.2
 # set cpu core count here: notice set this to 1 when the device has 1 GB of ram or less
 export CORE_COUNT=1
 
@@ -28,8 +28,31 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 # script Dependencies
+command_check_dependencies=( zip curl clang cmake make )
 apt update
-apt install curl zip -y
+
+for i in "${apt_dependencies[@]}"
+do
+    if ! command -v $i &> /dev/null
+    then
+        apt install $i -y
+    fi
+done
+
+# java
+if ! command -v java &> /dev/null
+then
+    apt install openjdk-17-jdk -y
+fi
+
+# protobuf-compiler
+if ! command -v protoc &> /dev/null
+then
+    apt install protobuf-compiler -y
+fi
+
+# libclang-dev
+apt install libclang-dev -y
 
 # delete temp folder if it exists
 if [ -d "/tmp/signal-cli-install" ]
@@ -46,17 +69,16 @@ then
     exit 0
 fi
 
-# signal-cli Dependencies
-apt install openjdk-17-jdk -y
-
 curl --proto '=https' --tlsv1.2 -L -o /tmp/signal-cli-install/signal-cli-"${VERSION}"-Linux.tar.gz https://github.com/AsamK/signal-cli/releases/download/v"${VERSION}"/signal-cli-"${VERSION}"-Linux.tar.gz
 tar xf /tmp/signal-cli-install/signal-cli-"${VERSION}"-Linux.tar.gz -C /opt
 export LIBVERSION=$(find /opt/signal-cli-"${VERSION}"/lib/ -maxdepth 1 -mindepth 1 -name 'libsignal-client-*' | sed -E 's/\/opt\/signal-cli-[0-9]{1,}.[0-9]{1,}.[0-9]{1,}\/lib\/libsignal-client-*//g' | sed -E 's/.jar//g')
 ln -sf /opt/signal-cli-"${VERSION}"/bin/signal-cli /usr/local/bin/
 
-# libsignal dependencies
-apt install protobuf-compiler clang libclang-dev cmake make -y
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+# rust
+if ! command -v cargo &> /dev/null
+then
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+fi
 source "$HOME/.cargo/env"
 
 # libsignal
@@ -85,8 +107,6 @@ Notice! Before running scripts from the Internet, check their code.
 `cat ./signal-cli.install.sh`  
 Now you can run the script:  
 `sudo chmod +x ./signal-cli-install.sh && sudo ./signal-cli.install.sh`  
-
-
 
 
 # Manual install
