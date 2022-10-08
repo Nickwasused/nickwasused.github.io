@@ -6,7 +6,7 @@ snippet: This is a guide for installing the signal-cli on the Raspberry Pi.
 tags: ["Raspberry Pi", "Signal"]
 ---
 
-At the time of writing this, the signal-cli is at version: `0.11.2` with the libsignal-client being at version: `0.20.0`.  
+At the time of writing this, the signal-cli is at version: `0.11.3` with the libsignal-client being at version: `0.20.0`.  
 The OS that I use is [DietPi](https://github.com/MichaIng/DietPi).
 
 # Automatic install
@@ -16,7 +16,7 @@ For an automatic install, I provide the following script:
 #!/bin/bash
 
 # set version of signal-cli here
-export VERSION=0.11.2
+export VERSION=0.11.3
 # set cpu core count here: notice set this to 1 when the device has 1 GB of ram or less
 export CORE_COUNT=1
 
@@ -28,7 +28,7 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 # script Dependencies
-command_check_dependencies=( zip curl clang cmake make )
+command_check_dependencies=( zip curl )
 apt update
 
 for i in "${apt_dependencies[@]}"
@@ -44,15 +44,6 @@ if ! command -v java &> /dev/null
 then
     apt install openjdk-17-jdk -y
 fi
-
-# protobuf-compiler
-if ! command -v protoc &> /dev/null
-then
-    apt install protobuf-compiler -y
-fi
-
-# libclang-dev
-apt install libclang-dev -y
 
 # delete temp folder if it exists
 if [ -d "/tmp/signal-cli-install" ]
@@ -74,29 +65,18 @@ tar xf /tmp/signal-cli-install/signal-cli-"${VERSION}"-Linux.tar.gz -C /opt
 export LIBVERSION=$(find /opt/signal-cli-"${VERSION}"/lib/ -maxdepth 1 -mindepth 1 -name 'libsignal-client-*' | sed -E 's/\/opt\/signal-cli-[0-9]{1,}.[0-9]{1,}.[0-9]{1,}\/lib\/libsignal-client-*//g' | sed -E 's/.jar//g')
 ln -sf /opt/signal-cli-"${VERSION}"/bin/signal-cli /usr/local/bin/
 
-# rust
-if ! command -v cargo &> /dev/null
-then
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-fi
-source "$HOME/.cargo/env"
-
 # libsignal
-curl --proto '=https' --tlsv1.2 -L -o /tmp/signal-cli-install/libsignal.tar.gz https://github.com/signalapp/libsignal/archive/refs/tags/v"${LIBVERSION}".tar.gz
-tar xf /tmp/signal-cli-install/libsignal.tar.gz -C /tmp/signal-cli-install/
-mv /tmp/signal-cli-install/libsignal-"${LIBVERSION}" /tmp/signal-cli-install/libsignal
-sed -i "s/include ':android'//" /tmp/signal-cli-install/libsignal/java/settings.gradle
-sed -i "s/cargo build /cargo build -j ${CORE_COUNT} /" /tmp/signal-cli-install/libsignal/java/build_jni.sh
-/tmp/signal-cli-install/libsignal/java/build_jni.sh desktop
+# https://gitlab.com/packaging/libsignal-client/
+curl -Lo /tmp/signal-cli-install/libsignal_jni.so "https://gitlab.com/packaging/libsignal-client/-/jobs/artifacts/${LIBVERSION}/raw/libsignal-client/arm64/libsignal_jni.so?job=libsignal-client-arm64"
 
 # replace libsignal_jni.so
 zip -d /opt/signal-cli-${VERSION}/lib/libsignal-client-*.jar libsignal_jni.so
-zip /opt/signal-cli-${VERSION}/lib/libsignal-client-*.jar /tmp/signal-cli-install/libsignal/target/release/libsignal_jni.so
+zip /opt/signal-cli-${VERSION}/lib/libsignal-client-*.jar /tmp/signal-cli-install/libsignal_jni.so
 
 # cleanup temp folder
 rm -r /tmp/signal-cli-install
 
-/opt/signal-cli-${VERSION}/bin/signal-cli -v
+/opt/signal-cli-${VERSION}/bin/signal-cli --version
 
 exit 0
 ```
@@ -118,7 +98,7 @@ For this guide, `curl` and `zip` is required. Install it with:
 First, we need to set the Version of the signal-cli we are installing. You can find the Version code [here](https://github.com/AsamK/signal-cli/releases).  
  
 Set the signal-cli version with:   
-`export VERSION=0.11.0`.  
+`export VERSION=0.11.3`.  
 After that, we download the signal-cli version:  
 `curl --proto '=https' --tlsv1.2 -o signal-cli-"${VERSION}"-Linux.tar.gz https://github.com/AsamK/signal-cli/releases/download/v"${VERSION}"/signal-cli-"${VERSION}"-Linux.tar.gz`  
 and unpack it to `/opt`:  
@@ -126,63 +106,31 @@ and unpack it to `/opt`:
 Finally, we link it to `/usr/local/bin` so we can use the signal-cli:  
 `sudo ln -sf /opt/signal-cli-"${VERSION}"/bin/signal-cli /usr/local/bin/`.  
 
-As a last step, we install the required Java version:  
+Now we install the required Java version:  
 `sudo apt install openjdk-17-jdk`
 
 ### Info
 
 If we try to run `signal-cli` now, then it will fail!
 
-## Building the libsignal_jni.so
+## Replacing the libsignal_jni.so
 
 To fix the problem, we need to build the "native lib for libsignal".
 
-### Dependencies
+### Downloading the correct file
 
-First, we need to install some dependencies:  
-  
-#### apt
-`sudo apt install protobuf-compiler clang libclang-dev cmake make`  
-  
-#### rust
-`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh` 
-
-### Build libsignal
-
-Let's create a temporary directory to store files:  
-`sudo mkdir /tmp/signal-cli-install && cd /tmp/signal-cli-install`
-
-Before starting to download the libsingal source-code, we need to find the matching version code:   
+Before starting to download the file, we need to find the matching version code:   
 `export LIBVERSION=$(find /opt/signal-cli-"${VERSION}"/lib/ -maxdepth 1 -mindepth 1 -name 'libsignal-client-*' | sed -E 's/\/opt\/signal-cli-[0-9]{1,}.[0-9]{1,}.[0-9]{1,}\/lib\/libsignal-client-*//g' | sed -E 's/.jar//g')`  
 
-After that, we download the source code:  
-`sudo curl --proto '=https' --tlsv1.2 -o /tmp/signal-cli-install/v"${LIBVERSION}".tar.gz https://github.com/signalapp/libsignal/archive/refs/tags/v"${LIBVERSION}".tar.gz`
+Let's create a temporary directory to store files:  
+`curl -Lo /tmp/signal-cli-install/libsignal_jni.so "https://gitlab.com/packaging/libsignal-client/-/jobs/artifacts/${LIBVERSION}/raw/libsignal-client/arm64/libsignal_jni.so?job=libsignal-client-arm64"`
 
-And now we need to unpack the downloaded code:  
-`sudo tar xf /tmp/signal-cli-install/v"${LIBVERSION}".tar.gz -C /tmp/signal-cli-install/ && mv libsignal-"${LIBVERSION}" libsignal`   
-
-Change into the java directory of the downloaded code:  
-`cd libsignal/java`  
-
-And as a last step, we disable some android stuff as we don\`t want to build for android:  
-`sudo sed -i "s/include ':android'//" /tmp/signal-cli-install/libsignal/java/settings.gradle`  
-
-#### 1 GB Ram
-
-While building libsignal I ran into a problem with the ram usage on the Raspberry Pi 3b, because eventually the 1 GB of ram would be full. This would result in a locked up Pi that I had to hard reset. We can work around this problem with limiting the CPU usage to 1 Core.  
-(I don't know if a 2 GB Raspberry Pi 4 can run all 4 Cores.)
-
-`sudo sed -i "s/cargo build /cargo build -j ${CORE_COUNT} /" /tmp/signal-cli-install/libsignal/java/build_jni.sh`
-
-#### Starting the Build
-
-We can start the build with: 
-`/tmp/signal-cli-install/libsignal/java/build_jni.sh desktop`  
+#### Replacing the file
 
 We need to remove the bundled `libsignal_jni.so` from `/opt/signal-cli-${VERSION}/lib/libsignal-client-*.jar`:  
 `sudo zip -d /opt/signal-cli-${VERSION}/lib/libsignal-client-*.jar libsignal_jni.so`  
 and add our own:  
-`sudo zip /opt/signal-cli-${VERSION}/lib/libsignal-client-*.jar /tmp/signal-cli-install/libsignal/target/release/libsignal_jni.so`
+`sudo zip /opt/signal-cli-${VERSION}/lib/libsignal-client-*.jar /tmp/signal-cli-install/libsignal_jni.so`
 
 As a last step, we remove the temporary files with:  
 `sudo rm -r /tmp/signal-cli-install`
