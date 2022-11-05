@@ -4,9 +4,8 @@ if git status | grep -q 'use "git pull" to update your local branch'; then
         echo "updating..."
         git stash
         git pull
-        hugo
+	hugo -d /var/www/html/
         chmod +x ./update.sh
-        cp -r public/* /var/www/html
 else
         echo "already up to date"
 fi
