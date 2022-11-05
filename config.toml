@@ -1,7 +1,6 @@
 baseURL = "https://nickwasused.com"
 languageCode = "en-us"
 title = "Nickwasused`s Site"
-theme = "noteworthy"
 enableRobotsTXT = true
 paginate = 4
 summaryLength = 10
