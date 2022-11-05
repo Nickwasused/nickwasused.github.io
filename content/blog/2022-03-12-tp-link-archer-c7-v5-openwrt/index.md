@@ -1,6 +1,6 @@
 ---
 title: "Install OpenWrt on the TP-Link Archer C7 V5 (2022)."
-publish_date: 2022-03-12
+date: 2022-03-12
 background: white
 snippet: This is a guide for installing OpenWrt on a TP-Link Archer C7 V5.
 tags: ["OpenWrt", "TP-Link Archer C7 V5"]
@@ -32,15 +32,15 @@ Connect to the Router via Wifi and set up a Password. After that, you can connec
 
 You just need to go to Advanced > System Tools > Firmware Upgrade
 Step 1: 
-![Step 1](./images/2021-04-08-tp-link-archer-c7-v5-openwrt/step1.webp)
+{{< resize-image src="step1.webp" alt="Step 1" >}}
 
 Step 2: 
-![Step 2](./images/2021-04-08-tp-link-archer-c7-v5-openwrt/step2.webp)
+{{< resize-image src="step2.webp" alt="Step 2" >}}
 
 Then select the firmware.bin and click on upgrade. This process can take up to 5 Minutes.
 Step 3,4 and 5: 
-![Step 3, 4 and 5](./images/2021-04-08-tp-link-archer-c7-v5-openwrt/step3.webp)
+{{< resize-image src="step3.webp" alt="Step 3, 4 and 5" >}}
 
 After that, you just need to go to ```http://192.168.1.1``` and there is the Web interface.
 The OpenWrt Webinterface LuCI: 
-![Webinterface](./images/2021-04-08-tp-link-archer-c7-v5-openwrt/interface.webp)
+{{< resize-image src="interface.webp" alt="Webinterface" >}}

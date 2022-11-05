@@ -1,6 +1,6 @@
 ---
 title: "Installing the signal-cli on the Raspberry Pi."
-publish_date: 2022-08-21
+date: 2022-08-21
 background: white
 snippet: This is a guide for installing the signal-cli on the Raspberry Pi.
 tags: ["Raspberry Pi", "Signal"]
@@ -141,7 +141,7 @@ We should set the permissions for the new files:
 
 Now we should be able to use the `signal-cli` command with no problems.
 
-Try is with:  
+Finally the signal-cli should report it`s version with:  
 `signal-cli --version`
 
 # Source

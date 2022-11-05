@@ -1,0 +1,72 @@
+baseURL = "https://nickwasused.com"
+languageCode = "en-us"
+title = "Nickwasused`s Site"
+theme = "noteworthy"
+enableRobotsTXT = true
+paginate = 4
+summaryLength = 10
+
+[taxonomies]
+  tag = "tags"
+
+[author]
+    name = "Nickwasused"
+
+# Set to false to disallow raw HTML in markdown files
+[markup.goldmark.renderer]
+    unsafe = false
+
+[params]
+    math = true
+    description = ""
+    showReadMore = false
+    email = "contact@nickwasused.com"
+    twitter = "https://twitter.com/Nickwasused"
+    github = "https://github.com/Nickwasused"
+    mastodon = "@nickwasused@mastodon.social"
+
+[[menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 1
+
+[[menu.main]]
+    identifier = "recommendations"
+    name = "Blog recommendations"
+    url = "/recommendations/"
+    weight = 2
+
+[[menu.main]]
+    identifier = "links"
+    name = "Link collection"
+    url = "/links/"
+    weight = 3
+
+# Privacy configurations: https://gohugo.io/about/hugo-and-gdpr/
+[privacy]
+  [privacy.disqus]
+    disable = true
+  [privacy.googleAnalytics]
+    anonymizeIP = true
+    disable = true
+    respectDoNotTrack = true
+    useSessionStorage = false
+  [privacy.instagram]
+    disable = true
+    simple = false
+  [privacy.twitter]
+    disable = true
+    enableDNT = true
+    simple = false
+  [privacy.vimeo]
+    disable = true
+    simple = false
+  [privacy.youtube]
+    disable = true
+    privacyEnhanced = true
+
+[outputFormats]
+     [outputFormats.RSS]
+         mediaType = "application/rss+xml"
+         baseName = "feed"

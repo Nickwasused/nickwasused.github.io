@@ -1,6 +1,6 @@
 ---
 title: "Block all Twitter advertising accounts from your timeline."
-publish_date: 2022-03-15
+date: 2022-03-15
 background: white
 snippet: This guide allows you to block all Twitter adverting accounts that have been in your timeline.
 tags: ["Twitter", "Python3"]
@@ -33,7 +33,7 @@ ACCESS_TOKEN_SECRET=""
 ```
 
 You need to get them on the Twitter Developer Site > your App > Keys and Tokens:
-![Twitter Dev](./images/2022-03-15-twitter-block-advertisers/twitter-dev.webp)
+{{< resize-image src="twitter-dev.webp" alt="Twitter Dev" >}}
 
 ## Twitter Data
 Now get your Twitter Data Archive from [here](https://twitter.com/settings/download_your_data)
@@ -68,15 +68,15 @@ The script will output a file called ```export.csv``` and tell you how many Adve
 To Block the Accounts you need to upload the ```export.csv``` content to [pastebin](https://pastebin.com) or another site.
 
 Paste the contents of ```export.csv``` in the input field and click ```create Paste```. 
-![pastebin-paste](./images/2022-03-15-twitter-block-advertisers/pastebin-paste.webp)
+{{< resize-image src="pastebin-paste.webp" alt="pastebin-paste" >}}
 
 Now you are redirected to your paste. Click on ```raw``` and copy the link. 
-![pastebin-raw](./images/2022-03-15-twitter-block-advertisers/pastebin-raw.webp)
+{{< resize-image src="pastebin-raw.webp" alt="pastebin-raw" >}}
 
 Now go to this site [https://twitter-blocklist-auth.glitch.me/](https://twitter-blocklist-auth.glitch.me/) and log in.
 
 Now you can paste the Url you have copied before in the field and click Submit.
-![glitch-setup](./images/2022-03-15-twitter-block-advertisers/glitch-setup.webp)
+{{< resize-image src="glitch-setup.webp" alt="glitch-setup" >}}
 
 After that the Page will tell you how many Accounts got blocked.
-![glitch-final](./images/2022-03-15-twitter-block-advertisers/glitch-final.webp)
+{{< resize-image src="glitch-final.webp" alt="glitch-final" >}}
