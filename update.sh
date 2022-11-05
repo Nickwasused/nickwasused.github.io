@@ -6,7 +6,7 @@ if git status | grep -q 'use "git pull" to update your local branch'; then
         git pull
         hugo
         chmod +x ./update.sh
-        cp public/* /var/www/html
+        cp -r public/* /var/www/html
 else
         echo "already up to date"
 fi
