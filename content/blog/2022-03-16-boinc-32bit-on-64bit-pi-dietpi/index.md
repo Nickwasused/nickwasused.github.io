@@ -1,6 +1,6 @@
 ---
 title: "Install 32-bit BOINC on a 64-bit Raspberry Pi."
-date: "16.03.2022"
+date: 2022-03-16
 background: white
 snippet: This guide helps you to install the 32-Bit Boinc version instead of the 64-Bit one.
 tags: ["Raspberry Pi", "Boinc"]
