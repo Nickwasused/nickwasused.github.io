@@ -1,6 +1,5 @@
 _site
 .sass-cache
-vendor
 public
 .hugo_build.lock
 resources
