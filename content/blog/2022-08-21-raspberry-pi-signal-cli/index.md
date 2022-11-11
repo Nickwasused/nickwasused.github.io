@@ -14,7 +14,7 @@ The OS that I use is [DietPi](https://github.com/MichaIng/DietPi).
 For an automatic install, I provide the following script:  
 
 You can use it by running:  
-`sudo wget https://nickwasused.com/scripts/signal-cli-install.sh`  
+`sudo wget https://nickwasused.com/blog/2022-08-21-raspberry-pi-signal-cli/signal-cli-install.sh`  
 Notice! Before running scripts from the Internet, check their code.  
 `cat ./signal-cli.install.sh`  
 Now you can run the script:  
