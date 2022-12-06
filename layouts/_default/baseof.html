@@ -10,7 +10,7 @@
         </div>
         {{ partial "footer-mobile.html" . }}
     </body>
-    {{ $js := resources.Get "js/lozad2.js" }}
+    {{ $js := resources.Get "js/lozad.js" }}
     {{ $secureJS := $js | resources.Fingerprint "sha512" }}
     <script src="{{ $secureJS.Permalink }}" integrity="{{ $secureJS.Data.Integrity }}"></script>
 </html>
