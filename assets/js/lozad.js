@@ -200,6 +200,3 @@
   return lozad;
 
 })));
-
-const observer = lozad();
-observer.observe();
