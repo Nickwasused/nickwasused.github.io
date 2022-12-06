@@ -2,7 +2,7 @@
 
 <h1 class="post-title">{{ .Title }}</h1>
     {{ if .Date }}
-    <span>{{ .Date.Format "January 2, 2006" }}</span>
+    <span class="time">{{ .Date.Format "January 2, 2006" }}</span>
     {{ end }}
     <div>
         <p>
