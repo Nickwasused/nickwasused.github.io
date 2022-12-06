@@ -27,10 +27,8 @@
     {{ $js := resources.Get "js/lozad.js" }}
     {{ $secureJS := $js | resources.Fingerprint "sha512" }}
     <link rel="preload" href="{{ $secureJS.Permalink }}" as="script" type="text/javascript">
-    <script src="{{ $secureJS.Permalink }}" integrity="{{ $secureJS.Data.Integrity }}" defer></script>
+    <script src="{{ $secureJS.Permalink }}" integrity="{{ $secureJS.Data.Integrity }}"></script>
     
-    {{ $script := resources.Get "js/main.js" | minify | fingerprint -}}
-	<script src="{{ $script.Permalink }}" {{ printf "integrity=%q" $script.Data.Integrity | safeHTMLAttr }} crossorigin="anonymous" defer></script>
 
     {{ with .OutputFormats.Get "RSS" }}
     {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
