@@ -9,10 +9,10 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{ "/icons/apple-touch-icon.png" | relURL }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ "/icons/favicon-32x32.png" | relURL }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ "/icons/favicon-16x16.png" | relURL }}">
-    <link rel="manifest" href="{{ "/icons/manifest.json" | relURL }}">
     <link rel="mask-icon" href="{{ "/icons/safari-pinned-tab.svg" | relURL }}" color="#FF3DB4">
     <meta name="theme-color" content="#ffffff">
 
+    <meta name="description" content="This is a Tech focused blog where I write random posts.">
     <!-- Styles -->
     <!-- Use Hugo Pipes to process the Sass file (convert to CSS, minify, and add a hash) -->
     {{ $main_style := resources.Get "css/main.scss" | toCSS | minify | fingerprint }}
