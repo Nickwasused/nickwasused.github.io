@@ -482,6 +482,10 @@ footer {
         display: inline-block;
         height: 2em;
         position: relative;
+
+        .mastodon svg {
+            enable-background: new 0 0 512 512;
+        }
     }
 
     .social-icon>svg:hover {
