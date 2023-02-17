@@ -1,4 +1,4 @@
-baseURL = "https://nickwasused.com"
+baseURL = "/"
 languageCode = "en-us"
 title = "Nickwasused`s Site"
 enableRobotsTXT = true
