@@ -1,0 +1,10 @@
+/*
+    Content-Security-Policy "default-src 'self'; script-src 'self' https://static.cloudflareinsights.com/; img-src 'self' https://www.abuseipdb.com/contributor/; connect-src 'self' cloudflareinsights.com; report-uri https://>
+    Cross-Origin-Embedder-Policy "require-corp; report-to='default'"
+    Cross-Origin-Opener-Policy "same-origin; report-to='default'"
+    Cross-Origin-Resource-Policy same-origin
+    Permissions-Policy interest-cohort=()
+    Strict-Transport-Security max-age=31536000; includeSubDomains;
+    X-Content-Type-Options nosniff
+    X-Frame-Options DENY
+    Referrer-Policy no-referrer-when-downgrade
