@@ -21,9 +21,9 @@ At first, check if you have the correct Model of the Raspberry Pi 3b:
 
 The output should be: `# Raspberry Pi 3 Model B Rev 1.2`
 
-Now, you need to install `libusb-1.0-0-dev`:
+Now, you need to install `libusb-1.0-0-dev`, `make`, `build-essential` and `gcc`:
 
-`sudo apt install libusb-1.0-0-dev -y`
+`sudo apt install libusb-1.0-0-dev make gcc build-essential -y`
 
 After that, you clone this repository: [https://github.com/dumpsite/lan951x-led-ctl](https://github.com/dumpsite/lan951x-led-ctl)
 
