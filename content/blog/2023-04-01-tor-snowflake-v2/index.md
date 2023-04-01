@@ -53,7 +53,7 @@ Start by creating a new user: `sudo adduser --no-create-home --disabled-login sn
 Create the systemd service file like this: `sudo nano /etc/systemd/system/snowflake.service`.
 
 With the following content:
-```
+```bash
 [Unit]
 Description=Tor Snowflake Proxy
 After=network.target
@@ -107,7 +107,7 @@ After some time the log should have lines like: `2023/04/01 15:54:08 In the last
 Logrotate is used to keep older logs and compress them with a defined limit.
 
 Start by creating a config file for snowflake: `sudo nano /etc/logrotate.d/snowflake` with the following content:
-```
+```bash
 /var/log/snowflake.log { 
     su root root
     daily
