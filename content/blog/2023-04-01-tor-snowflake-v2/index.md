@@ -92,7 +92,11 @@ To enable the automatic start on reboot, run: `sudo systemctl enable snowflake.s
 
 This section is useful if you want to have usage logs.
 
-We start by editing the rsyslog config: `sudo nano /etc/rsyslog.d/50-default.conf` and add the following line `:programname,isequal,"snowflake" /var/log/snowflake.log`
+We start by editing the rsyslog config: `sudo nano /etc/rsyslog.d/50-default.conf` and add the following line 
+
+```bash 
+:programname,isequal,"snowflake" /var/log/snowflake.log
+```
 
 To apply this change, restart `rsyslog`: `sudo service rsyslog restart`.
 
