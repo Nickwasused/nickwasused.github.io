@@ -1,4 +1,3 @@
-
 ---
 title: "Fix the Minecraft Launcher on a debloated Windows 10 install."
 date: 2022-11-14

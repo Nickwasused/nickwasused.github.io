@@ -6,8 +6,17 @@ snippet: This is a guide for installing the signal-cli on the Raspberry Pi.
 tags: ["Raspberry Pi", "Signal"]
 ---
 
+# Notice
+
+As of 31.03.2023 this guide is not working correctly! Because of that reason the script got renamed to `signal-cli-install-old.sh`.
+
 At the time of writing this, the signal-cli is at version: `0.11.3` with the libsignal-client being at version: `0.20.0`.  
 The OS that I use is [DietPi](https://github.com/MichaIng/DietPi).
+
+# Usage
+
+The signal-cli could be useful for sending automatic messages, e.g. when a service/job fails.
+For example, when your database backup fails, you can get the notification right into Signal.
 
 # Automatic install
 

@@ -5,6 +5,10 @@ background: white
 snippet: This guide allows you to block all Twitter adverting accounts that have been in your timeline.
 tags: ["Twitter", "Python3"]
 ---
+# Notice
+
+As of 31.03.2023 this method is not a good way of blocking Advertising on Twitter, you should just use something like [uBlock Origin](https://ublockorigin.com/) or alternative Apps.
+
 ## Requirements
 For following this Guide you need the following:
 
