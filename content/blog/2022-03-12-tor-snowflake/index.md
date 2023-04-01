@@ -5,6 +5,11 @@ background: white
 snippet: This is a guide for installing a tor snowflake on your Raspberry Pi as systemd service.
 tags: ["Raspberry Pi", "Tor"]
 ---
+# Notice
+
+This guide has been overhauled. See [here](/blog/2023-04-01-tor-snowflake-v2/).
+
+
 ## Requirements
 
 I use a Raspberry Pi 3b with DietPi 8.2.2, which means we need to use 64Bit Packages.
