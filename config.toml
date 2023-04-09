@@ -42,6 +42,12 @@ summaryLength = 10
     url = "/links/"
     weight = 3
 
+[[menu.main]]
+    identifier = "privacy"
+    name = "Privacy Policy"
+    url = "/privacy/"
+    weight = 4
+
 # https://gohugo.io/about/hugo-and-gdpr/
 [privacy]
   [privacy.disqus]
