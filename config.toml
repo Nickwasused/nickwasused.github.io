@@ -48,6 +48,12 @@ summaryLength = 10
     url = "/privacy/"
     weight = 4
 
+[[menu.main]]
+    identifier = "imprint"
+    name = "Imprint"
+    url = "/imprint/"
+    weight = 5
+
 # https://gohugo.io/about/hugo-and-gdpr/
 [privacy]
   [privacy.disqus]

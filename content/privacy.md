@@ -39,4 +39,4 @@ Changes to this policy can be made at any time. I recommend rechecking this page
 
 # §4 complaints
 
-You can send a complaint to [contact@nickwasused.com](mailto:contact@nickwasused.com).
+You can send a complaint to contact@nickwasused.com.
