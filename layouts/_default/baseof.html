@@ -11,5 +11,5 @@
         {{ partial "footer-mobile.html" . }}
     </body>
     {{ $js := resources.Get "js/lozad.js" }}
-    <script src="{{ $secureJS.Permalink }}"></script>
+    <script src="{{ $js.Permalink }}"></script>
 </html>
