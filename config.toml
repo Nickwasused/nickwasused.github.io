@@ -22,7 +22,7 @@ summaryLength = 10
     email = "contact@nickwasused.com"
     twitter = "https://twitter.com/Nickwasused"
     github = "https://github.com/Nickwasused"
-    mastodon = "https://mastodon.social/@nickwasused"
+    mastodon = "https://social.tchncs.de/@nickwasused"
 
 [[menu.main]]
     identifier = "tags"
