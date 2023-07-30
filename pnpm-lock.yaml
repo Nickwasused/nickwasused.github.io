@@ -7,6 +7,12 @@ devDependencies:
   '@11ty/eleventy-plugin-rss':
     specifier: ^1.2.0
     version: 1.2.0
+  eleventy-plugin-rev:
+    specifier: ^1.1.1
+    version: 1.1.1(@11ty/eleventy@2.0.1)
+  eleventy-sass:
+    specifier: ^2.2.3
+    version: 2.2.3(@11ty/eleventy@2.0.1)(eleventy-plugin-rev@1.1.1)
 
 packages:
 
@@ -476,6 +482,53 @@ packages:
       jake: 10.8.7
     dev: true
 
+  /eleventy-introspector@1.0.2(@11ty/eleventy@2.0.1):
+    resolution: {integrity: sha512-AYRw/VSNuEHaTHyKxLLD4x3uJRoMLofokcuRXdr0C7sn/MiagXaTBP3xv7mW9026g6NaOvxIQJGzAwE7IgZttw==}
+    peerDependencies:
+      '@11ty/eleventy': 0.8 - 0.12 || ^1.0.0 || ^2.0.0-canary.1
+    dependencies:
+      '@11ty/eleventy': 2.0.1
+    dev: true
+
+  /eleventy-plugin-output-path@1.2.1(@11ty/eleventy@2.0.1):
+    resolution: {integrity: sha512-Ku0VaDh0kEoASSrwvTEv1MIxDY2CXxfM4Vpmby9Xh35E0Zm/3KatufNtzMVayN6Ni8Px9tDrXa5/Rg4VHx2H6g==}
+    peerDependencies:
+      '@11ty/eleventy': ^1.0.0 || ^2.0.0-canary.1 || ^2.0.0-beta.1
+    dependencies:
+      '@11ty/eleventy': 2.0.1
+      eleventy-introspector: 1.0.2(@11ty/eleventy@2.0.1)
+    dev: true
+
+  /eleventy-plugin-rev@1.1.1(@11ty/eleventy@2.0.1):
+    resolution: {integrity: sha512-aSYYwG/n+vO8NGQGrd2ssyJRcd6D1gDsI8ye6XJSOegvlVLO0jNCbSnkcdFTA3NuU87FDy3B44XsdOt9kL/BUA==}
+    dependencies:
+      eleventy-plugin-output-path: 1.2.1(@11ty/eleventy@2.0.1)
+      kleur: 4.1.5
+    transitivePeerDependencies:
+      - '@11ty/eleventy'
+    dev: true
+
+  /eleventy-sass@2.2.3(@11ty/eleventy@2.0.1)(eleventy-plugin-rev@1.1.1):
+    resolution: {integrity: sha512-XmrG//wTJVxV1gwdl923cxBHBv3LrzF0vvUd0AMx8D6Rydfw25Zkwp7P1lMeTZ9BnCNrKDSzK/NH8bUN2eevJw==}
+    peerDependencies:
+      '@11ty/eleventy': ^1.0.0 || ^2.0.0-canary.12 || ^2.0.0-beta.1
+      eleventy-plugin-clean: ^1.1.0
+      eleventy-plugin-rev: ^1.1.1
+    peerDependenciesMeta:
+      eleventy-plugin-clean:
+        optional: true
+      eleventy-plugin-rev:
+        optional: true
+    dependencies:
+      '@11ty/eleventy': 2.0.1
+      debug: 4.3.4
+      eleventy-plugin-rev: 1.1.1(@11ty/eleventy@2.0.1)
+      kleur: 4.1.5
+      sass: 1.64.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /encodeurl@1.0.2:
     resolution: {integrity: sha512-TPJXq8JqFaVYm2CWmPvnP2Iyo4ZSM7/QKcSmuMLDObfpH5fi7RUGmd/rTDf+rut/saiDiQEeVTNgAmJEdAOx0w==}
     engines: {node: '>= 0.8'}
@@ -684,6 +737,10 @@ packages:
   /http-equiv-refresh@1.0.0:
     resolution: {integrity: sha512-TScO04soylRN9i/QdOdgZyhydXg9z6XdaGzEyOgDKycePeDeTT4KvigjBcI+tgfTlieLWauGORMq5F1eIDa+1w==}
     engines: {node: '>= 0.10'}
+    dev: true
+
+  /immutable@4.3.1:
+    resolution: {integrity: sha512-lj9cnmB/kVS0QHsJnYKD1uo3o39nrbKxszjnqS9Fr6NB7bZzW45U6WSGBPKXDL/CvDKqDNPA4r3DoDQ8GTxo2A==}
     dev: true
 
   /inflight@1.0.6:
@@ -1242,6 +1299,16 @@ packages:
       queue-microtask: 1.2.3
     dev: true
 
+  /sass@1.64.1:
+    resolution: {integrity: sha512-16rRACSOFEE8VN7SCgBu1MpYCyN7urj9At898tyzdXFhC+a+yOX5dXwAR7L8/IdPJ1NB8OYoXmD55DM30B2kEQ==}
+    engines: {node: '>=14.0.0'}
+    hasBin: true
+    dependencies:
+      chokidar: 3.5.3
+      immutable: 4.3.1
+      source-map-js: 1.0.2
+    dev: true
+
   /section-matter@1.0.0:
     resolution: {integrity: sha512-vfD3pmTzGpufjScBh50YHKzEu2lxBWhVEHsNGoEXmCmn2hKGfeNLYMzCJpe8cD7gqX7TJluOVpBkAequ6dgMmA==}
     engines: {node: '>=4'}
@@ -1282,6 +1349,11 @@ packages:
   /slugify@1.6.6:
     resolution: {integrity: sha512-h+z7HKHYXj6wJU+AnS/+IH8Uh9fdcX1Lrhg1/VMdf9PwoBQXFcXiAdsy2tSK0P6gKwJLXp02r90ahUCqHk9rrw==}
     engines: {node: '>=8.0.0'}
+    dev: true
+
+  /source-map-js@1.0.2:
+    resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
+    engines: {node: '>=0.10.0'}
     dev: true
 
   /source-map@0.6.1:
