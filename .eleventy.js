@@ -1,5 +1,8 @@
+const pluginRss = require("@11ty/eleventy-plugin-rss");
+
 module.exports = function(eleventyConfig) {
-    eleventyConfig.addShortcode("resize-image", function(src, alt) {
-      return '<img class="article-image lozad" data-src="${src}" />';
-    });
+    eleventyConfig.addPassthroughCopy("basic.css");
+    eleventyConfig.addPassthroughCopy("lozad.js");
+    eleventyConfig.addPlugin(pluginRss);
+    eleventyConfig.addPassthroughCopy("**/*.webp");
 };

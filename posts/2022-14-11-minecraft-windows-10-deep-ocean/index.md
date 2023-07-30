@@ -30,8 +30,9 @@ After that, I searched "Minecraft Windows 10 deep ocean error". There were a lot
 
 In the Windows 10 settings is a category called "Gaming" and a point called "Xbox-Network". In there is a status for the Xbox-Network e.g. Internet Connectivity, Xbox Live-Services and Xbox Live-Multiplayer.
 Under the point Xbox Live-Multiplayer is the status for Server connectivity, but for me that was disconnected/unavailable.  
-{{< resize-image "xbox-settings.webp" "Xbox Settings" >}}
   
+![Xbox Settings](./xbox-settings.webp "")
+
 So I went to the Microsoft Store and searched for "Xbox" and there it was: the Xbox App got uninstalled by the Debloat script.  
 
 # Fix

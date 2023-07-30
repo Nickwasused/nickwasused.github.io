@@ -1,0 +1,25 @@
+.wrap {
+    display: flex;
+}
+
+a h1,
+h2 a {
+    color: black;
+    text-decoration: none;
+}
+
+.nav {
+    width: 15%;
+    order: 2;
+    padding-top: 1%;
+}
+
+.nav a {
+    color: black;
+    text-decoration: none;
+}
+
+.posts {
+    width: 85%;
+    order: 3
+}
