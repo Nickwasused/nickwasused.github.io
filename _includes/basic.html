@@ -12,18 +12,14 @@
     <link rel="stylesheet" href="/basic.css" />
 </head>
 <body>
-    <a href="/"><h1 class="title">Nick's Site</h1></a>
-
-    {% if page.snippet %}
-    <h2>{{ page.title }}</h2>
-    {% endif %}
+    <h1 class="title"><a href="/">Nick's Site</a></h1>
     
     <span class="wrap">
         <div class="nav">
-            <p><a href="/recommendations">Blog recommendations</a></p>
-            <p><a href="/links">link collection</a></p>
-            <p><a href="/privacy">Privacy Policy</a></p>
-            <p><a href="/imprint">Imprint</a></p>
+            <p><a href="/sites/recommendations">Blog recommendations</a></p>
+            <p><a href="/sites/links">link collection</a></p>
+            <p><a href="/sites/privacy">Privacy Policy</a></p>
+            <p><a href="/sites/imprint">Imprint</a></p>
             <p><a href="/feed.xml">RSS</a></p>
             &nbsp;
             <p><a target="_blank" href="https://social.tchncs.de/@nickwasused">Mastodon</a></p>
@@ -32,7 +28,13 @@
             <p><a target="_blank" href="mailto:contact@nickwasused.com">Email</a></p>
         </div>
 
-        <div class="posts">
+        <div class="content">
+            {% if snippet %}
+                <div class="post-info">
+                    <h1>{{ title }}</h1>
+                    <span>{{ date }}</span>
+                </div>
+            {% endif %}
             {{ content }}
         </div>
     </span>
