@@ -14,6 +14,10 @@
 <body>
     <a href="/"><h1 class="title">Nick's Site</h1></a>
 
+    {% if page.snippet %}
+    <h2>{{ page.title }}</h2>
+    {% endif %}
+    
     <span class="wrap">
         <div class="nav">
             <p><a href="/recommendations">Blog recommendations</a></p>

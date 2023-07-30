@@ -4,5 +4,5 @@ module.exports = function(eleventyConfig) {
     eleventyConfig.addPassthroughCopy("basic.css");
     eleventyConfig.addPassthroughCopy("lozad.js");
     eleventyConfig.addPlugin(pluginRss);
-    eleventyConfig.addPassthroughCopy("**/*.webp");
+    eleventyConfig.addPassthroughCopy("{,!(_site)/**/}*.webp");
 };

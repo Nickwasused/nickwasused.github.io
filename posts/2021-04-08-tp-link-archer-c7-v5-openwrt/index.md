@@ -10,7 +10,7 @@ tags: ["OpenWrt", "TP-Link Archer C7 V5"]
 This guide is a little outdated, you should use OpenWrt version 21. I have created an updated Guide [here](/2022/03/12/tp-link-archer-c7-v5-openwrt).
 
 # The Technical Details
-[Techdata: TP-Link Archer C7 AC1750 v5](https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5)
+[Techdata: TP-Link Archer C7 AC1750 v5](https://web.archive.org/web/20220609111144/https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5)
 
 (If you don´t want to read all of this in short it means that the Router should have enough power to run current OpenWrt versions.)
 
@@ -18,7 +18,7 @@ This guide is a little outdated, you should use OpenWrt version 21. I have creat
 
 The Archer C7 is supported by two major versions of OpenWrt: Version 18 and 19. But in the Forum for the Archer C7 are some threads that point out Issues with the latest release. So I am going to use the Router with Version 18 because it seems more stable.
 
-{{< resize-image "forum.webp" "Forum" >}}
+![Forum](./forum.webp "")
 
 # The right Firmware Image
 
@@ -54,16 +54,16 @@ Connect to the Router via Wifi and set up a Password. After that, you can connec
 
 You just need to go to Advanced > System Tools > Firmware Upgrade
 Step 1: 
-
-{{< resize-image "step1.webp" "Step 1" >}}
+![Step 1](./step1.webp "")
 
 Step 2: 
-{{< resize-image "step2.webp" "Step 2" >}}
+![Step 2](./step2.webp "")
 
 Then select the firmware.bin and click on upgrade. This process can take up to 5 Minutes.
 Step 3,4 and 5: 
-{{< resize-image "step3.webp" "Step 3, 4 and 5" >}}
+![Step 3, 4 and 5](./step3.webp "")
 
 After that, you just need to go to ```http://192.168.1.1``` and there is the Web interface.
 The OpenWrt Webinterface LuCI: 
-{{< resize-image "interface.webp" "Webinterface" >}}
+
+![Webinterface](./interface.webp "")
