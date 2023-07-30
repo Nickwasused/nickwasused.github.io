@@ -1,8 +1,15 @@
 const pluginRss = require("@11ty/eleventy-plugin-rss");
 
 module.exports = function(eleventyConfig) {
-    eleventyConfig.addPassthroughCopy("basic.css");
-    eleventyConfig.addPassthroughCopy("lozad.js");
+    eleventyConfig.addPassthroughCopy("src/basic.css");
+    eleventyConfig.addPassthroughCopy("src/lozad.js");
+    eleventyConfig.addPassthroughCopy("src/{,!(_site)/**/}*.webp");
     eleventyConfig.addPlugin(pluginRss);
-    eleventyConfig.addPassthroughCopy("{,!(_site)/**/}*.webp");
+   
+    return {
+        dir: {
+          input: "src", 
+          output: "dist"
+        }
+    }
 };
