@@ -12,13 +12,13 @@ pagination:
 
 <nav class="pagination">
   {% if pagination.previousPageLink %}
-    <a class="pagination__item" href="{{ pagination.previousPageHref }}">Previous</a>
+    <a href="{{ pagination.previousPageHref }}">Previous</a>
   {% else %}
-    <span class="pagination__item">Previous</span>
+    <span>Previous</span>
   {% endif %}
   {% if pagination.nextPageLink %}
-    <a class="pagination__item" href="{{ pagination.nextPageHref}}">Next</a>
+    <a href="{{ pagination.nextPageHref}}">Next</a>
   {% else %}
-    <span class="pagination__item">Next</span>
+    <span>Next</span>
   {% endif %}
 </nav>
