@@ -6,8 +6,10 @@ pagination:
   reverse: true
 ---
 {% for post in pagination.items %}
-<a href="{{ post.url }}"><h2>{{post.data.title}}</h2></a>
-<span>{{post.data.snippet}}</span>
+  <span>
+    <a href="{{ post.url }}"><h2>{{post.data.title}}</h2></a>
+    <span>{{post.data.snippet}}</span>
+  </span>
 {% endfor %}
 
 <nav class="pagination">
