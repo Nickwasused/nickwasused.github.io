@@ -32,15 +32,15 @@ Connect to the Router via Wifi and set up a Password. After that, you can connec
 
 You just need to go to Advanced > System Tools > Firmware Upgrade
 Step 1: 
-{{< resize-image src="step1.webp" alt="Step 1" >}}
+{{< resize-image "step1.webp" "Step 1" >}}
 
 Step 2: 
-{{< resize-image src="step2.webp" alt="Step 2" >}}
+{{< resize-image "step2.webp" "Step 2" >}}
 
 Then select the firmware.bin and click on upgrade. This process can take up to 5 Minutes.
 Step 3,4 and 5: 
-{{< resize-image src="step3.webp" alt="Step 3, 4 and 5" >}}
+{{< resize-image "step3.webp" "Step 3, 4 and 5" >}}
 
 After that, you just need to go to ```http://192.168.1.1``` and there is the Web interface.
 The OpenWrt Webinterface LuCI: 
-{{< resize-image src="interface.webp" alt="Webinterface" >}}
+{{< resize-image "interface.webp" "Webinterface" >}}

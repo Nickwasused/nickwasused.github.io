@@ -37,7 +37,7 @@ ACCESS_TOKEN_SECRET=""
 ```
 
 You need to get them on the Twitter Developer Site > your App > Keys and Tokens:
-{{< resize-image src="twitter-dev.webp" alt="Twitter Dev" >}}
+{{< resize-image "twitter-dev.webp" "Twitter Dev" >}}
 
 ## Twitter Data
 Now get your Twitter Data Archive from [here](https://twitter.com/settings/download_your_data)
@@ -72,15 +72,15 @@ The script will output a file called ```export.csv``` and tell you how many Adve
 To Block the Accounts you need to upload the ```export.csv``` content to [pastebin](https://pastebin.com) or another site.
 
 Paste the contents of ```export.csv``` in the input field and click ```create Paste```. 
-{{< resize-image src="pastebin-paste.webp" alt="pastebin-paste" >}}
+{{< resize-image "pastebin-paste.webp" "pastebin-paste" >}}
 
 Now you are redirected to your paste. Click on ```raw``` and copy the link. 
-{{< resize-image src="pastebin-raw.webp" alt="pastebin-raw" >}}
+{{< resize-image "pastebin-raw.webp" "pastebin-raw" >}}
 
 Now go to this site [https://twitter-blocklist-auth.glitch.me/](https://twitter-blocklist-auth.glitch.me/) and log in.
 
 Now you can paste the Url you have copied before in the field and click Submit.
-{{< resize-image src="glitch-setup.webp" alt="glitch-setup" >}}
+{{< resize-image "glitch-setup.webp" "glitch-setup" >}}
 
 After that the Page will tell you how many Accounts got blocked.
-{{< resize-image src="glitch-final.webp" alt="glitch-final" >}}
+{{< resize-image "glitch-final.webp" "glitch-final" >}}

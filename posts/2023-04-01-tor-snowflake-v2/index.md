@@ -84,7 +84,7 @@ WantedBy=multi-user.target
 To verify that everything is working as intended, run: `sudo service snowflake start` and after that `sudo service snowflake status`.
 
 The output should look like this:
-{{< resize-image src="snowflake-service.webp" alt="Snowflake service status" caption="">}}
+{{< resize-image "snowflake-service.webp" "Snowflake service status" >}}
 
 To enable the automatic start on reboot, run: `sudo systemctl enable snowflake.service`.
 
