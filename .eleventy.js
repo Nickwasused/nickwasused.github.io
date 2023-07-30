@@ -6,6 +6,7 @@ module.exports = function(eleventyConfig) {
     eleventyConfig.addPassthroughCopy("src/basic.css");
     eleventyConfig.addPassthroughCopy("src/lozad.js");
     eleventyConfig.addPassthroughCopy("src/_headers");
+    eleventyConfig.addPassthroughCopy("src/_redirects");
     eleventyConfig.addPassthroughCopy("src/robots.txt");
     eleventyConfig.addPassthroughCopy("src/{,!(_site)/**/}*.webp");
     eleventyConfig.addPlugin(pluginRss);
