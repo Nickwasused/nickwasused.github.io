@@ -32,13 +32,31 @@ span a {
     text-decoration: none;
 }
 
-.post-info {
-    padding-bottom: 2%;
-}
-
 .content {
     width: 85%;
     order: 3
+}
+
+@media (max-width: 1220px) {
+    .wrap {
+        flex-wrap: wrap;
+    }
+
+    .content {
+        order: 2;
+        width: 100%;
+    }
+
+    .nav {
+        order: 3;
+        width: 100%;
+    }
+}
+
+
+
+.post-info {
+    padding-bottom: 2%;
 }
 
 code {
