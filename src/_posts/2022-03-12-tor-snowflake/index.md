@@ -6,7 +6,7 @@ tags: ["Raspberry Pi", "Tor"]
 ---
 # Notice
 
-**This guide has been overhauled.** See [here](/blog/2023-04-01-tor-snowflake-v2/).
+**This guide has been overhauled.** See [here](/_posts/2023-04-01-tor-snowflake-v2/).
 
 
 ## Requirements
