@@ -22,9 +22,14 @@ Notice that I am creating this guide from the view of a User account with sudo r
 
 First, we need to install [Go](https://go.dev/) version 1.13 or higher.
 
-We install Go using `sudo dietpi-software` now search for `go` and select `Go: Runtime environment and package installer` by pressing space.
+We install Go using:
+```shell
+sudo dietpi-software
+```
 
-After that press TAB and select confirm, when back on the main page select `install`.
+now search for `go` and select the following by pressing space. `Go: Runtime environment and package installer`
+
+After that press TAB and select confirm, when back on the main page select `install`
 
 Now reload your shell by running `exec bash` or reconnect.
 
@@ -38,9 +43,20 @@ First change to the `/opt` directory: `cd /opt`
 
 **Notice the sudo in front!**
 
-Start by cloning the Git repository: `sudo git clone https://git.torproject.org/pluggable-transports/snowflake.git` and then get ownership of the folder: `sudo chown -R $USER:$USER snowflake/`
+Start by cloning the Git repository: 
+```shell
+sudo git clone https://git.torproject.org/pluggable-transports/snowflake.git
+```
 
-Now we can start to build the program itself: `cd snowflake/proxy && go build`
+and then get ownership of the folder: 
+```shell
+sudo chown -R $USER:$USER snowflake/
+```
+
+Now we can start to build the program itself: 
+```shell
+cd snowflake/proxy && go build
+```
 
 To verify that the build is working, run `./proxy`. The output should look like: `2023/04/01 15:29:14 Proxy starting`
 
@@ -48,9 +64,24 @@ To verify that the build is working, run `./proxy`. The output should look like:
 
 To autostart the program, we are going to use systemd.
 
-Start by creating a new user: `sudo adduser --no-create-home --disabled-login snowflake`. This will create the user snowflake, but we still need to give the user access to the snowflake folder: `sudo chown -R $USER:snowflake /opt/snowflake` and `sudo chmod -R 775 /opt/snowflake/`.
+Start by creating a new user: 
+```shell
+sudo adduser --no-create-home --disabled-login snowflake
+```
 
-Create the systemd service file like this: `sudo nano /etc/systemd/system/snowflake.service`.
+This will create the user snowflake, but we still need to give the user access to the snowflake folder: 
+```shell
+sudo chown -R $USER:snowflake /opt/snowflake
+```
+and 
+```shell
+sudo chmod -R 775 /opt/snowflake/
+```
+
+Create the systemd service file like this: 
+```shell
+sudo nano /etc/systemd/system/snowflake.service
+```
 
 With the following content:
 ```bash
@@ -86,7 +117,10 @@ To verify that everything is working as intended, run: `sudo service snowflake s
 The output should look like this:
 ![Snowflake service status](./snowflake-service.webp "")
 
-To enable the automatic start on reboot, run: `sudo systemctl enable snowflake.service`.
+To enable the automatic start on reboot, run: 
+```shell
+sudo systemctl enable snowflake.service
+```
 
 # Logs
 

@@ -3,6 +3,7 @@ const pluginRev = require("eleventy-plugin-rev");
 const eleventySass = require("eleventy-sass");
 
 module.exports = function(eleventyConfig) {
+    eleventyConfig.addFilter("custom_date", function(value) { return value.toLocaleDateString() });
     eleventyConfig.addPassthroughCopy("src/basic.css");
     eleventyConfig.addPassthroughCopy("src/lozad.js");
     eleventyConfig.addPassthroughCopy("src/_headers");
