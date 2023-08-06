@@ -9,6 +9,11 @@ html {
     scrollbar-gutter: stable;
 }
 
+img {
+    display: block;
+    padding: 1% 0% 1%;
+}
+
 .wrap {
     display: flex;
 }
@@ -23,8 +28,7 @@ span a {
 .nav {
     width: 15%;
     order: 2;
-    padding-top: 1%;
-    padding-left: 1%;
+    padding: 1% 1%;
 
     a {
         color: black;
@@ -59,12 +63,21 @@ span a {
     padding-bottom: 2%;
 }
 
-code {
-    font-family: 'Courier New', monospace;
-    font-size: 14px;
-    background-color: #f2f2f2;
-    padding: 2px 4px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    color: #333;
+
+// https://stackoverflow.com/a/48694906
+pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #f36d33;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
 }
