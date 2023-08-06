@@ -5,12 +5,14 @@ pagination:
   size: 5
   reverse: true
 ---
+<div class="posts">
 {% for post in pagination.items %}
   <span>
     <a href="{{ post.url }}"><h2>{{post.data.title}}</h2></a>
     <span>{{post.data.snippet}}</span>
   </span>
 {% endfor %}
+</div>
 
 <nav class="pagination">
   {% if pagination.previousPageLink %}
