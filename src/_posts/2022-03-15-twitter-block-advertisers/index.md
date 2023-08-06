@@ -40,7 +40,7 @@ You need to get them on the Twitter Developer Site > your App > Keys and Tokens:
 ![Twitter Dev](./twitter-dev.webp "")
 
 ## Twitter Data
-Now get your Twitter Data Archive from [here](https://twitter.com/settings/download_your_data)
+Now [get your Twitter Data Archive from here](https://twitter.com/settings/download_your_data)
 
 After you have requested the Archive wait for the Notification Email. (This can take hours to days!)
 
