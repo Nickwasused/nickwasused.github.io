@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no" />
+    <title>Install Tor Snowflake on the Raspberry Pi with DietPi. (2023)</title>
+    <meta name="description" content="This is a guide for installing a tor snowflake on your Raspberry Pi as systemd service.">
+    <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="Nick's Site" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/basic-e17af982.css" />
+</head>
+<body>
+    <h1 class="title"><a href="/">Nick's Site</a></h1>
+    
+    <span class="wrap">
+        <div class="nav">
+            <p><a href="/sites/recommendations">Blog recommendations</a></p>
+            <p><a href="/sites/links">link collection</a></p>
+            <p><a href="/sites/privacy">Privacy Policy</a></p>
+            <p><a href="/sites/imprint">Imprint</a></p>
+            <p><a href="/feed.xml">RSS</a></p>
+            &nbsp;
+            <p><a target="_blank" href="https://social.tchncs.de/@nickwasused">Mastodon</a></p>
+            <p><a target="_blank" href="https://github.com/Nickwasused">Github</a></p>
+            <p><a target="_blank" href="https://twitter.com/nickwasused">Twitter</a></p>
+            <p><a target="_blank" href="mailto:contact@nickwasused.com">Email</a></p>
+        </div>
+
+        <div class="content">
+            
+                <div class="post-info">
+                    <h1>Install Tor Snowflake on the Raspberry Pi with DietPi. (2023)</h1>
+                    <h2>4/1/2023</h2>
+                </div>
+            
+            <p>This is a guide for installing a tor snowflake on your Raspberry Pi as systemd service.</p>
+<p>Tor snowflake: <a href="https://snowflake.torproject.org/">&quot;Allows people from anywhere in the world to access censored websites and applications.&quot;</a></p>
+<h2>Requirements</h2>
+<p>I have certain requirements for this guide. Using this guide on any other system is properly unsupported! Use at your own risk.</p>
+<ul>
+<li>DietPi version v8.15.2 or above</li>
+<li>Debian version based on bullseye (check with <code>cat /etc/os-release</code>)</li>
+</ul>
+<p>Notice that I am creating this guide from the view of a User account with sudo rights and a headless setup.</p>
+<h2>Install GO</h2>
+<p>First, we need to install <a href="https://go.dev/">Go</a> version 1.13 or higher.</p>
+<p>We install Go using:</p>
+<pre><code class="language-shell">sudo dietpi-software
+</code></pre>
+<p>now search for <code>go</code> and select the following by pressing space. <code>Go: Runtime environment and package installer</code></p>
+<p>After that press TAB and select confirm, when back on the main page select <code>install</code></p>
+<p>Now reload your shell by running <code>exec bash</code> or reconnect.</p>
+<p>To verify the Go install run <code>go version</code>, it should output something like <code>go version go1.20.2 linux/arm64</code>. Just make sure that the version is 1.13 or higher.</p>
+<h2>Snowflake</h2>
+<p>Now we can start to install the snowflake.</p>
+<p>First change to the <code>/opt</code> directory: <code>cd /opt</code></p>
+<p><strong>Notice the sudo in front!</strong></p>
+<p>Start by cloning the Git repository:</p>
+<pre><code class="language-shell">sudo git clone https://git.torproject.org/pluggable-transports/snowflake.git
+</code></pre>
+<p>and then get ownership of the folder:</p>
+<pre><code class="language-shell">sudo chown -R $USER:$USER snowflake/
+</code></pre>
+<p>Now we can start to build the program itself:</p>
+<pre><code class="language-shell">cd snowflake/proxy &amp;&amp; go build
+</code></pre>
+<p>To verify that the build is working, run <code>./proxy</code>. The output should look like: <code>2023/04/01 15:29:14 Proxy starting</code></p>
+<h1>Autostart</h1>
+<p>To autostart the program, we are going to use systemd.</p>
+<p>Start by creating a new user:</p>
+<pre><code class="language-shell">sudo adduser --no-create-home --disabled-login snowflake
+</code></pre>
+<p>This will create the user snowflake, but we still need to give the user access to the snowflake folder:</p>
+<pre><code class="language-shell">sudo chown -R $USER:snowflake /opt/snowflake
+</code></pre>
+<p>and</p>
+<pre><code class="language-shell">sudo chmod -R 775 /opt/snowflake/
+</code></pre>
+<p>Create the systemd service file like this:</p>
+<pre><code class="language-shell">sudo nano /etc/systemd/system/snowflake.service
+</code></pre>
+<p>With the following content:</p>
+<pre><code class="language-bash">[Unit]
+Description=Tor Snowflake Proxy
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+LogLevelMax=6
+Type=simple
+User=snowflake
+SyslogIdentifier=snowflake
+StandardOutput=journal
+StandardError=journal
+ExecStart=/opt/snowflake/proxy/proxy -summary-interval 10m
+Restart=on-failure
+RestartSec=120
+TimeoutSec=300
+PrivateTmp=true
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=false
+ReadOnlyDirectories=/
+ReadWriteDirectories=/opt/snowflake/
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>To verify that everything is working as intended, run: <code>sudo service snowflake start</code> and after that <code>sudo service snowflake status</code>.</p>
+<p>The output should look like this:
+<img src="./snowflake-service.webp" alt="Snowflake service status"></p>
+<p>To enable the automatic start on reboot, run:</p>
+<pre><code class="language-shell">sudo systemctl enable snowflake.service
+</code></pre>
+<h1>Logs</h1>
+<p>This section is useful if you want to have usage logs.</p>
+<p>We start by editing the rsyslog config: <code>sudo nano /etc/rsyslog.d/50-default.conf</code> and add the following line</p>
+<pre><code class="language-bash">:programname,isequal,&quot;snowflake&quot; /var/log/snowflake.log
+</code></pre>
+<p>To apply this change, restart <code>rsyslog</code>: <code>sudo service rsyslog restart</code>.</p>
+<p>To see the new log, wait up to 10 minutes or restart the <code>snowflake</code> service like this: <code>sudo service snowflake restart</code>.</p>
+<p>You can now see the log like this: <code>sudo tail -f /var/log/snowflake.log</code> or this: <code>sudo cat /var/log/snowflake.log</code>.</p>
+<p>After some time the log should have lines like: <code>2023/04/01 15:54:08 In the last 10m0s, there were 0 connections. Traffic Relayed ↓ 0 KB, ↑ 0 KB.</code>, these indicate the usage of the proxy you are hosting.</p>
+<h2>Logrotate</h2>
+<p>Logrotate is used to keep older logs and compress them with a defined limit.</p>
+<p>Start by creating a config file for snowflake: <code>sudo nano /etc/logrotate.d/snowflake</code> with the following content:</p>
+<pre><code class="language-bash">/var/log/snowflake.log { 
+    su root root
+    daily
+    rotate 5
+    compress
+    delaycompress
+    missingok
+    postrotate
+        systemctl restart rsyslog &gt; /dev/null
+    endscript    
+}
+</code></pre>
+<p>To finalize everything, reboot the system: <code>sudo reboot</code>.</p>
+
+            <hr />
+        </div>
+    </span>
+</body>
+</html>

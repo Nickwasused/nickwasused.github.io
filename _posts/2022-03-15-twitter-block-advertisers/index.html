@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no" />
+    <title>Block all Twitter advertising accounts from your timeline.</title>
+    <meta name="description" content="This guide allows you to block all Twitter adverting accounts that have been in your timeline.">
+    <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="Nick's Site" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/basic-e17af982.css" />
+</head>
+<body>
+    <h1 class="title"><a href="/">Nick's Site</a></h1>
+    
+    <span class="wrap">
+        <div class="nav">
+            <p><a href="/sites/recommendations">Blog recommendations</a></p>
+            <p><a href="/sites/links">link collection</a></p>
+            <p><a href="/sites/privacy">Privacy Policy</a></p>
+            <p><a href="/sites/imprint">Imprint</a></p>
+            <p><a href="/feed.xml">RSS</a></p>
+            &nbsp;
+            <p><a target="_blank" href="https://social.tchncs.de/@nickwasused">Mastodon</a></p>
+            <p><a target="_blank" href="https://github.com/Nickwasused">Github</a></p>
+            <p><a target="_blank" href="https://twitter.com/nickwasused">Twitter</a></p>
+            <p><a target="_blank" href="mailto:contact@nickwasused.com">Email</a></p>
+        </div>
+
+        <div class="content">
+            
+                <div class="post-info">
+                    <h1>Block all Twitter advertising accounts from your timeline.</h1>
+                    <h2>3/15/2022</h2>
+                </div>
+            
+            <h1>Notice</h1>
+<p>As of 31.03.2023 this method is not a good way of blocking Advertising on Twitter, you should just use something like <a href="https://ublockorigin.com/">uBlock Origin</a> or alternative Apps.</p>
+<h2>Requirements</h2>
+<p>For following this Guide you need the following:</p>
+<ul>
+<li><a href="https://developer.twitter.com/">a Twitter Developer Account</a></li>
+<li><a href="https://twitter.com/settings/download_your_data">your Twitter Data Archive</a></li>
+<li><a href="https://github.com/Nickwasused/twitter-data-export-to-blocklist">the programm</a></li>
+<li><a href="https://www.python.org/">python3 and pip3</a></li>
+</ul>
+<h2>Program Setup</h2>
+<p>Let's start by getting the Program set up.</p>
+<p>First, we need to install the requirements by running</p>
+<pre><code class="language-bash">pip3 install -r requirements.txt --user
+</code></pre>
+<p>After that you need to copy the <code>.env.example</code> file to <code>.env</code></p>
+<p>Now you need to get your Twitter Developer Credential and fill them in the <code>.env</code> file.</p>
+<pre><code class="language-plaintext">API_KEY=&quot;&quot;
+API_SECRET=&quot;&quot;
+ACCESS_TOKEN=&quot;&quot;
+ACCESS_TOKEN_SECRET=&quot;&quot;
+</code></pre>
+<p>You need to get them on the Twitter Developer Site &gt; your App &gt; Keys and Tokens:
+<img src="./twitter-dev.webp" alt="Twitter Dev"></p>
+<h2>Twitter Data</h2>
+<p>Now <a href="https://twitter.com/settings/download_your_data">get your Twitter Data Archive from here</a></p>
+<p>After you have requested the Archive wait for the Notification Email. (This can take hours to days!)</p>
+<p>Unpack the archive into the folder called <code>export</code>.</p>
+<p>The directory structure should look like this now:</p>
+<pre><code class="language-plaintext">- export
+    - assets
+    - data
+    - .gitkeep
+    - Your archive.html
+- .env
+- main.py
+...
+</code></pre>
+<h2>Get the List</h2>
+<p>Now you just need to run</p>
+<pre><code class="language-bash">python3 main.py
+</code></pre>
+<p>The script will output a file called <code>export.csv</code> and tell you how many Advertising Accounts you have seen. For me, it was around 750 Accounts, but in this example, I will use a list of 3 Accounts.</p>
+<h2>Block the Accounts</h2>
+<p>To Block the Accounts you need to upload the <code>export.csv</code> content to <a href="https://pastebin.com">pastebin</a> or another site.</p>
+<p>Paste the contents of <code>export.csv</code> in the input field and click <code>create Paste</code>.
+<img src="./pastebin-paste.webp" alt="pastebin-paste"></p>
+<p>Now you are redirected to your paste. Click on <code>raw</code> and copy the link.
+<img src="./pastebin-raw.webp" alt="pastebin-raw"></p>
+<p>Now go to this site <a href="https://twitter-blocklist-auth.glitch.me/">https://twitter-blocklist-auth.glitch.me/</a> and log in.</p>
+<p>Now you can paste the Url you have copied before in the field and click Submit.
+<img src="./glitch-setup.webp" alt="glitch-setup"></p>
+<p>After that the Page will tell you how many Accounts got blocked.
+<img src="./glitch-final.webp" alt="glitch-final"></p>
+
+            <hr />
+        </div>
+    </span>
+</body>
+</html>

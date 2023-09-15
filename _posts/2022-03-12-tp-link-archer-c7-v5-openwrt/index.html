@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no" />
+    <title>Install OpenWrt on the TP-Link Archer C7 V5 (2022).</title>
+    <meta name="description" content="This is a guide for installing OpenWrt on a TP-Link Archer C7 V5.">
+    <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="Nick's Site" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/basic-e17af982.css" />
+</head>
+<body>
+    <h1 class="title"><a href="/">Nick's Site</a></h1>
+    
+    <span class="wrap">
+        <div class="nav">
+            <p><a href="/sites/recommendations">Blog recommendations</a></p>
+            <p><a href="/sites/links">link collection</a></p>
+            <p><a href="/sites/privacy">Privacy Policy</a></p>
+            <p><a href="/sites/imprint">Imprint</a></p>
+            <p><a href="/feed.xml">RSS</a></p>
+            &nbsp;
+            <p><a target="_blank" href="https://social.tchncs.de/@nickwasused">Mastodon</a></p>
+            <p><a target="_blank" href="https://github.com/Nickwasused">Github</a></p>
+            <p><a target="_blank" href="https://twitter.com/nickwasused">Twitter</a></p>
+            <p><a target="_blank" href="mailto:contact@nickwasused.com">Email</a></p>
+        </div>
+
+        <div class="content">
+            
+                <div class="post-info">
+                    <h1>Install OpenWrt on the TP-Link Archer C7 V5 (2022).</h1>
+                    <h2>3/12/2022</h2>
+                </div>
+            
+            <h1>The Technical Details</h1>
+<p><a href="https://web.archive.org/web/20220609111144/https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5">Techdata: TP-Link Archer C7 AC1750 v5</a></p>
+<p>(If you don´t want to read all of this in short it means that the Router should have enough power to run current OpenWrt versions.)</p>
+<h1>The right Firmware Image</h1>
+<p>When installing OpenWrt for the first time you search for a Firmware image that looks like that:</p>
+<p><code>tplink_archer-a7-v5-squashfs-factory.bin</code></p>
+<p>Version 21: <a href="https://downloads.openwrt.org/releases/21.02.2/targets/ath79/generic/openwrt-21.02.2-ath79-generic-tplink_archer-a7-v5-squashfs-factory.bin">https://downloads.openwrt.org/releases/21.02.2/targets/ath79/generic/openwrt-21.02.2-ath79-generic-tplink_archer-a7-v5-squashfs-factory.bin</a></p>
+<p>After you have the right image you need to rename it to:</p>
+<p><code>firmware.bin</code></p>
+<h1>Flashing the Firmware (Web interface Methode)</h1>
+<p>I am going to use the Web interface method because it is stable enough on my Stock firmware version.</p>
+<p>Connect to the Router via Wifi and set up a Password. After that, you can connect with an Ethernet Cable and log in. (The Stock Web interface is located here: <code>192.168.0.1</code>)</p>
+<p>(The Images Below are from the <a href="https://emulator.tp-link.com/archer-c7-v5/index.html">TP-Link Emulator</a>)</p>
+<p>You just need to go to Advanced &gt; System Tools &gt; Firmware Upgrade
+Step 1:
+<img src="./step1.webp" alt="Step 1"></p>
+<p>Step 2:
+<img src="./step2.webp" alt="Step 2"></p>
+<p>Then select the firmware.bin and click on upgrade. This process can take up to 5 Minutes.
+Step 3,4 and 5:
+<img src="./step3.webp" alt="Step 3, 4 and 5"></p>
+<p>After that, you just need to go to <code>http://192.168.1.1</code> and there is the Web interface.
+The OpenWrt Webinterface LuCI:
+<img src="./interface.webp" alt="Webinterface"></p>
+
+            <hr />
+        </div>
+    </span>
+</body>
+</html>

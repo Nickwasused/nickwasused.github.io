@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:base="https://nickwasused.com/">
+  <title>Nick&#39;s Site</title>
+  <subtitle>This is a Tech focused blog where I write random posts.</subtitle>
+  <link href="https://nickwasused.com/feed.xml" rel="self"/>
+  <link href="https://nickwasused.com/"/>
+  <updated>2023-04-01T00:00:00Z</updated>
+  <id>https://nickwasused.com/</id>
+  <author>
+    <name>Nick</name>
+    <email>contact@nickwasused.com</email>
+  </author>
+  <entry>
+    <title>Install Tor Snowflake on the Raspberry Pi with DietPi. (2023)</title>
+    <link href="https://nickwasused.com/_posts/2023-04-01-tor-snowflake-v2/"/>
+    <updated>2023-04-01T00:00:00Z</updated>
+    <id>https://nickwasused.com/_posts/2023-04-01-tor-snowflake-v2/</id>
+    <content xml:lang="en" type="html">&lt;p&gt;This is a guide for installing a tor snowflake on your Raspberry Pi as systemd service.&lt;/p&gt;
+&lt;p&gt;Tor snowflake: &lt;a href=&quot;https://snowflake.torproject.org/&quot;&gt;&amp;quot;Allows people from anywhere in the world to access censored websites and applications.&amp;quot;&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Requirements&lt;/h2&gt;
+&lt;p&gt;I have certain requirements for this guide. Using this guide on any other system is properly unsupported! Use at your own risk.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;DietPi version v8.15.2 or above&lt;/li&gt;
+&lt;li&gt;Debian version based on bullseye (check with &lt;code&gt;cat /etc/os-release&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Notice that I am creating this guide from the view of a User account with sudo rights and a headless setup.&lt;/p&gt;
+&lt;h2&gt;Install GO&lt;/h2&gt;
+&lt;p&gt;First, we need to install &lt;a href=&quot;https://go.dev/&quot;&gt;Go&lt;/a&gt; version 1.13 or higher.&lt;/p&gt;
+&lt;p&gt;We install Go using:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;sudo dietpi-software
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;now search for &lt;code&gt;go&lt;/code&gt; and select the following by pressing space. &lt;code&gt;Go: Runtime environment and package installer&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;After that press TAB and select confirm, when back on the main page select &lt;code&gt;install&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Now reload your shell by running &lt;code&gt;exec bash&lt;/code&gt; or reconnect.&lt;/p&gt;
+&lt;p&gt;To verify the Go install run &lt;code&gt;go version&lt;/code&gt;, it should output something like &lt;code&gt;go version go1.20.2 linux/arm64&lt;/code&gt;. Just make sure that the version is 1.13 or higher.&lt;/p&gt;
+&lt;h2&gt;Snowflake&lt;/h2&gt;
+&lt;p&gt;Now we can start to install the snowflake.&lt;/p&gt;
+&lt;p&gt;First change to the &lt;code&gt;/opt&lt;/code&gt; directory: &lt;code&gt;cd /opt&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Notice the sudo in front!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Start by cloning the Git repository:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;sudo git clone https://git.torproject.org/pluggable-transports/snowflake.git
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and then get ownership of the folder:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;sudo chown -R $USER:$USER snowflake/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now we can start to build the program itself:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;cd snowflake/proxy &amp;amp;&amp;amp; go build
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To verify that the build is working, run &lt;code&gt;./proxy&lt;/code&gt;. The output should look like: &lt;code&gt;2023/04/01 15:29:14 Proxy starting&lt;/code&gt;&lt;/p&gt;
+&lt;h1&gt;Autostart&lt;/h1&gt;
+&lt;p&gt;To autostart the program, we are going to use systemd.&lt;/p&gt;
+&lt;p&gt;Start by creating a new user:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;sudo adduser --no-create-home --disabled-login snowflake
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This will create the user snowflake, but we still need to give the user access to the snowflake folder:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;sudo chown -R $USER:snowflake /opt/snowflake
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;sudo chmod -R 775 /opt/snowflake/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Create the systemd service file like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;sudo nano /etc/systemd/system/snowflake.service
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;With the following content:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;[Unit]
+Description=Tor Snowflake Proxy
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+LogLevelMax=6
+Type=simple
+User=snowflake
+SyslogIdentifier=snowflake
+StandardOutput=journal
+StandardError=journal
+ExecStart=/opt/snowflake/proxy/proxy -summary-interval 10m
+Restart=on-failure
+RestartSec=120
+TimeoutSec=300
+PrivateTmp=true
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=false
+ReadOnlyDirectories=/
+ReadWriteDirectories=/opt/snowflake/
+
+[Install]
+WantedBy=multi-user.target
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To verify that everything is working as intended, run: &lt;code&gt;sudo service snowflake start&lt;/code&gt; and after that &lt;code&gt;sudo service snowflake status&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The output should look like this:
+&lt;img src=&quot;https://nickwasused.com/_posts/2023-04-01-tor-snowflake-v2/snowflake-service.webp&quot; alt=&quot;Snowflake service status&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;To enable the automatic start on reboot, run:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;sudo systemctl enable snowflake.service
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;Logs&lt;/h1&gt;
+&lt;p&gt;This section is useful if you want to have usage logs.&lt;/p&gt;
+&lt;p&gt;We start by editing the rsyslog config: &lt;code&gt;sudo nano /etc/rsyslog.d/50-default.conf&lt;/code&gt; and add the following line&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;:programname,isequal,&amp;quot;snowflake&amp;quot; /var/log/snowflake.log
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To apply this change, restart &lt;code&gt;rsyslog&lt;/code&gt;: &lt;code&gt;sudo service rsyslog restart&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;To see the new log, wait up to 10 minutes or restart the &lt;code&gt;snowflake&lt;/code&gt; service like this: &lt;code&gt;sudo service snowflake restart&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;You can now see the log like this: &lt;code&gt;sudo tail -f /var/log/snowflake.log&lt;/code&gt; or this: &lt;code&gt;sudo cat /var/log/snowflake.log&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;After some time the log should have lines like: &lt;code&gt;2023/04/01 15:54:08 In the last 10m0s, there were 0 connections. Traffic Relayed ↓ 0 KB, ↑ 0 KB.&lt;/code&gt;, these indicate the usage of the proxy you are hosting.&lt;/p&gt;
+&lt;h2&gt;Logrotate&lt;/h2&gt;
+&lt;p&gt;Logrotate is used to keep older logs and compress them with a defined limit.&lt;/p&gt;
+&lt;p&gt;Start by creating a config file for snowflake: &lt;code&gt;sudo nano /etc/logrotate.d/snowflake&lt;/code&gt; with the following content:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;/var/log/snowflake.log { 
+    su root root
+    daily
+    rotate 5
+    compress
+    delaycompress
+    missingok
+    postrotate
+        systemctl restart rsyslog &amp;gt; /dev/null
+    endscript    
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To finalize everything, reboot the system: &lt;code&gt;sudo reboot&lt;/code&gt;.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Disabling the Ethernet LED on the Raspberry Pi 3B 1.2</title>
+    <link href="https://nickwasused.com/_posts/2023-02-17-raspberry-pi3-ethernet-led/"/>
+    <updated>2023-02-17T00:00:00Z</updated>
+    <id>https://nickwasused.com/_posts/2023-02-17-raspberry-pi3-ethernet-led/</id>
+    <content xml:lang="en" type="html">&lt;h1&gt;Notice&lt;/h1&gt;
+&lt;p&gt;This is essentially a copy of this Stackexchange post: &lt;a href=&quot;https://web.archive.org/web/20230401143350/https://raspberrypi.stackexchange.com/questions/117632/turn-off-external-leds-on-raspberry-pi-3/130495&quot;&gt;https://raspberrypi.stackexchange.com/questions/117632/turn-off-external-leds-on-raspberry-pi-3/130495#130495&lt;/a&gt;&lt;/p&gt;
+&lt;h1&gt;Post&lt;/h1&gt;
+&lt;p&gt;At first, check if you have the correct Model of the Raspberry Pi 3b:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;cat /sys/firmware/devicetree/base/model&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;The output should be: &lt;code&gt;# Raspberry Pi 3 Model B Rev 1.2&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Now, you need to install &lt;code&gt;libusb-1.0-0-dev&lt;/code&gt;, &lt;code&gt;make&lt;/code&gt;, &lt;code&gt;build-essential&lt;/code&gt; and &lt;code&gt;gcc&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sudo apt install libusb-1.0-0-dev make gcc build-essential -y&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;After that, you clone this repository: &lt;a href=&quot;https://github.com/dumpsite/lan951x-led-ctl&quot;&gt;https://github.com/dumpsite/lan951x-led-ctl&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git clone git@github.com:dumpsite/lan951x-led-ctl.git&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Now build the project:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;cd lan951x-led-ctl &amp;amp;&amp;amp; make &amp;amp;&amp;amp; sudo chmod +x ./lan951x-led-ctl&lt;/code&gt;&lt;/p&gt;
+&lt;h1&gt;Disable the LEDs&lt;/h1&gt;
+&lt;p&gt;The following command will disable both Ethernet LEDs.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sudo ./lan951x-led-ctl --fdx=0 --lnk=0 --spd=0&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;You need to apply this on every restart!&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Fix the Minecraft Launcher on a debloated Windows 10 install.</title>
+    <link href="https://nickwasused.com/_posts/2022-14-11-minecraft-windows-10-deep-ocean/"/>
+    <updated>2022-11-14T00:00:00Z</updated>
+    <id>https://nickwasused.com/_posts/2022-14-11-minecraft-windows-10-deep-ocean/</id>
+    <content xml:lang="en" type="html">&lt;h1&gt;Microsoft&lt;/h1&gt;
+&lt;p&gt;On February 8, 2022 I received an email from Mojang stating that I need to migrate my Account to a Microsoft one.&lt;/p&gt;
+&lt;p&gt;After another two emails, I finally migrated my Account in October.&lt;/p&gt;
+&lt;p&gt;But I haven&#39;t played the Game since sometime in 2021, so I tried to give it another shot today.&lt;/p&gt;
+&lt;h1&gt;Deep Ocean&lt;/h1&gt;
+&lt;p&gt;I downloaded the launcher from https://minecraft.net/ and installed it. After that I tried to log in with my Microsoft Account, but every time I clicked on the button an error popped up stating that there was some type of error with the error code being &lt;code&gt;deep ocean&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;So I did the first thing that came to my mind: clicking the info link in the error message. That turned out to be a &lt;code&gt;404&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The next thing I tried was disabling Pi-Hole for 30 seconds and flushing the DNS cache, it was possible that I was blocking some domains that Microsoft needs for their services. But this has not worked.&lt;/p&gt;
+&lt;h1&gt;YouTube tutorials&lt;/h1&gt;
+&lt;p&gt;After that, I searched &amp;quot;Minecraft Windows 10 deep ocean error&amp;quot;. There were a lot of &lt;a href=&quot;https://www.youtube.com/watch?v=dmBJaZzQZco&quot;&gt;recent videos&lt;/a&gt; that showed the same steps: to enable some Xbox Services. After trying to reset the Microsoft Store and Minecraft Launcher, I noticed that there could be a problem with the Xbox stuff because I used a debloat script on my Windows installation.&lt;/p&gt;
+&lt;h1&gt;XBOX&lt;/h1&gt;
+&lt;p&gt;In the Windows 10 settings is a category called &amp;quot;Gaming&amp;quot; and a point called &amp;quot;Xbox-Network&amp;quot;. In there is a status for the Xbox-Network e.g. Internet Connectivity, Xbox Live-Services and Xbox Live-Multiplayer.
+Under the point Xbox Live-Multiplayer is the status for Server connectivity, but for me that was disconnected/unavailable.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://nickwasused.com/_posts/2022-14-11-minecraft-windows-10-deep-ocean/xbox-settings.webp&quot; alt=&quot;Xbox Settings&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;So I went to the Microsoft Store and searched for &amp;quot;Xbox&amp;quot; and there it was: the Xbox App got uninstalled by the Debloat script.&lt;/p&gt;
+&lt;h1&gt;Fix&lt;/h1&gt;
+&lt;p&gt;I installed the Xbox App, logged in, installed some missing components and started the Minecraft Launcher, but it was still not working. I was in a loop of having a Game license and playing the Demo.&lt;/p&gt;
+&lt;p&gt;So I logged out from the Microsoft Store, the Minecraft Launcher and the Xbox App.
+After logging in again, everything was working.&lt;/p&gt;
+&lt;h1&gt;TL;DR&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;debloat script uninstalled the Xbox stuff from Windows 10&lt;/li&gt;
+&lt;li&gt;reinstall the Xbox App and the missing components&lt;/li&gt;
+&lt;li&gt;restart the PC&lt;/li&gt;
+&lt;li&gt;log out of the Microsoft Store, the Minecraft Launcher and the Xbox App&lt;/li&gt;
+&lt;li&gt;log back in&lt;/li&gt;
+&lt;li&gt;enjoy the Game&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Installing the signal-cli on the Raspberry Pi.</title>
+    <link href="https://nickwasused.com/_posts/2022-08-21-raspberry-pi-signal-cli/"/>
+    <updated>2022-08-21T00:00:00Z</updated>
+    <id>https://nickwasused.com/_posts/2022-08-21-raspberry-pi-signal-cli/</id>
+    <content xml:lang="en" type="html">&lt;h1&gt;Notice&lt;/h1&gt;
+&lt;p&gt;As of 31.03.2023 this guide is not working correctly! Because of that reason the script got renamed to &lt;code&gt;signal-cli-install-old.sh&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;At the time of writing this, the signal-cli is at version: &lt;code&gt;0.11.3&lt;/code&gt; with the libsignal-client being at version: &lt;code&gt;0.20.0&lt;/code&gt;.&lt;br /&gt;
+The OS that I use is &lt;a href=&quot;https://github.com/MichaIng/DietPi&quot;&gt;DietPi&lt;/a&gt;.&lt;/p&gt;
+&lt;h1&gt;Usage&lt;/h1&gt;
+&lt;p&gt;The signal-cli could be useful for sending automatic messages, e.g. when a service/job fails.
+For example, when your database backup fails, you can get the notification right into Signal.&lt;/p&gt;
+&lt;h1&gt;Automatic install&lt;/h1&gt;
+&lt;p&gt;For an automatic install, I provide the following script:&lt;/p&gt;
+&lt;p&gt;You can use it by running:&lt;br /&gt;
+&lt;code&gt;sudo wget https://nickwasused.com/blog/2022-08-21-raspberry-pi-signal-cli/signal-cli-install.sh&lt;/code&gt;&lt;br /&gt;
+Notice! Before running scripts from the Internet, check their code.&lt;br /&gt;
+&lt;code&gt;cat ./signal-cli.install.sh&lt;/code&gt;&lt;br /&gt;
+Now you can run the script:&lt;br /&gt;
+&lt;code&gt;sudo chmod +x ./signal-cli-install.sh &amp;amp;&amp;amp; sudo ./signal-cli.install.sh&lt;/code&gt;&lt;/p&gt;
+&lt;h1&gt;Manual install&lt;/h1&gt;
+&lt;h1&gt;precautions&lt;/h1&gt;
+&lt;p&gt;You need to check the size of your &lt;code&gt;/tmp&lt;/code&gt; directory with the following command:&lt;br /&gt;
+&lt;code&gt;df -h&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;There will be a line that looks like this:&lt;br /&gt;
+&lt;code&gt;tmpfs           1.0G  1.0M 1023M   1% /tmp&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Notice that is reads &lt;code&gt;1.0G&lt;/code&gt;. This is too small as the installation requires about 1.25G.&lt;/p&gt;
+&lt;p&gt;You can expand the size of your &lt;code&gt;/tmp&lt;/code&gt; directory with this command:&lt;br /&gt;
+&lt;code&gt;sudo mount -o remount,size=2G /tmp/&lt;/code&gt;&lt;/p&gt;
+&lt;h1&gt;required tools&lt;/h1&gt;
+&lt;p&gt;For this guide, &lt;code&gt;curl&lt;/code&gt; and &lt;code&gt;zip&lt;/code&gt; are required. Install them with:&lt;br /&gt;
+&lt;code&gt;sudo apt install curl zip&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;(If there is an error try to run &lt;code&gt;sudo apt update&lt;/code&gt;)&lt;/p&gt;
+&lt;h2&gt;Basic install&lt;/h2&gt;
+&lt;p&gt;First, we need to set the Version of the signal-cli we are installing. You can find the Version code &lt;a href=&quot;https://github.com/AsamK/signal-cli/releases&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Set the signal-cli version with:&lt;br /&gt;
+&lt;code&gt;export VERSION=0.11.3&lt;/code&gt;.&lt;br /&gt;
+After that, we download the signal-cli version:&lt;br /&gt;
+&lt;code&gt;curl --proto &#39;=https&#39; --tlsv1.2 -o signal-cli-&amp;quot;${VERSION}&amp;quot;-Linux.tar.gz https://github.com/AsamK/signal-cli/releases/download/v&amp;quot;${VERSION}&amp;quot;/signal-cli-&amp;quot;${VERSION}&amp;quot;-Linux.tar.gz&lt;/code&gt;&lt;br /&gt;
+and unpack it to &lt;code&gt;/opt&lt;/code&gt;:&lt;br /&gt;
+&lt;code&gt;sudo tar xf signal-cli-&amp;quot;${VERSION}&amp;quot;-Linux.tar.gz -C /opt&lt;/code&gt;.
+After extracting the code remove the file:&lt;br /&gt;
+&lt;code&gt;sudo rm signal-cli-&amp;quot;${VERSION}&amp;quot;-Linux.tar.gz&lt;/code&gt;&lt;br /&gt;
+Finally, we link it to &lt;code&gt;/usr/local/bin&lt;/code&gt; so we can use the signal-cli:&lt;br /&gt;
+&lt;code&gt;sudo ln -sf /opt/signal-cli-&amp;quot;${VERSION}&amp;quot;/bin/signal-cli /usr/local/bin/&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;As the last step for the basic install, we install the required Java version:&lt;br /&gt;
+&lt;code&gt;sudo apt install openjdk-17-jdk&lt;/code&gt;&lt;/p&gt;
+&lt;h3&gt;Info&lt;/h3&gt;
+&lt;p&gt;If we try to run &lt;code&gt;signal-cli&lt;/code&gt; now, then it will fail! (But only if your system type is not &lt;code&gt;x86_64&lt;/code&gt;)&lt;/p&gt;
+&lt;h2&gt;Building the libsignal_jni.so&lt;/h2&gt;
+&lt;p&gt;To fix the problem, we need to build the &amp;quot;native lib for libsignal&amp;quot;.&lt;/p&gt;
+&lt;p&gt;Notice! If you have a 1GB Raspberry Pi then please read &lt;a href=&quot;https://nickwasused.com/_posts/2022-08-21-raspberry-pi-signal-cli/#1-gb-ram&quot;&gt;#1-gb-ram&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;Dependencies&lt;/h3&gt;
+&lt;p&gt;First, we need to install some dependencies:&lt;/p&gt;
+&lt;h4&gt;apt&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;sudo apt install protobuf-compiler clang libclang-dev cmake make&lt;/code&gt;&lt;/p&gt;
+&lt;h4&gt;rust&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;sudo curl https://sh.rustup.rs -sSf | sudo sh -s -- --default-toolchain nightly-aarch64-unknown-linux-gnu -y&lt;/code&gt;&lt;/p&gt;
+&lt;h3&gt;Build libsignal&lt;/h3&gt;
+&lt;p&gt;Let&#39;s create a temporary directory to store files:&lt;br /&gt;
+&lt;code&gt;sudo mkdir /tmp/signal-cli-install &amp;amp;&amp;amp; cd /tmp/signal-cli-install&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Before starting to download the libsignal source-code, we need to find the matching version code:&lt;br /&gt;
+&lt;code&gt;export LIBVERSION=$(find /opt/signal-cli-&amp;quot;${VERSION}&amp;quot;/lib/ -maxdepth 1 -mindepth 1 -name &#39;libsignal-client-*&#39; | sed -E &#39;s/&#92;/opt&#92;/signal-cli-[0-9]{1,}.[0-9]{1,}.[0-9]{1,}&#92;/lib&#92;/libsignal-client-*//g&#39; | sed -E &#39;s/.jar//g&#39;)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;After that, we download the source code:&lt;br /&gt;
+&lt;code&gt;sudo curl --proto &#39;=https&#39; --tlsv1.2 -o /tmp/signal-cli-install/v&amp;quot;${LIBVERSION}&amp;quot;.tar.gz https://github.com/signalapp/libsignal/archive/refs/tags/v&amp;quot;${LIBVERSION}&amp;quot;.tar.gz&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;And now we need to unpack the downloaded code:&lt;br /&gt;
+&lt;code&gt;sudo tar xf /tmp/signal-cli-install/v&amp;quot;${LIBVERSION}&amp;quot;.tar.gz -C /tmp/signal-cli-install/ &amp;amp;&amp;amp; mv libsignal-&amp;quot;${LIBVERSION}&amp;quot; libsignal&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;After extracting the code remove the archive as it is no longer needed:
+&lt;code&gt;sudo rm /tmp/signal-cli-install/v&amp;quot;${LIBVERSION}&amp;quot;.tar.gz&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Change into the java directory of the downloaded code:&lt;br /&gt;
+&lt;code&gt;cd libsignal/java&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;We disable some android stuff as we don`t want to build for android:&lt;br /&gt;
+&lt;code&gt;sudo sed -i &amp;quot;s/include &#39;:android&#39;//&amp;quot; /tmp/signal-cli-install/libsignal/java/settings.gradle&lt;/code&gt;&lt;/p&gt;
+&lt;h4&gt;1 GB Ram&lt;/h4&gt;
+&lt;p&gt;While building libsignal I ran into a problem with the ram usage on the Raspberry Pi 3b, because eventually, the 1 GB of ram would be full. This would result in a locked-up Pi that I had to hard reset. We can work around this problem by limiting the CPU usage to 1 Core.&lt;br /&gt;
+(I don&#39;t know if a 2 GB Raspberry Pi 4 can run all 4 Cores.)&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sudo sed -i &amp;quot;s/cargo build /cargo build -j ${CORE_COUNT} /&amp;quot; /tmp/signal-cli-install/libsignal/java/build_jni.sh&lt;/code&gt;&lt;/p&gt;
+&lt;h5&gt;Update 08.10.2022&lt;/h5&gt;
+&lt;p&gt;I could not get libsignal to compile on a Raspberry Pi with 1GB of ram.&lt;/p&gt;
+&lt;h4&gt;Starting the Build&lt;/h4&gt;
+&lt;p&gt;We can start the build with:
+&lt;code&gt;sudo /tmp/signal-cli-install/libsignal/java/build_jni.sh desktop&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;We need to remove the bundled &lt;code&gt;libsignal_jni.so&lt;/code&gt; from &lt;code&gt;/opt/signal-cli-${VERSION}/lib/libsignal-client-*.jar&lt;/code&gt;:&lt;br /&gt;
+&lt;code&gt;sudo zip -d /opt/signal-cli-${VERSION}/lib/libsignal-client-*.jar libsignal_jni.so&lt;/code&gt;&lt;br /&gt;
+and add our own:&lt;br /&gt;
+&lt;code&gt;sudo zip /opt/signal-cli-${VERSION}/lib/libsignal-client-*.jar /tmp/signal-cli-install/libsignal/target/release/libsignal_jni.so&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Since Version 0.11.3 the replacing is not working for me, because of that we add the &lt;code&gt;libsignal_jni.so&lt;/code&gt; to the default Java library path.&lt;br /&gt;
+For that create it if it dosen`t exist:
+&lt;code&gt;sudo mkdir -p /usr/java/packages/lib&lt;/code&gt;&lt;br /&gt;
+and finally copy the file to that folder:&lt;br /&gt;
+&lt;code&gt;sudo cp /tmp/signal-cli-install/libsignal/target/release/libsignal_jni.so /usr/java/packages/lib&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Now we can remove the temporary files:&lt;br /&gt;
+&lt;code&gt;sudo rm -r /tmp/signal-cli-install&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;We should set the permissions for the new files:&lt;br /&gt;
+&lt;code&gt;sudo chown root:root /usr/java/packages/lib/libsignal_jni.so&lt;/code&gt;&lt;br /&gt;
+&lt;code&gt;sudo chmod 755 /usr/java/packages/lib/libsignal_jni.so&lt;/code&gt;&lt;br /&gt;
+&lt;code&gt;sudo chmod 755 -R /opt/signal-cli-${VERSION}&lt;/code&gt;&lt;br /&gt;
+&lt;code&gt;sudo chown root:root -R /opt/signal-cli-${VERSION}&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Now we should be able to use the &lt;code&gt;signal-cli&lt;/code&gt; command with no problems.&lt;/p&gt;
+&lt;p&gt;Finally the signal-cli should report it&lt;code&gt;s version with:   &lt;/code&gt;signal-cli --version`&lt;/p&gt;
+&lt;h1&gt;Source&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/AsamK/signal-cli#install-system-wide-on-linux&quot;&gt;https://github.com/AsamK/signal-cli#install-system-wide-on-linux&lt;/a&gt;
+&lt;a href=&quot;https://github.com/AsamK/signal-cli/wiki/Provide-native-lib-for-libsignal#manual-build&quot;&gt;https://github.com/AsamK/signal-cli/wiki/Provide-native-lib-for-libsignal#manual-build&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://github.com/signalapp/libsignal&quot;&gt;https://github.com/signalapp/libsignal&lt;/a&gt;&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Fix the PS4 Time after replacing the CMOS Battery on Firmware version 9.0.</title>
+    <link href="https://nickwasused.com/_posts/2022-03-27-ps4-time-wrong-after-cmos-change-900/"/>
+    <updated>2022-03-27T00:00:00Z</updated>
+    <id>https://nickwasused.com/_posts/2022-03-27-ps4-time-wrong-after-cmos-change-900/</id>
+    <content xml:lang="en" type="html">&lt;h2&gt;The Problem&lt;/h2&gt;
+&lt;p&gt;After I replaced the CMOS Battery on my Base Model PS4, I noticed that it couldn&#39;t keep the time after a power loss. The PS4 is on firmware Version 9.0 where the &lt;a href=&quot;https://web.archive.org/web/20220609110029/https://www.ps4storage.com/functional-cmos-battery-is-inevitably-required-by-ps4-and-ps5-system/&quot;&gt;CMOS Time Bomb&lt;/a&gt; was fixed. However, despite the fix, some games like Grand Theft Auto V (Version 1.38) with the &lt;a href=&quot;https://github.com/illusion0001/illusion0001.github.io/blob/04223072dd1ba6cb5deb4ee7953bfc2e1430745f/_patch0/orbis/GTA5-Orbis.yml&quot;&gt;No Intro&lt;/a&gt; Patch were not able to start correctly (stuck at 90% Loading and heavy flickering).&lt;/p&gt;
+&lt;h2&gt;The Fix&lt;/h2&gt;
+&lt;p&gt;The fix is very simple, but a little scary to do on a Jailbroken PS4. You need to sync the time with a PSN Time Server. &lt;strong&gt;This has to be done once,&lt;/strong&gt; after that the time will stay saved even after a power loss. The Time Server is probably just an NTP server.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Make sure to do at least one of the following steps before:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Have a Pi-hole setup on your Network and whitelist the following Domain for: &lt;code&gt;csla.np.community.playstation.net&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Have a payload that Blocks the Update&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you don`t know what Pi-hole is the look &lt;a href=&quot;https://pi-hole.net/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;It is important that you have some sort of Update-block in place!&lt;/strong&gt;&lt;/p&gt;
+&lt;h3&gt;Steps&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Block the Updates&lt;/li&gt;
+&lt;li&gt;Connect to the Internet (preferable a LAN Cable, because you can unplug that quickly.)&lt;/li&gt;
+&lt;li&gt;Go to the Settings and sync the Time using &amp;quot;Network Time&amp;quot;&lt;/li&gt;
+&lt;li&gt;Disconnect from the Internet&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;After you have done that, the PS4 should keep the correct time again.&lt;/p&gt;
+&lt;p&gt;You need to use the network time because only this option sets the correct time in the Kernel-Clock.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Install 32-bit BOINC on a 64-bit Raspberry Pi.</title>
+    <link href="https://nickwasused.com/_posts/2022-03-16-boinc-32bit-on-64bit-pi-dietpi/"/>
+    <updated>2022-03-16T00:00:00Z</updated>
+    <id>https://nickwasused.com/_posts/2022-03-16-boinc-32bit-on-64bit-pi-dietpi/</id>
+    <content xml:lang="en" type="html">&lt;h2&gt;Why would you do this?&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Projects like UNIVERSE@HOME have no aarch64 Tasks.&lt;/li&gt;
+&lt;li&gt;A Raspberry Pi 3b can´t run ROSETTA@HOME because it doesn&#39;t have enough ram.&lt;/li&gt;
+&lt;li&gt;DietPi, a popular OS for the Raspberry Pi, uses 64Bit.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Requirements&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;64-bit Raspberry Pi e.g. DietPi&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Type:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;uname -a
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;the output should contain the following: &lt;code&gt;aarch64&lt;/code&gt; if there is &lt;code&gt;armhf&lt;/code&gt; in the output then you can skip to the
+&lt;a href=&quot;https://nickwasused.com/_posts/2022-03-16-boinc-32bit-on-64bit-pi-dietpi/false&quot; title=&quot;Install&quot;&gt;Install&lt;/a&gt; section.
+Example output: &lt;code&gt;Linux raspberrypi-1 5.10.103-v8+ #1530 SMP PREEMPT Tue Mar 8 13:06:35 GMT 2022 aarch64 GNU/Linux&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;Architecture&lt;/h2&gt;
+&lt;p&gt;First, we need to add the 32-bit Architecture to our system with the following command:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;sudo dpkg --add-architecture armhf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now you need to update the package list:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;sudo apt update
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Remove 64-bit Boinc&lt;/h2&gt;
+&lt;p&gt;To remove the 64-bit version of the Boinc-Client type:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;sudo apt remove boinc-client -y
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Install 32-bit Boinc&lt;/h2&gt;
+&lt;p&gt;If the output of &lt;code&gt;uname -a&lt;/code&gt; is &lt;code&gt;armhf&lt;/code&gt; then type:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;sudo apt install boinc-client
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To install the 32-bit version of the Boinc-Client type:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;sudo apt install boinc-client:armhf -y
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Block all Twitter advertising accounts from your timeline.</title>
+    <link href="https://nickwasused.com/_posts/2022-03-15-twitter-block-advertisers/"/>
+    <updated>2022-03-15T00:00:00Z</updated>
+    <id>https://nickwasused.com/_posts/2022-03-15-twitter-block-advertisers/</id>
+    <content xml:lang="en" type="html">&lt;h1&gt;Notice&lt;/h1&gt;
+&lt;p&gt;As of 31.03.2023 this method is not a good way of blocking Advertising on Twitter, you should just use something like &lt;a href=&quot;https://ublockorigin.com/&quot;&gt;uBlock Origin&lt;/a&gt; or alternative Apps.&lt;/p&gt;
+&lt;h2&gt;Requirements&lt;/h2&gt;
+&lt;p&gt;For following this Guide you need the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://developer.twitter.com/&quot;&gt;a Twitter Developer Account&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://twitter.com/settings/download_your_data&quot;&gt;your Twitter Data Archive&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/Nickwasused/twitter-data-export-to-blocklist&quot;&gt;the programm&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.python.org/&quot;&gt;python3 and pip3&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Program Setup&lt;/h2&gt;
+&lt;p&gt;Let&#39;s start by getting the Program set up.&lt;/p&gt;
+&lt;p&gt;First, we need to install the requirements by running&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;pip3 install -r requirements.txt --user
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After that you need to copy the &lt;code&gt;.env.example&lt;/code&gt; file to &lt;code&gt;.env&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Now you need to get your Twitter Developer Credential and fill them in the &lt;code&gt;.env&lt;/code&gt; file.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-plaintext&quot;&gt;API_KEY=&amp;quot;&amp;quot;
+API_SECRET=&amp;quot;&amp;quot;
+ACCESS_TOKEN=&amp;quot;&amp;quot;
+ACCESS_TOKEN_SECRET=&amp;quot;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You need to get them on the Twitter Developer Site &amp;gt; your App &amp;gt; Keys and Tokens:
+&lt;img src=&quot;https://nickwasused.com/_posts/2022-03-15-twitter-block-advertisers/twitter-dev.webp&quot; alt=&quot;Twitter Dev&quot; /&gt;&lt;/p&gt;
+&lt;h2&gt;Twitter Data&lt;/h2&gt;
+&lt;p&gt;Now &lt;a href=&quot;https://twitter.com/settings/download_your_data&quot;&gt;get your Twitter Data Archive from here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;After you have requested the Archive wait for the Notification Email. (This can take hours to days!)&lt;/p&gt;
+&lt;p&gt;Unpack the archive into the folder called &lt;code&gt;export&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The directory structure should look like this now:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-plaintext&quot;&gt;- export
+    - assets
+    - data
+    - .gitkeep
+    - Your archive.html
+- .env
+- main.py
+...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Get the List&lt;/h2&gt;
+&lt;p&gt;Now you just need to run&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;python3 main.py
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The script will output a file called &lt;code&gt;export.csv&lt;/code&gt; and tell you how many Advertising Accounts you have seen. For me, it was around 750 Accounts, but in this example, I will use a list of 3 Accounts.&lt;/p&gt;
+&lt;h2&gt;Block the Accounts&lt;/h2&gt;
+&lt;p&gt;To Block the Accounts you need to upload the &lt;code&gt;export.csv&lt;/code&gt; content to &lt;a href=&quot;https://pastebin.com/&quot;&gt;pastebin&lt;/a&gt; or another site.&lt;/p&gt;
+&lt;p&gt;Paste the contents of &lt;code&gt;export.csv&lt;/code&gt; in the input field and click &lt;code&gt;create Paste&lt;/code&gt;.
+&lt;img src=&quot;https://nickwasused.com/_posts/2022-03-15-twitter-block-advertisers/pastebin-paste.webp&quot; alt=&quot;pastebin-paste&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Now you are redirected to your paste. Click on &lt;code&gt;raw&lt;/code&gt; and copy the link.
+&lt;img src=&quot;https://nickwasused.com/_posts/2022-03-15-twitter-block-advertisers/pastebin-raw.webp&quot; alt=&quot;pastebin-raw&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Now go to this site &lt;a href=&quot;https://twitter-blocklist-auth.glitch.me/&quot;&gt;https://twitter-blocklist-auth.glitch.me/&lt;/a&gt; and log in.&lt;/p&gt;
+&lt;p&gt;Now you can paste the Url you have copied before in the field and click Submit.
+&lt;img src=&quot;https://nickwasused.com/_posts/2022-03-15-twitter-block-advertisers/glitch-setup.webp&quot; alt=&quot;glitch-setup&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;After that the Page will tell you how many Accounts got blocked.
+&lt;img src=&quot;https://nickwasused.com/_posts/2022-03-15-twitter-block-advertisers/glitch-final.webp&quot; alt=&quot;glitch-final&quot; /&gt;&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Install OpenWrt on the TP-Link Archer C7 V5 (2022).</title>
+    <link href="https://nickwasused.com/_posts/2022-03-12-tp-link-archer-c7-v5-openwrt/"/>
+    <updated>2022-03-12T00:00:00Z</updated>
+    <id>https://nickwasused.com/_posts/2022-03-12-tp-link-archer-c7-v5-openwrt/</id>
+    <content xml:lang="en" type="html">&lt;h1&gt;The Technical Details&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20220609111144/https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5&quot;&gt;Techdata: TP-Link Archer C7 AC1750 v5&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;(If you don´t want to read all of this in short it means that the Router should have enough power to run current OpenWrt versions.)&lt;/p&gt;
+&lt;h1&gt;The right Firmware Image&lt;/h1&gt;
+&lt;p&gt;When installing OpenWrt for the first time you search for a Firmware image that looks like that:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;tplink_archer-a7-v5-squashfs-factory.bin&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Version 21: &lt;a href=&quot;https://downloads.openwrt.org/releases/21.02.2/targets/ath79/generic/openwrt-21.02.2-ath79-generic-tplink_archer-a7-v5-squashfs-factory.bin&quot;&gt;https://downloads.openwrt.org/releases/21.02.2/targets/ath79/generic/openwrt-21.02.2-ath79-generic-tplink_archer-a7-v5-squashfs-factory.bin&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;After you have the right image you need to rename it to:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;firmware.bin&lt;/code&gt;&lt;/p&gt;
+&lt;h1&gt;Flashing the Firmware (Web interface Methode)&lt;/h1&gt;
+&lt;p&gt;I am going to use the Web interface method because it is stable enough on my Stock firmware version.&lt;/p&gt;
+&lt;p&gt;Connect to the Router via Wifi and set up a Password. After that, you can connect with an Ethernet Cable and log in. (The Stock Web interface is located here: &lt;code&gt;192.168.0.1&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;(The Images Below are from the &lt;a href=&quot;https://emulator.tp-link.com/archer-c7-v5/index.html&quot;&gt;TP-Link Emulator&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;You just need to go to Advanced &amp;gt; System Tools &amp;gt; Firmware Upgrade
+Step 1:
+&lt;img src=&quot;https://nickwasused.com/_posts/2022-03-12-tp-link-archer-c7-v5-openwrt/step1.webp&quot; alt=&quot;Step 1&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Step 2:
+&lt;img src=&quot;https://nickwasused.com/_posts/2022-03-12-tp-link-archer-c7-v5-openwrt/step2.webp&quot; alt=&quot;Step 2&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Then select the firmware.bin and click on upgrade. This process can take up to 5 Minutes.
+Step 3,4 and 5:
+&lt;img src=&quot;https://nickwasused.com/_posts/2022-03-12-tp-link-archer-c7-v5-openwrt/step3.webp&quot; alt=&quot;Step 3, 4 and 5&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;After that, you just need to go to &lt;code&gt;http://192.168.1.1&lt;/code&gt; and there is the Web interface.
+The OpenWrt Webinterface LuCI:
+&lt;img src=&quot;https://nickwasused.com/_posts/2022-03-12-tp-link-archer-c7-v5-openwrt/interface.webp&quot; alt=&quot;Webinterface&quot; /&gt;&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Install Tor Snowflake on the Raspberry Pi with DietPi.</title>
+    <link href="https://nickwasused.com/_posts/2022-03-12-tor-snowflake/"/>
+    <updated>2022-03-12T00:00:00Z</updated>
+    <id>https://nickwasused.com/_posts/2022-03-12-tor-snowflake/</id>
+    <content xml:lang="en" type="html">&lt;h1&gt;Notice&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;This guide has been overhauled.&lt;/strong&gt; See &lt;a href=&quot;https://nickwasused.com/_posts/2023-04-01-tor-snowflake-v2/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Requirements&lt;/h2&gt;
+&lt;p&gt;I use a Raspberry Pi 3b with DietPi 8.2.2, which means we need to use 64Bit Packages.
+I assume that you do everything in your default home folder of the root user. (That is just essential for the last step, but you will notice what you need to change if you use another folder.)&lt;/p&gt;
+&lt;h2&gt;Install GO&lt;/h2&gt;
+&lt;h3&gt;Automatic&lt;/h3&gt;
+&lt;p&gt;Open the diet pi software installer by typing: &lt;code&gt;dietpi-software&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;After that, go to search and search for: &lt;code&gt;go&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Now select &lt;code&gt;Go: Runtime environment and package installer&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Reconnect to the pi and run &lt;code&gt;go version&lt;/code&gt;. This should be higher than 1.13.&lt;/p&gt;
+&lt;h3&gt;Manual&lt;/h3&gt;
+&lt;p&gt;It is important that you install Go Version 13 or above.&lt;/p&gt;
+&lt;p&gt;Start by creating some directories and downloading go:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;mkdir ~/src &amp;amp;&amp;amp; cd ~/src
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;wget https://go.dev/dl/go1.17.8.linux-arm64.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now extract the package.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;tar -C /usr/local -xzf go1.17.8.linux-arm64.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After that, you can delete the downloaded archive.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;rm go1.17.8.linux-arm64.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The last step is to add go to your Path.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;nano ~/.profile
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Add the following in that file:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;PATH=$PATH:/usr/local/go/bin
+GOPATH=$HOME/go
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can now reload the file with:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;source ~/.profile
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Test the installation by running:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;go version
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The output should look like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;go version go1.17.8 linux/arm64
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Build Tor Snowflake&lt;/h2&gt;
+&lt;p&gt;First, we need to install some essentials:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;apt install git
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After that you can clone the repo:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;git clone https://git.torproject.org/pluggable-transports/snowflake.git
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now go in the directory and start the build.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;cd snowflake/proxy
+go build
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To start the snowflake make the build file executable and start it.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;chmod +x ./proxy
+./proxy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Run Snowflake as a service&lt;/h2&gt;
+&lt;p&gt;(This is the part where the installation location and User matter!)&lt;/p&gt;
+&lt;p&gt;Create a new Service file.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;nano /etc/systemd/system/snowflake.service
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Add the following to the file.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-plaintext&quot;&gt;[Unit]
+Description=Tor Snowflake Proxy
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+LogLevelMax=6
+Type=simple
+User=root
+SyslogIdentifier=snowflake
+StandardOutput=syslog
+StandardError=syslog
+ExecStart=/root/snowflake/proxy/proxy -summary-interval 10m
+Restart=on-failure
+RestartSec=120
+TimeoutSec=300
+PrivateTmp=true
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=false
+ReadOnlyDirectories=/
+ReadWriteDirectories=/root/snowflake/
+
+[Install]
+WantedBy=multi-user.target
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now let&#39;s create some logs.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;nano /etc/rsyslog.d/50-default.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Add the following:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-plaintext&quot;&gt;:programname,isequal,&amp;quot;snowflake&amp;quot;         /var/log/snowflake/snowflake.log
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After you added the line, save the file and restart rsyslog.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;systemctl restart rsyslog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;As the last step, we set up logrotate.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;nano /etc/logrotate.d/snowflake
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;With the following content:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-plaintext&quot;&gt;/var/log/snowflake/snowflake.log { 
+    su root syslog
+    daily
+    rotate 5
+    compress
+    delaycompress
+    missingok
+    postrotate
+        systemctl restart rsyslog &amp;gt; /dev/null
+    endscript    
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Run on startup&lt;/h2&gt;
+&lt;p&gt;To run the Snowflake on system startup run:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;systemctl enable snowflake
+service snowflake start
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can now type&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;tail -f /var/log/snowflake/snowflake.log
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;to see your snowflake in action.&lt;/p&gt;
+&lt;h2&gt;Update&lt;/h2&gt;
+&lt;p&gt;Steps to update the snowflake.&lt;/p&gt;
+&lt;p&gt;Stop the proxy service:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;service snowflake stop
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Go in the snowflake directory:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;cd /root/snowflake
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now update the code by running:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;git pull
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After that, rebuild the proxy:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;cd proxy
+go build
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can now start the snowflake service.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;service snowflake start
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;Source&lt;/h1&gt;
+&lt;h3&gt;For installing GO&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20220505171516/https://www.jeremymorgan.com/tutorials/raspberry-pi/install-go-raspberry-pi/&quot;&gt;https://www.jeremymorgan.com/tutorials/raspberry-pi/install-go-raspberry-pi/&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;Building Tor Snowflake&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/-/wikis/home&quot;&gt;https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/-/wikis/home&lt;/a&gt;&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Install OpenWrt on the TP-Link Archer C7 V5 (2021).</title>
+    <link href="https://nickwasused.com/_posts/2021-04-08-tp-link-archer-c7-v5-openwrt/"/>
+    <updated>2021-04-08T00:00:00Z</updated>
+    <id>https://nickwasused.com/_posts/2021-04-08-tp-link-archer-c7-v5-openwrt/</id>
+    <content xml:lang="en" type="html">&lt;h1&gt;Disclaimer&lt;/h1&gt;
+&lt;p&gt;This guide is a little outdated, you should use OpenWrt version 21. I have created an updated Guide &lt;a href=&quot;https://nickwasused.com/2022/03/12/tp-link-archer-c7-v5-openwrt&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h1&gt;The Technical Details&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20220609111144/https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5&quot;&gt;Techdata: TP-Link Archer C7 AC1750 v5&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;(If you don´t want to read all of this in short it means that the Router should have enough power to run current OpenWrt versions.)&lt;/p&gt;
+&lt;h1&gt;The Problem with the Versions&lt;/h1&gt;
+&lt;p&gt;The Archer C7 is supported by two major versions of OpenWrt: Version 18 and 19. But in the Forum for the Archer C7 are some threads that point out Issues with the latest release. So I am going to use the Router with Version 18 because it seems more stable.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://nickwasused.com/_posts/2021-04-08-tp-link-archer-c7-v5-openwrt/forum.webp&quot; alt=&quot;Forum&quot; /&gt;&lt;/p&gt;
+&lt;h1&gt;The right Firmware Image&lt;/h1&gt;
+&lt;p&gt;When installing OpenWrt for the first time you search for a Firmware image that looks like that:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-plaintext&quot;&gt;    openwrt-19.07.7-ath79-generic-tplink_archer-c7-v5-squashfs-factory.bin
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The place to search for the right Firmware is on the OpenWrt page of the router, but because I don´t want the latest version I need to search on the Download Server:&lt;/p&gt;
+&lt;p&gt;Version 19: &lt;a href=&quot;https://downloads.openwrt.org/releases/19.07.7/targets/ath79/generic/&quot;&gt;https://downloads.openwrt.org/releases/19.07.7/targets/ath79/generic/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Version 18: &lt;a href=&quot;https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/&quot;&gt;https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Version 18 alternative:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20210405170819/https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/&quot;&gt;https://web.archive.org/web/20210405170819/https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The Latest Version I have found was: &lt;a href=&quot;https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/openwrt-18.06.9-ar71xx-generic-archer-c7-v5-squashfs-factory.bin&quot;&gt;https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/openwrt-18.06.9-ar71xx-generic-archer-c7-v5-squashfs-factory.bin&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;After you have the right image you need to rename it to:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;firmware.bin&lt;/code&gt;&lt;/p&gt;
+&lt;h1&gt;Flashing the Firmware (Web interface Methode)&lt;/h1&gt;
+&lt;p&gt;I am going to use the Web interface method because it is stable enough on my Stock firmware version.&lt;/p&gt;
+&lt;p&gt;Connect to the Router via Wifi and set up a Password. After that, you can connect with an Ethernet Cable and log in. (The Stock Web interface is located here: &lt;code&gt;192.168.0.1&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;(The Images Below are from the &lt;a href=&quot;https://emulator.tp-link.com/archer-c7-v5/index.html&quot;&gt;TP-Link Emulator&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;You just need to go to Advanced &amp;gt; System Tools &amp;gt; Firmware Upgrade
+Step 1:
+&lt;img src=&quot;https://nickwasused.com/_posts/2021-04-08-tp-link-archer-c7-v5-openwrt/step1.webp&quot; alt=&quot;Step 1&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Step 2:
+&lt;img src=&quot;https://nickwasused.com/_posts/2021-04-08-tp-link-archer-c7-v5-openwrt/step2.webp&quot; alt=&quot;Step 2&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Then select the firmware.bin and click on upgrade. This process can take up to 5 Minutes.
+Step 3,4 and 5:
+&lt;img src=&quot;https://nickwasused.com/_posts/2021-04-08-tp-link-archer-c7-v5-openwrt/step3.webp&quot; alt=&quot;Step 3, 4 and 5&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;After that, you just need to go to &lt;code&gt;http://192.168.1.1&lt;/code&gt; and there is the Web interface.
+The OpenWrt Webinterface LuCI:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://nickwasused.com/_posts/2021-04-08-tp-link-archer-c7-v5-openwrt/interface.webp&quot; alt=&quot;Webinterface&quot; /&gt;&lt;/p&gt;
+</content>
+  </entry>
+</feed>

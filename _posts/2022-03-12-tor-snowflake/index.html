@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no" />
+    <title>Install Tor Snowflake on the Raspberry Pi with DietPi.</title>
+    <meta name="description" content="This is a guide for installing a tor snowflake on your Raspberry Pi as systemd service.">
+    <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="Nick's Site" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/basic-e17af982.css" />
+</head>
+<body>
+    <h1 class="title"><a href="/">Nick's Site</a></h1>
+    
+    <span class="wrap">
+        <div class="nav">
+            <p><a href="/sites/recommendations">Blog recommendations</a></p>
+            <p><a href="/sites/links">link collection</a></p>
+            <p><a href="/sites/privacy">Privacy Policy</a></p>
+            <p><a href="/sites/imprint">Imprint</a></p>
+            <p><a href="/feed.xml">RSS</a></p>
+            &nbsp;
+            <p><a target="_blank" href="https://social.tchncs.de/@nickwasused">Mastodon</a></p>
+            <p><a target="_blank" href="https://github.com/Nickwasused">Github</a></p>
+            <p><a target="_blank" href="https://twitter.com/nickwasused">Twitter</a></p>
+            <p><a target="_blank" href="mailto:contact@nickwasused.com">Email</a></p>
+        </div>
+
+        <div class="content">
+            
+                <div class="post-info">
+                    <h1>Install Tor Snowflake on the Raspberry Pi with DietPi.</h1>
+                    <h2>3/12/2022</h2>
+                </div>
+            
+            <h1>Notice</h1>
+<p><strong>This guide has been overhauled.</strong> See <a href="/_posts/2023-04-01-tor-snowflake-v2/">here</a>.</p>
+<h2>Requirements</h2>
+<p>I use a Raspberry Pi 3b with DietPi 8.2.2, which means we need to use 64Bit Packages.
+I assume that you do everything in your default home folder of the root user. (That is just essential for the last step, but you will notice what you need to change if you use another folder.)</p>
+<h2>Install GO</h2>
+<h3>Automatic</h3>
+<p>Open the diet pi software installer by typing: <code>dietpi-software</code>.</p>
+<p>After that, go to search and search for: <code>go</code>.</p>
+<p>Now select <code>Go: Runtime environment and package installer</code>.</p>
+<p>Reconnect to the pi and run <code>go version</code>. This should be higher than 1.13.</p>
+<h3>Manual</h3>
+<p>It is important that you install Go Version 13 or above.</p>
+<p>Start by creating some directories and downloading go:</p>
+<pre><code class="language-Shell">mkdir ~/src &amp;&amp; cd ~/src
+</code></pre>
+<pre><code class="language-Shell">wget https://go.dev/dl/go1.17.8.linux-arm64.tar.gz
+</code></pre>
+<p>Now extract the package.</p>
+<pre><code class="language-Shell">tar -C /usr/local -xzf go1.17.8.linux-arm64.tar.gz
+</code></pre>
+<p>After that, you can delete the downloaded archive.</p>
+<pre><code class="language-Shell">rm go1.17.8.linux-arm64.tar.gz
+</code></pre>
+<p>The last step is to add go to your Path.</p>
+<pre><code class="language-Shell">nano ~/.profile
+</code></pre>
+<p>Add the following in that file:</p>
+<pre><code class="language-Shell">PATH=$PATH:/usr/local/go/bin
+GOPATH=$HOME/go
+</code></pre>
+<p>You can now reload the file with:</p>
+<pre><code class="language-Shell">source ~/.profile
+</code></pre>
+<p>Test the installation by running:</p>
+<pre><code class="language-Shell">go version
+</code></pre>
+<p>The output should look like this:</p>
+<pre><code class="language-Shell">go version go1.17.8 linux/arm64
+</code></pre>
+<h2>Build Tor Snowflake</h2>
+<p>First, we need to install some essentials:</p>
+<pre><code class="language-Shell">apt install git
+</code></pre>
+<p>After that you can clone the repo:</p>
+<pre><code class="language-Shell">git clone https://git.torproject.org/pluggable-transports/snowflake.git
+</code></pre>
+<p>Now go in the directory and start the build.</p>
+<pre><code class="language-Shell">cd snowflake/proxy
+go build
+</code></pre>
+<p>To start the snowflake make the build file executable and start it.</p>
+<pre><code class="language-Shell">chmod +x ./proxy
+./proxy
+</code></pre>
+<h2>Run Snowflake as a service</h2>
+<p>(This is the part where the installation location and User matter!)</p>
+<p>Create a new Service file.</p>
+<pre><code class="language-Shell">nano /etc/systemd/system/snowflake.service
+</code></pre>
+<p>Add the following to the file.</p>
+<pre><code class="language-plaintext">[Unit]
+Description=Tor Snowflake Proxy
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+LogLevelMax=6
+Type=simple
+User=root
+SyslogIdentifier=snowflake
+StandardOutput=syslog
+StandardError=syslog
+ExecStart=/root/snowflake/proxy/proxy -summary-interval 10m
+Restart=on-failure
+RestartSec=120
+TimeoutSec=300
+PrivateTmp=true
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=false
+ReadOnlyDirectories=/
+ReadWriteDirectories=/root/snowflake/
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>Now let's create some logs.</p>
+<pre><code class="language-bash">nano /etc/rsyslog.d/50-default.conf
+</code></pre>
+<p>Add the following:</p>
+<pre><code class="language-plaintext">:programname,isequal,&quot;snowflake&quot;         /var/log/snowflake/snowflake.log
+</code></pre>
+<p>After you added the line, save the file and restart rsyslog.</p>
+<pre><code class="language-bash">systemctl restart rsyslog
+</code></pre>
+<p>As the last step, we set up logrotate.</p>
+<pre><code class="language-bash">nano /etc/logrotate.d/snowflake
+</code></pre>
+<p>With the following content:</p>
+<pre><code class="language-plaintext">/var/log/snowflake/snowflake.log { 
+    su root syslog
+    daily
+    rotate 5
+    compress
+    delaycompress
+    missingok
+    postrotate
+        systemctl restart rsyslog &gt; /dev/null
+    endscript    
+}
+</code></pre>
+<h2>Run on startup</h2>
+<p>To run the Snowflake on system startup run:</p>
+<pre><code class="language-bash">systemctl enable snowflake
+service snowflake start
+</code></pre>
+<p>You can now type</p>
+<pre><code class="language-bash">tail -f /var/log/snowflake/snowflake.log
+</code></pre>
+<p>to see your snowflake in action.</p>
+<h2>Update</h2>
+<p>Steps to update the snowflake.</p>
+<p>Stop the proxy service:</p>
+<pre><code class="language-bash">service snowflake stop
+</code></pre>
+<p>Go in the snowflake directory:</p>
+<pre><code class="language-bash">cd /root/snowflake
+</code></pre>
+<p>Now update the code by running:</p>
+<pre><code class="language-bash">git pull
+</code></pre>
+<p>After that, rebuild the proxy:</p>
+<pre><code class="language-bash">cd proxy
+go build
+</code></pre>
+<p>You can now start the snowflake service.</p>
+<pre><code class="language-bash">service snowflake start
+</code></pre>
+<h1>Source</h1>
+<h3>For installing GO</h3>
+<p><a href="https://web.archive.org/web/20220505171516/https://www.jeremymorgan.com/tutorials/raspberry-pi/install-go-raspberry-pi/">https://www.jeremymorgan.com/tutorials/raspberry-pi/install-go-raspberry-pi/</a></p>
+<h3>Building Tor Snowflake</h3>
+<p><a href="https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/-/wikis/home">https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/-/wikis/home</a></p>
+
+            <hr />
+        </div>
+    </span>
+</body>
+</html>

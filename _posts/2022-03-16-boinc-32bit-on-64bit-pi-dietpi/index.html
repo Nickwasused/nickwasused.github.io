@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no" />
+    <title>Install 32-bit BOINC on a 64-bit Raspberry Pi.</title>
+    <meta name="description" content="This guide helps you to install the 32-Bit Boinc version instead of the 64-Bit one.">
+    <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="Nick's Site" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/basic-e17af982.css" />
+</head>
+<body>
+    <h1 class="title"><a href="/">Nick's Site</a></h1>
+    
+    <span class="wrap">
+        <div class="nav">
+            <p><a href="/sites/recommendations">Blog recommendations</a></p>
+            <p><a href="/sites/links">link collection</a></p>
+            <p><a href="/sites/privacy">Privacy Policy</a></p>
+            <p><a href="/sites/imprint">Imprint</a></p>
+            <p><a href="/feed.xml">RSS</a></p>
+            &nbsp;
+            <p><a target="_blank" href="https://social.tchncs.de/@nickwasused">Mastodon</a></p>
+            <p><a target="_blank" href="https://github.com/Nickwasused">Github</a></p>
+            <p><a target="_blank" href="https://twitter.com/nickwasused">Twitter</a></p>
+            <p><a target="_blank" href="mailto:contact@nickwasused.com">Email</a></p>
+        </div>
+
+        <div class="content">
+            
+                <div class="post-info">
+                    <h1>Install 32-bit BOINC on a 64-bit Raspberry Pi.</h1>
+                    <h2>3/16/2022</h2>
+                </div>
+            
+            <h2>Why would you do this?</h2>
+<ul>
+<li>Projects like UNIVERSE@HOME have no aarch64 Tasks.</li>
+<li>A Raspberry Pi 3b can´t run ROSETTA@HOME because it doesn't have enough ram.</li>
+<li>DietPi, a popular OS for the Raspberry Pi, uses 64Bit.</li>
+</ul>
+<h2>Requirements</h2>
+<ul>
+<li>64-bit Raspberry Pi e.g. DietPi</li>
+</ul>
+<p>Type:</p>
+<pre><code class="language-Shell">uname -a
+</code></pre>
+<p>the output should contain the following: <code>aarch64</code> if there is <code>armhf</code> in the output then you can skip to the
+<a href="false" title="Install">Install</a> section.
+Example output: <code>Linux raspberrypi-1 5.10.103-v8+ #1530 SMP PREEMPT Tue Mar 8 13:06:35 GMT 2022 aarch64 GNU/Linux</code></p>
+<h2>Architecture</h2>
+<p>First, we need to add the 32-bit Architecture to our system with the following command:</p>
+<pre><code class="language-Shell">sudo dpkg --add-architecture armhf
+</code></pre>
+<p>Now you need to update the package list:</p>
+<pre><code class="language-Shell">sudo apt update
+</code></pre>
+<h2>Remove 64-bit Boinc</h2>
+<p>To remove the 64-bit version of the Boinc-Client type:</p>
+<pre><code class="language-Shell">sudo apt remove boinc-client -y
+</code></pre>
+<h2>Install 32-bit Boinc</h2>
+<p>If the output of <code>uname -a</code> is <code>armhf</code> then type:</p>
+<pre><code class="language-Shell">sudo apt install boinc-client
+</code></pre>
+<p>To install the 32-bit version of the Boinc-Client type:</p>
+<pre><code class="language-Shell">sudo apt install boinc-client:armhf -y
+</code></pre>
+
+            <hr />
+        </div>
+    </span>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no" />
+    <title>Disabling the Ethernet LED on the Raspberry Pi 3B 1.2</title>
+    <meta name="description" content="This Guide will show you how to install disable the Ethernet LEDs on the Raspberry Pi 3b+.">
+    <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="Nick's Site" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/basic-e17af982.css" />
+</head>
+<body>
+    <h1 class="title"><a href="/">Nick's Site</a></h1>
+    
+    <span class="wrap">
+        <div class="nav">
+            <p><a href="/sites/recommendations">Blog recommendations</a></p>
+            <p><a href="/sites/links">link collection</a></p>
+            <p><a href="/sites/privacy">Privacy Policy</a></p>
+            <p><a href="/sites/imprint">Imprint</a></p>
+            <p><a href="/feed.xml">RSS</a></p>
+            &nbsp;
+            <p><a target="_blank" href="https://social.tchncs.de/@nickwasused">Mastodon</a></p>
+            <p><a target="_blank" href="https://github.com/Nickwasused">Github</a></p>
+            <p><a target="_blank" href="https://twitter.com/nickwasused">Twitter</a></p>
+            <p><a target="_blank" href="mailto:contact@nickwasused.com">Email</a></p>
+        </div>
+
+        <div class="content">
+            
+                <div class="post-info">
+                    <h1>Disabling the Ethernet LED on the Raspberry Pi 3B 1.2</h1>
+                    <h2>2/17/2023</h2>
+                </div>
+            
+            <h1>Notice</h1>
+<p>This is essentially a copy of this Stackexchange post: <a href="https://web.archive.org/web/20230401143350/https://raspberrypi.stackexchange.com/questions/117632/turn-off-external-leds-on-raspberry-pi-3/130495">https://raspberrypi.stackexchange.com/questions/117632/turn-off-external-leds-on-raspberry-pi-3/130495#130495</a></p>
+<h1>Post</h1>
+<p>At first, check if you have the correct Model of the Raspberry Pi 3b:</p>
+<p><code>cat /sys/firmware/devicetree/base/model</code></p>
+<p>The output should be: <code># Raspberry Pi 3 Model B Rev 1.2</code></p>
+<p>Now, you need to install <code>libusb-1.0-0-dev</code>, <code>make</code>, <code>build-essential</code> and <code>gcc</code>:</p>
+<p><code>sudo apt install libusb-1.0-0-dev make gcc build-essential -y</code></p>
+<p>After that, you clone this repository: <a href="https://github.com/dumpsite/lan951x-led-ctl">https://github.com/dumpsite/lan951x-led-ctl</a></p>
+<p><code>git clone git@github.com:dumpsite/lan951x-led-ctl.git</code></p>
+<p>Now build the project:</p>
+<p><code>cd lan951x-led-ctl &amp;&amp; make &amp;&amp; sudo chmod +x ./lan951x-led-ctl</code></p>
+<h1>Disable the LEDs</h1>
+<p>The following command will disable both Ethernet LEDs.</p>
+<p><code>sudo ./lan951x-led-ctl --fdx=0 --lnk=0 --spd=0</code></p>
+<p>You need to apply this on every restart!</p>
+
+            <hr />
+        </div>
+    </span>
+</body>
+</html>
