@@ -20,9 +20,9 @@ jobs:
         run: npm i -g pnpm
 
       - name: Install packages
-        run: pnpm ci
+        run: pnpm i
 
-      - name: Run npm build
+      - name: run pnpm build
         run: pnpm run build
 
       - name: Deploy to gh-pages
