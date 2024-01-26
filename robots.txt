@@ -6,3 +6,5 @@ Disallow: /
 
 User-agent: CCBot
 Disallow: /
+
+Sitemap: https://nickwasused.com/sitemap.xml
