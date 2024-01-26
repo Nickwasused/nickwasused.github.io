@@ -1,6 +1,6 @@
 # Privacy Policy
 
-This website is hosted on [Cloudflare Pages](https://pages.cloudflare.com/). You can find their privacy policy here: [https://www.cloudflare.com/privacypolicy/](https://www.cloudflare.com/privacypolicy/)
+This website is hosted on [Github Pages](hhttps://pages.github.com/). You can find their privacy policy here: <https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement>
 
 # §1 information collected
 
@@ -17,12 +17,10 @@ Data collected by report-uri.com when a report occurs:
 
 ## hosting
 
-[Cloudflare is collecting data](https://www.cloudflare.com/privacypolicy/#2-information-we-collect-categories-of-data-subjects)
+[Github (Pages) is collecting data](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#data-collection)
 
-Examples of data collected by Cloudflare:
+Examples of data collected by Github:
 - IP addresses
-- traffic routing data
-- system configuration information
 
 
 # §2 cookies
@@ -31,7 +29,7 @@ The following cookies will be set when visiting the site.
 
 | name | usage
 | -- | -- 
-| __cf_bm | [Cloudflare bot protection](https://developers.cloudflare.com/fundamentals/get-started/reference/cloudflare-cookies#__cf_bm-cookie-for-cloudflare-bot-products)
+| None | None
 
 # §3 changes
 
