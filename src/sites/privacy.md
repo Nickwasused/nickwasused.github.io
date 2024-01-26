@@ -1,6 +1,6 @@
 # Privacy Policy
 
-This website is hosted on [Cloudflare Pages](https://pages.cloudflare.com/). You can find their privacy policy here: [https://www.cloudflare.com/privacypolicy/](https://www.cloudflare.com/privacypolicy/)
+This website is hosted on [Github Pages](hhttps://pages.github.com/). You can find their privacy policy here: <https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement>
 
 # §1 information collected
 
