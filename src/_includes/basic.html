@@ -16,11 +16,9 @@
     <meta property="og:description" content="{{ snippet | default: "This is a Tech focused blog where I write random posts." }}" />
     <meta name="description" content="{{ snippet | default: "This is a Tech focused blog where I write random posts." }}">
     <meta property="og:site_name" content="Nick's Site" />
-{% if snippet %}
-    <meta property="article:published_time" content="{{ date | custom_date_iso }}" />
+{% if tags[0] == "posts" %}    <meta property="article:published_time" content="{{ date | custom_date_iso }}" />
     <meta property="article:section" content="Technology" />
-    {% for tag in tags %}
-    <meta property="article:tag" content="{{ tag }}" />
+    {% for tag in tags offset:1 %}<meta property="article:tag" content="{{ tag }}" />
     {% endfor %}
 {% endif %}
 </head>
