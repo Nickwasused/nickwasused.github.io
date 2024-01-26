@@ -4,6 +4,7 @@ const eleventySass = require("eleventy-sass");
 
 module.exports = function(eleventyConfig) {
     eleventyConfig.addFilter("custom_date", function(value) { return value.toLocaleDateString() });
+    eleventyConfig.addFilter("custom_date_iso", function(value) { return value.toISOString().split('T')[0] });
     eleventyConfig.addPassthroughCopy("src/basic.css");
     eleventyConfig.addPassthroughCopy("src/lozad.js");
     eleventyConfig.addPassthroughCopy("src/_headers");
