@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no" />
+    <title>OV2 TomTom Adventures</title>
+    <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="Nick's Site" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/basic-32331184.css" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+    <meta property="og:title" content="OV2 TomTom Adventures" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:description" content="By chance, I have received an old version of the TomTom Start 52." />
+    <meta name="description" content="By chance, I have received an old version of the TomTom Start 52.">
+    <meta property="og:site_name" content="Nick's Site" />
+    <meta property="article:published_time" content="2024-03-01" />
+    <meta property="article:section" content="Technology" />
+    <meta property="article:tag" content="TomTom" />
+    <meta property="article:tag" content="Ov2" />
+    <meta property="article:tag" content="Maps" />
+    
+
+</head>
+<body>
+    <h1 class="title"><a href="/">Nick's Site</a></h1>
+    
+    <span class="wrap">
+        <div class="nav">
+            <p><a href="/sites/recommendations">Blog recommendations</a></p>
+            <p><a href="/sites/links">link collection</a></p>
+            <p><a href="/sites/privacy">Privacy Policy</a></p>
+            <p><a href="/sites/imprint">Imprint</a></p>
+            <p><a href="/feed.xml">RSS</a></p>
+            &nbsp;
+            <p><a target="_blank" href="https://social.tchncs.de/@nickwasused">Mastodon</a></p>
+            <p><a target="_blank" href="https://github.com/Nickwasused">Github</a></p>
+            <p><a target="_blank" href="mailto:contact@nickwasused.com">Email</a></p>
+        </div>
+
+        <div class="content">
+            
+                <div class="post-info">
+                    <h1>OV2 TomTom Adventures</h1>
+                    <h2>3/1/2024</h2>
+                </div>
+            
+            <h1>OV2 TomTom Adventures</h1>
+<p>By chance, I have received an old version of the <a href="https://tomtom.com">TomTom</a> Start 52. The device has no Internet connection by itself, only through the TomTom software &quot;<a href="https://www.tomtom.com/en_us/navigation/mydrive-connect/">TomTom MyDrive Connect</a>&quot;.</p>
+<p>On first connect, the Map of Europe got updated to the newest Version, as TomTom Devices usually get lifelong Map updates, at least for the one included at the time of purchase. I knew that you can save your own <strong>Points of Interest</strong>'s, in short <strong>POI</strong>, as there were some saved already, but there is also the method of importing them, with <strong>OV2</strong> files. (I still don't know what <strong>OV2</strong> stands for.)</p>
+<h2>POI (ov2) file format</h2>
+<p>A <code>ov2</code> file is a POI database, they contain multiple POIs. For that, the can have 4 record types:</p>
+<ul>
+<li>deleted records</li>
+<li>skipper records</li>
+<li>simple records</li>
+<li>extended records</li>
+</ul>
+<p>We only take a look at skipper and simple records, but I have linked a document, that describes the others as well, below. [1]</p>
+<p>A simple record is, as the name says, very simple. It consists of:</p>
+<ul>
+<li>a (little-endian) Byte for the Type. For a simple record, this is always a 2.</li>
+<li>4 bytes that define the length of the whole record</li>
+<li>4 bytes signed integer for the longitude</li>
+<li>4 bytes signed integer for the latitude</li>
+<li>a &quot;zero−terminated ASCII string specifying the name of the POI&quot; [1, p.12]</li>
+</ul>
+<p>Or in short: Coordinates and the Name, e.g. A Point in the USA with the Name of &quot;McDonald's&quot;</p>
+<ul>
+<li>The latitude/longitude needs to be divided by <strong>100000</strong>!</li>
+</ul>
+<h2>adding some files</h2>
+<p>So I started adding some POI files from <a href="https://www.poibase.com">POIbase</a> that contain current construction zones, Hospitals and some more. That is where I got suspicious: The Hospital POI file had a lot of Points! How was a very weak device capable of showing them <strong>all</strong> on a Map?</p>
+<h2>Checking Performance</h2>
+<p>While searching about the file format, I stumbled about <a href="https://gordthompson.github.io/ov2optimizer/">https://gordthompson.github.io/ov2optimizer/</a>, especially the page about &quot;How Indexing Helps&quot;. What I now knew was that there should be a reasonable amount of skipper records: I set my requirement to 1 skipper record per 20 simple records, as mentioned on the page multiple times.</p>
+<p>One more great thing about the page is that there are tools available <code>ov2scan</code> and <code>ov2optimizer</code>. So I ran <code>ov2scan</code> on the Hospital file:</p>
+<pre><code class="language-shell">PS C:\Users\Nick\Desktop\in&gt; ov2scan.exe .\Hospitals.ov2
+deleted POI records (type 0): 0
+skipper records (type 1): 80
+regular POI records (type 2): 1020
+extended POI records (type 3): 0
+</code></pre>
+<p>That's more than enough, great!</p>
+<h2>Creating a <code>ov2</code> file</h2>
+<p>As a small project, I generate data of all <a href="https://bp.com">BP</a> gas stations. That is because I usually go to a sub-brand of them, &quot;Aral&quot;. While using their official website, I noticed that it was too packed, so I created <a href="https://tankpreise.uk">https://tankpreise.uk</a>.</p>
+<p>The project uses <code>.json</code> and <code>sqlite3</code>, but it would be a great test to generate <code>ov2</code> files!</p>
+<p>So let's say I want to use a list of all <a href="https://bp.com">BP</a> gas stations worldwide and show them when I get near them: That is around <strong>18,000</strong> POIs. How will the device handle that?</p>
+<p>A good thing is that I don't have to test that, as it has been done already. [2] The device needs to calculate the distance to all 18,000 Points! That can't be good.
+And is even worse, if you show them on the Map, then the Device will do that for every &quot;Screen Update&quot; while driving.</p>
+<h3>Introduce the skipper record.</h3>
+<p>As seen <a href="#checking-performance">above</a>: A skipper record can skip a certain part of the file when it is not in range.
+Let's say I have 20 records in New Zealand. Then a skipper record defines the borders of all 20 POIs and the size to skip. So when I am in South Africa, the device only needs to check 2 locations: the border of the skipper record. If we are not near it [3] then we skip the defined size of the 20 records.</p>
+<p>Here is an example:</p>
+<pre><code>decoded skipper record: 1 1050 17658722 -3833799 17507574 -4121712
+decoded simple record: 2 82 176.58722 -39.94494 [NZ-None] BP 
+decoded simple record: 2 81 175.38627 -40.17633 [NZ-None] BP Bulls 
+decoded simple record: 2 88 175.65618 -40.95201 [NZ-None] BP 2go 
+decoded simple record: 2 110 175.60367 -40.34684 [NZ-None] BP 
+decoded simple record: 2 95 175.62228 -40.35152 [NZ-None] BP 2go 
+decoded simple record: 2 95 175.59529 -40.36307 [NZ-None] BP 2go 
+decoded simple record: 2 86 175.38549 -40.17701 [NZ-None] BP 
+decoded simple record: 2 88 175.16715 -38.33799 [NZ-None] BP Te 
+decoded simple record: 2 103 175.16699 -38.33807 [NZ-None] BP 2go 
+decoded simple record: 2 100 175.07574 -41.12353 [NZ-None] BP 
+decoded simple record: 2 101 175.45792 -41.21712 [NZ-None] BP 2go 
+decoded skipper record: 1 967 17501094 -3678409 17484129 -4126259
+</code></pre>
+<p><strong>Update 14.03.2024</strong> I am not so sure about the skipper record structure that I defined below. It is based on the official documentation, but when I used that in my scripts it was not working on the Start 52. But the structure defined on <a href="https://gordthompson.github.io/ov2optimizer/ov2FileFormat.html">[4]</a> is working!</p>
+<p>The structure of this skipper record is as follows <code>decoded skipper record: 1 1050 17658722 -3833799 17507574 -4121712</code></p>
+<ul>
+<li><code>1</code>: type = skipper record</li>
+<li><code>1050</code>: If you are not near me then skip <strong>1050</strong> bytes including this record</li>
+<li><code>17658722</code>: Longitude of the west edge</li>
+<li><code>-3833799</code>: Latitude of the south edge</li>
+<li><code>17507574</code>: Longitude of the east edge</li>
+<li><code>-4121712</code>: Latitude of the north edge</li>
+</ul>
+<p>The structure of this simple record is as follows <code>decoded simple record: 2 82 176.58722 -39.94494 [NZ-None] BP</code></p>
+<ul>
+<li><code>2</code>: type = simple record</li>
+<li><code>82</code>: total length of this record</li>
+<li><code>176.58722</code>: Longitude</li>
+<li><code>-39.94494</code>: Latitude</li>
+<li><code>[NZ-None]</code> BP: shortened POI name (this can be any string)</li>
+</ul>
+<p>Now let's check if the given size is correct! First we add the size of each simple record together:</p>
+<pre><code>82 + 81 + 88 + 110 + 95 + 95 + 86 + 88 + 103 + 100 + 101 = 1029
+</code></pre>
+<p>Then we add the <strong>21</strong> Bytes of the skipper record:</p>
+<pre><code>1029 + 21 = 1050
+</code></pre>
+<p>And in fact, <strong>1050</strong> is the size the skipper record defines to skip!</p>
+<h3>Map example</h3>
+<p><img src="./map.avif" alt="Map example">
+(Some points appear to be outside, when in fact they are not.)</p>
+<p>In the map example are Blue points that represent gas stations. The black boxes around them are the defined borders of the skipper records. I have a maximum of 20 POIs in one box. The device would have to do <strong>10</strong> latitude/longitude comparisons.</p>
+<p>Here is another one:
+<img src="./map2.avif" alt="Map example"></p>
+<p>You can see the black borders again, the line should be straight but is bent, this is just a display issue!</p>
+<h1>Using the generated file on the device</h1>
+<p>To add a <code>ov2</code> file to the device, I need to import it <a href="https://plan.tomtom.com/de/">here</a>, Then it will magically transfer through &quot;TomTom MyDrive Connect&quot; onto the device. This happens really fast!</p>
+<h1>sources and notes</h1>
+<p>[1] https://archive.org/details/ttnavsdk3_manual_3.0_193
+[2] https://github.com/gordthompson/ov2optimizer, https://gordthompson.github.io/ov2optimizer/
+[3] I actually do not know how this exactly works!
+[4] https://gordthompson.github.io/ov2optimizer/ov2FileFormat.html</p>
+<p>You can find the generated <code>ov2</code> files <a href="https://github.com/bp-stations/station-data/tree/gh-pages/ov2">here</a>.</p>
+<h3>tags</h3>
+<p>#tomtom #ov2</p>
+
+            <hr />
+        </div>
+    </span>
+</body>
+</html>
