@@ -6,4 +6,4 @@
 
 <https://www.kuketz-blog.de/> [DE]
 
-<https://forum.agreper.com/> [MULTI] [DEAD]
+<https://forum.agreper.com/> [MULTI] [UNUSED]

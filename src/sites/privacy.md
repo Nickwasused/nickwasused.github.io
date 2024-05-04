@@ -4,17 +4,6 @@ This website is hosted on [Github Pages](hhttps://pages.github.com/). You can fi
 
 # §1 information collected
 
-## reporting
-
-This website is using [report-uri.com](https://report-uri.com/home/privacy_policy) for getting reports of browser security standards.
-
-Data collected by report-uri.com when a report occurs:
-- IP address
-- HTTP Referrer
-- Document URI
-- Query String
-- URI Fragments
-
 ## hosting
 
 [Github (Pages) is collecting data](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#data-collection)
