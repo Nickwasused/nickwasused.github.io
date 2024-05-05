@@ -32,6 +32,13 @@ h2 a,
     }
 }
 
+@media screen and (max-width: 701px) {
+    .menu {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
 .content {
     width: 75%;
     order: 3;
