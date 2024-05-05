@@ -3,6 +3,10 @@ name: Build & Deploy
 on:
   push:
     branches: ['main']
+    paths:
+      - '.eleventy.js'
+      - '**.yml'
+      - 'src/'
 
 jobs:
   build:
