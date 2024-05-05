@@ -6,7 +6,7 @@ on:
     paths:
       - '.eleventy.js'
       - '**.yml'
-      - 'src/'
+      - 'src/**'
 
 jobs:
   build:
