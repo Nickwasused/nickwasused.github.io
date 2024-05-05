@@ -39,8 +39,16 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: ${{ runner.os }}-pnpm-store
 
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        id: npm-cache
+        with:
+          path: "/home/runner/.npm/"
+          key: ${{ runner.os }}-npm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: ${{ runner.os }}-npm-store
+
       - name: Install packages
-        if: steps.pnpm-cache.outputs.cache-hit != 'true'
+        if: steps.pnpm-cache.outputs.cache-hit != 'true' && steps.npm-cache.outputs.cache-hit != 'true'
         run: pnpm i
 
       - name: run pnpm build
