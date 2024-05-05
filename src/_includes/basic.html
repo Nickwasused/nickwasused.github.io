@@ -23,30 +23,33 @@
 {% endif %}
 </head>
 <body>
-    <a id="top"></a>
-    <div style="margin: 0 auto; text-align: center;">
-        <h1><a href="/">Nick's Site</a></h1>
-    </div>
+    <header>
+        <a id="top"></a>
+        <div style="margin: 0 auto; text-align: center;">
+            <h1><a href="/">Nick's Site</a></h1>
+        </div>
 
-    <div class="menu">
-        <p><a href="/sites/recommendations">Blog recommendations</a></p>
-        <p><a href="/sites/links">link collection</a></p>
-        <p><a href="/sites/privacy">Privacy Policy</a></p>
-        <p><a href="/sites/imprint">Imprint</a></p>
-        <p><a href="/feed.xml">RSS</a></p>
-    </div>
-
-    <span class="menu">
-        <article class="content">
-            {% if snippet %}
-                <div style="margin: 0 auto; text-align: center; padding-top: 1%;">
-                    <h1>{{ title }} ({{ date | custom_date }})</h1>
-                </div>
-            {% endif %}
-            {{ content }}
-            <hr />
-            {% if snippet %}<a href="#top" style="padding-bottom: 1.5%;">Back to top</a>{% endif %}
-        </article>
-    </span>
+        <div class="menu">
+            <p><a href="/sites/recommendations">Blog recommendations</a></p>
+            <p><a href="/sites/links">link collection</a></p>
+            <p><a href="/sites/privacy">Privacy Policy</a></p>
+            <p><a href="/sites/imprint">Imprint</a></p>
+            <p><a href="/feed.xml">RSS</a></p>
+        </div>
+    </header>
+    <main>
+        <span class="menu">
+            <article class="content">
+                {% if snippet %}
+                    <div style="margin: 0 auto; text-align: center; padding-top: 1%;">
+                        <h1>{{ title }} ({{ date | custom_date }})</h1>
+                    </div>
+                {% endif %}
+                {{ content }}
+                <hr />
+                {% if snippet %}<a href="#top" style="padding-bottom: 1.5%;">Back to top</a>{% endif %}
+            </article>
+        </span>
+    </main>
 </body>
 </html>
