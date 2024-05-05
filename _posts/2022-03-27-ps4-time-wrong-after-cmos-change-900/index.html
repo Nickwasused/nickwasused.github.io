@@ -8,7 +8,7 @@
     <title>Fix the PS4 Time after replacing the CMOS Battery on Firmware version 9.0.</title>
     <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="Nick's Site" />
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-    <link rel="stylesheet" href="/basic-11c45df0.css" />
+    <link rel="stylesheet" href="/basic-45b4cfbf.css" />
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
     <meta property="og:title" content="Fix the PS4 Time after replacing the CMOS Battery on Firmware version 9.0." />
     <meta property="og:type" content="website" />
@@ -23,33 +23,29 @@
 
 </head>
 <body>
-    <a id="top"></a>
-    <div style="margin: 0 auto; text-align: center;">
-        <h1><a href="/">Nick's Site</a></h1>
-    </div>
+    <header>
+        <a id="top"></a>
+        <div style="margin: 0 auto; text-align: center;">
+            <h1><a href="/">Nick's Site</a></h1>
+        </div>
 
-    <div class="menu">
-        <p><a href="/sites/recommendations">Blog recommendations</a></p>
-        <p><a href="/sites/links">link collection</a></p>
-        <p><a href="/sites/privacy">Privacy Policy</a></p>
-        <p><a href="/sites/imprint">Imprint</a></p>
-        <p><a href="/feed.xml">RSS</a></p>
-    </div>
-
-    <div class="menu">
-        <p><a target="_blank" href="https://social.tchncs.de/@nickwasused">Mastodon</a></p>
-        <p><a target="_blank" href="https://github.com/Nickwasused">Github</a></p>
-        <p><a target="_blank" href="mailto:contact@nickwasused.com">Email</a></p>
-    </div>
-
-    <span class="menu">
-        <article class="content">
-            
-                <div style="margin: 0 auto; text-align: center; padding-top: 1%;">
-                    <h1>Fix the PS4 Time after replacing the CMOS Battery on Firmware version 9.0. (27.03.2022)</h1>
-                </div>
-            
-            <h2>The Problem</h2>
+        <div class="menu">
+            <p><a href="/sites/recommendations">Blog recommendations</a></p>
+            <p><a href="/sites/links">link collection</a></p>
+            <p><a href="/sites/privacy">Privacy Policy</a></p>
+            <p><a href="/sites/imprint">Imprint</a></p>
+            <p><a href="/feed.xml">RSS</a></p>
+        </div>
+    </header>
+    <main>
+        <span class="menu">
+            <article class="content">
+                
+                    <div style="margin: 0 auto; text-align: center; padding-top: 1%;">
+                        <h1>Fix the PS4 Time after replacing the CMOS Battery on Firmware version 9.0. (27.03.2022)</h1>
+                    </div>
+                
+                <h2>The Problem</h2>
 <p>After I replaced the CMOS Battery on my Base Model PS4, I noticed that it couldn't keep the time after a power loss. The PS4 is on firmware Version 9.0 where the <a href="https://web.archive.org/web/20220609110029/https://www.ps4storage.com/functional-cmos-battery-is-inevitably-required-by-ps4-and-ps5-system/">CMOS Time Bomb</a> was fixed. However, despite the fix, some games like Grand Theft Auto V (Version 1.38) with the <a href="https://github.com/illusion0001/illusion0001.github.io/blob/04223072dd1ba6cb5deb4ee7953bfc2e1430745f/_patch0/orbis/GTA5-Orbis.yml">No Intro</a> Patch were not able to start correctly (stuck at 90% Loading and heavy flickering).</p>
 <h2>The Fix</h2>
 <p>The fix is very simple, but a little scary to do on a Jailbroken PS4. You need to sync the time with a PSN Time Server. <strong>This has to be done once,</strong> after that the time will stay saved even after a power loss. The Time Server is probably just an NTP server.</p>
@@ -70,9 +66,10 @@
 <p>After you have done that, the PS4 should keep the correct time again.</p>
 <p>You need to use the network time because only this option sets the correct time in the Kernel-Clock.</p>
 
-            <hr />
-            <a href="#top" style="padding-bottom: 1.5%;">Back to top</a>
-        </article>
-    </span>
+                <hr />
+                <a href="#top" style="padding-bottom: 1.5%;">Back to top</a>
+            </article>
+        </span>
+    </main>
 </body>
 </html>

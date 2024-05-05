@@ -110,9 +110,9 @@ decoded skipper record: 1 967 17501094 -3678409 17484129 -4126259
 &lt;h1&gt;Using the generated file on the device&lt;/h1&gt;
 &lt;p&gt;To add a &lt;code&gt;ov2&lt;/code&gt; file to the device, I need to import it &lt;a href=&quot;https://plan.tomtom.com/de/&quot;&gt;here&lt;/a&gt;, Then it will magically transfer through &amp;quot;TomTom MyDrive Connect&amp;quot; onto the device. This happens really fast!&lt;/p&gt;
 &lt;h1&gt;sources and notes&lt;/h1&gt;
-&lt;p&gt;[1] https://archive.org/details/ttnavsdk3_manual_3.0_193
-[2] https://github.com/gordthompson/ov2optimizer, https://gordthompson.github.io/ov2optimizer/
-[3] I actually do not know how this exactly works!
+&lt;p&gt;[1] https://archive.org/details/ttnavsdk3_manual_3.0_193&lt;br /&gt;
+[2] https://github.com/gordthompson/ov2optimizer, https://gordthompson.github.io/ov2optimizer/&lt;br /&gt;
+[3] I actually do not know how this exactly works!&lt;br /&gt;
 [4] https://gordthompson.github.io/ov2optimizer/ov2FileFormat.html&lt;/p&gt;
 &lt;p&gt;You can find the generated &lt;code&gt;ov2&lt;/code&gt; files &lt;a href=&quot;https://github.com/bp-stations/station-data/tree/gh-pages/ov2&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;h3&gt;tags&lt;/h3&gt;
