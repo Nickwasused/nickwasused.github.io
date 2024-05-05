@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/simple.xslt" ?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:base="https://nickwasused.com/">
   <title>Nick&#39;s Site</title>
   <subtitle>This is a Tech focused blog where I write random posts.</subtitle>
@@ -15,8 +16,7 @@
     <link href="https://nickwasused.com/_posts/2024-03-01-ov2-tomtom-adventures/"/>
     <updated>2024-03-01T00:00:00Z</updated>
     <id>https://nickwasused.com/_posts/2024-03-01-ov2-tomtom-adventures/</id>
-    <content xml:lang="en" type="html">&lt;h1&gt;OV2 TomTom Adventures&lt;/h1&gt;
-&lt;p&gt;By chance, I have received an old version of the &lt;a href=&quot;https://tomtom.com/&quot;&gt;TomTom&lt;/a&gt; Start 52. The device has no Internet connection by itself, only through the TomTom software &amp;quot;&lt;a href=&quot;https://www.tomtom.com/en_us/navigation/mydrive-connect/&quot;&gt;TomTom MyDrive Connect&lt;/a&gt;&amp;quot;.&lt;/p&gt;
+    <content xml:lang="en" type="html">&lt;p&gt;By chance, I have received an old version of the &lt;a href=&quot;https://tomtom.com/&quot;&gt;TomTom&lt;/a&gt; Start 52. The device has no Internet connection by itself, only through the TomTom software &amp;quot;&lt;a href=&quot;https://www.tomtom.com/en_us/navigation/mydrive-connect/&quot;&gt;TomTom MyDrive Connect&lt;/a&gt;&amp;quot;.&lt;/p&gt;
 &lt;p&gt;On first connect, the Map of Europe got updated to the newest Version, as TomTom Devices usually get lifelong Map updates, at least for the one included at the time of purchase. I knew that you can save your own &lt;strong&gt;Points of Interest&lt;/strong&gt;&#39;s, in short &lt;strong&gt;POI&lt;/strong&gt;, as there were some saved already, but there is also the method of importing them, with &lt;strong&gt;OV2&lt;/strong&gt; files. (I still don&#39;t know what &lt;strong&gt;OV2&lt;/strong&gt; stands for.)&lt;/p&gt;
 &lt;h2&gt;POI (ov2) file format&lt;/h2&gt;
 &lt;p&gt;A &lt;code&gt;ov2&lt;/code&gt; file is a POI database, they contain multiple POIs. For that, the can have 4 record types:&lt;/p&gt;
