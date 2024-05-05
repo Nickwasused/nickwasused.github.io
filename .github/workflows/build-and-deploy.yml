@@ -26,29 +26,7 @@ jobs:
       - name: install pnpm
         run: npm i -g pnpm
 
-      - name: Get pnpm store directory
-        id: pnpm-cache-dir
-        shell: bash
-        run: echo "STORE_PATH=$(pnpm store path --silent)" >> ${GITHUB_OUTPUT}
-
-      - uses: actions/cache@v4
-        name: Setup pnpm cache
-        id: pnpm-cache
-        with:
-          path: ${{ steps.pnpm-cache-dir.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: ${{ runner.os }}-pnpm-store
-
-      - uses: actions/cache@v4
-        name: Setup npm cache
-        id: npm-cache
-        with:
-          path: "/home/runner/.npm/"
-          key: ${{ runner.os }}-npm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: ${{ runner.os }}-npm-store
-
       - name: Install packages
-        if: steps.pnpm-cache.outputs.cache-hit != 'true' && steps.npm-cache.outputs.cache-hit != 'true'
         run: pnpm i
 
       - name: run pnpm build
