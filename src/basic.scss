@@ -14,11 +14,14 @@ img {
     width: 50%;
 }
 
-h1 a,
-h2 a,
-.posts a {
-    color: black;
+.posts a,
+h1 a {
     text-decoration: none;
+    color: black;
+    
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 .menu {
@@ -56,7 +59,7 @@ pre {
     color: #666;
     page-break-inside: avoid;
     font-family: monospace;
-    font-size: 0.8rem;
+    font-size: 0.8em;
     line-height: 1.6;
     margin-bottom: 1.6em;
     max-width: 100%;

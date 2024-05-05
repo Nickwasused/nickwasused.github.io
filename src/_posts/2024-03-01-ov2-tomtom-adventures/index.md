@@ -128,10 +128,10 @@ To add a `ov2` file to the device, I need to import it [here](https://plan.tomto
 
 # sources and notes
 
-[1] https://archive.org/details/ttnavsdk3_manual_3.0_193
-[2] https://github.com/gordthompson/ov2optimizer, https://gordthompson.github.io/ov2optimizer/
-[3] I actually do not know how this exactly works!
-[4] https://gordthompson.github.io/ov2optimizer/ov2FileFormat.html
+[1] https://archive.org/details/ttnavsdk3_manual_3.0_193  
+[2] https://github.com/gordthompson/ov2optimizer, https://gordthompson.github.io/ov2optimizer/  
+[3] I actually do not know how this exactly works!  
+[4] https://gordthompson.github.io/ov2optimizer/ov2FileFormat.html  
 
 You can find the generated `ov2` files [here](https://github.com/bp-stations/station-data/tree/gh-pages/ov2).
 
