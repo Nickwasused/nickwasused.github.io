@@ -35,10 +35,9 @@ jobs:
         name: Setup pnpm cache
         id: pnpm-cache
         with:
-          path: ${{ steps.pnpm-cache-dir.outcome.STORE_PATH }}
+          path: ${{ steps.pnpm-cache-dir.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          restore-keys: ${{ runner.os }}-pnpm-store
 
       - name: Install packages
         if: steps.pnpm-cache.outputs.cache-hit != 'true'
