@@ -5,8 +5,6 @@ background: white
 snippet: By chance, I have received an old version of the TomTom Start 52. 
 tags: ["TomTom", "Ov2", "Maps"]
 ---
-# OV2 TomTom Adventures
-
 By chance, I have received an old version of the [TomTom](https://tomtom.com) Start 52. The device has no Internet connection by itself, only through the TomTom software "[TomTom MyDrive Connect](https://www.tomtom.com/en_us/navigation/mydrive-connect/)".
 
 On first connect, the Map of Europe got updated to the newest Version, as TomTom Devices usually get lifelong Map updates, at least for the one included at the time of purchase. I knew that you can save your own **Points of Interest**'s, in short **POI**, as there were some saved already, but there is also the method of importing them, with **OV2** files. (I still don't know what **OV2** stands for.)

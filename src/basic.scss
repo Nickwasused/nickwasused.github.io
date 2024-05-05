@@ -1,7 +1,6 @@
 html {
-    font-size: 16px;
-    font-family: system-ui, "Segoe UI", "Ubuntu", "Roboto", "Noto Sans",
-        "Droid Sans", sans-serif;
+    font-size: 18px;
+    font-family: system-ui, "Segoe UI", "Ubuntu", "Roboto", "Noto Sans", "Droid Sans", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     word-wrap: break-word;
@@ -15,10 +14,6 @@ img {
     width: 50%;
 }
 
-.wrap {
-    display: flex;
-}
-
 h1 a,
 h2 a,
 .posts a {
@@ -26,49 +21,25 @@ h2 a,
     text-decoration: none;
 }
 
-.nav {
-    width: 15%;
-    order: 2;
-    padding: 1% 1%;
+.menu {
+    display: flex;
+    flex: auto;
+    flex-direction: row;
+    justify-content: center;
 
-    a {
-        color: black;
-        text-decoration: none;
-        padding: 0.5%;
+    p {
+        padding-right: 1%;
     }
 }
 
 .content {
-    width: 85%;
+    width: 75%;
     order: 3;
 
     li {
         margin: .5%;
     }
 }
-
-@media (max-width: 1220px) {
-    .wrap {
-        flex-wrap: wrap;
-    }
-
-    .content {
-        order: 2;
-        width: 100%;
-    }
-
-    .nav {
-        order: 3;
-        width: 100%;
-    }
-}
-
-
-
-.post-info {
-    padding-bottom: 2%;
-}
-
 
 // https://stackoverflow.com/a/48694906
 pre {
@@ -78,7 +49,7 @@ pre {
     color: #666;
     page-break-inside: avoid;
     font-family: monospace;
-    font-size: 15px;
+    font-size: 0.8rem;
     line-height: 1.6;
     margin-bottom: 1.6em;
     max-width: 100%;

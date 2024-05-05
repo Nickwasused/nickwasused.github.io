@@ -23,31 +23,36 @@
 {% endif %}
 </head>
 <body>
-    <h1 class="title"><a href="/">Nick's Site</a></h1>
-    
-    <span class="wrap">
-        <div class="nav">
-            <p><a href="/sites/recommendations">Blog recommendations</a></p>
-            <p><a href="/sites/links">link collection</a></p>
-            <p><a href="/sites/privacy">Privacy Policy</a></p>
-            <p><a href="/sites/imprint">Imprint</a></p>
-            <p><a href="/feed.xml">RSS</a></p>
-            &nbsp;
-            <p><a target="_blank" href="https://social.tchncs.de/@nickwasused">Mastodon</a></p>
-            <p><a target="_blank" href="https://github.com/Nickwasused">Github</a></p>
-            <p><a target="_blank" href="mailto:contact@nickwasused.com">Email</a></p>
-        </div>
+    <a id="top"></a>
+    <div style="margin: 0 auto; text-align: center;">
+        <h1><a href="/">Nick's Site</a></h1>
+    </div>
 
-        <div class="content">
+    <div class="menu">
+        <p><a href="/sites/recommendations">Blog recommendations</a></p>
+        <p><a href="/sites/links">link collection</a></p>
+        <p><a href="/sites/privacy">Privacy Policy</a></p>
+        <p><a href="/sites/imprint">Imprint</a></p>
+        <p><a href="/feed.xml">RSS</a></p>
+    </div>
+
+    <div class="menu">
+        <p><a target="_blank" href="https://social.tchncs.de/@nickwasused">Mastodon</a></p>
+        <p><a target="_blank" href="https://github.com/Nickwasused">Github</a></p>
+        <p><a target="_blank" href="mailto:contact@nickwasused.com">Email</a></p>
+    </div>
+
+    <span class="menu">
+        <article class="content">
             {% if snippet %}
-                <div class="post-info">
-                    <h1>{{ title }}</h1>
-                    <h2>{{ date | custom_date }}</h2>
+                <div style="margin: 0 auto; text-align: center; padding-top: 1%;">
+                    <h1>{{ title }} ({{ date | custom_date }})</h1>
                 </div>
             {% endif %}
             {{ content }}
             <hr />
-        </div>
+            {% if snippet %}<a href="#top" style="padding-bottom: 1.5%;">Back to top</a>{% endif %}
+        </article>
     </span>
 </body>
 </html>
