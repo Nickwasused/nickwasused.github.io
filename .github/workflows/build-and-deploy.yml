@@ -22,19 +22,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: install pnpm
         run: npm i -g pnpm
 
-      - name: cache packages
-        id: pnpm-cache
-        uses: actions/cache@v4
-        with:
-          path: "~/.pnpm-store"
-          key: ${{ runner.os }}-pnpm-cache-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**/package.json') }}
-
       - name: Install packages
-        if: steps.pnpm-cache.outputs.cache-hit != 'true'
         run: pnpm i
 
       - name: run pnpm build
