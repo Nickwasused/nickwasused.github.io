@@ -11,6 +11,7 @@ module.exports = function(eleventyConfig) {
     eleventyConfig.addPassthroughCopy("src/_redirects");
     eleventyConfig.addPassthroughCopy("src/CNAME");
     eleventyConfig.addPassthroughCopy("src/robots.txt");
+    eleventyConfig.addPassthroughCopy("src/simple.xslt");
     eleventyConfig.addPassthroughCopy("src/{,!(_site)/**/}*.webp");
     eleventyConfig.addPassthroughCopy("src/{,!(_site)/**/}*.avif");
     eleventyConfig.addPlugin(pluginRss);
