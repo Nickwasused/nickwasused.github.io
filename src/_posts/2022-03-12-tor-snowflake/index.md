@@ -218,8 +218,15 @@ service snowflake start
 # Source
 
 ### For installing GO
-[https://www.jeremymorgan.com/tutorials/raspberry-pi/install-go-raspberry-pi/](https://web.archive.org/web/20220505171516/https://www.jeremymorgan.com/tutorials/raspberry-pi/install-go-raspberry-pi/)
+[https://www.jeremymorgan.com/tutorials/raspberry-pi/install-go-raspberry-pi/](https://www.jeremymorgan.com/tutorials/raspberry-pi/install-go-raspberry-pi/)
 
 ### Building Tor Snowflake
 [https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/-/wikis/home](https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/-/wikis/home)
 
+### archive
+
+The following links are archived versions, as the main ones could break.
+
+[https://go.dev/dl/go1.17.8.linux-arm64.tar.gz](https://web.archive.org/web/20240509215400/https://dl.google.com/go/go1.17.8.linux-arm64.tar.gz)  
+[https://www.jeremymorgan.com/tutorials/raspberry-pi/install-go-raspberry-pi/](https://web.archive.org/web/20220505171516/https://www.jeremymorgan.com/tutorials/raspberry-pi/install-go-raspberry-pi/)  
+[https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/-/wikis/home](https://web.archive.org/web/20220324185808/https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/-/wikis/home)  

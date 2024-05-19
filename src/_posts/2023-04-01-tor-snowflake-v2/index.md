@@ -160,3 +160,11 @@ Start by creating a config file for snowflake: `sudo nano /etc/logrotate.d/snowf
 ```
 
 To finalize everything, reboot the system: `sudo reboot`.
+
+
+### archive
+
+The following links are archived versions, as the main ones could break.
+
+[https://snowflake.torproject.org/](https://web.archive.org/web/20240519172246/https://snowflake.torproject.org/)  
+[https://go.dev/](https://web.archive.org/web/20240519172501/https://go.dev/)  

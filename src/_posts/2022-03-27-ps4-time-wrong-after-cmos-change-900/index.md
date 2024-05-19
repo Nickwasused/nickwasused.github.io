@@ -32,3 +32,11 @@ If you don`t know what Pi-hole is the look [here](https://pi-hole.net/).
 After you have done that, the PS4 should keep the correct time again.
 
 You need to use the network time because only this option sets the correct time in the Kernel-Clock.
+
+### archive
+
+The following links are archived versions, as the main ones could break.
+
+[https://www.ps4storage.com/functional-cmos-battery-is-inevitably-required-by-ps4-and-ps5-system/](https://web.archive.org/web/20220609110029/https://www.ps4storage.com/functional-cmos-battery-is-inevitably-required-by-ps4-and-ps5-system/)  
+[https://github.com/illusion0001/illusion0001.github.io/blob/04223072dd1ba6cb5deb4ee7953bfc2e1430745f/_patch0/orbis/GTA5-Orbis.yml](https://web.archive.org/web/20240519173341/https://github.com/illusion0001/illusion0001.github.io/blob/04223072dd1ba6cb5deb4ee7953bfc2e1430745f/_patch0/orbis/GTA5-Orbis.yml)  
+[https://pi-hole.net/](https://web.archive.org/web/20240519173456/https://pi-hole.net/)  

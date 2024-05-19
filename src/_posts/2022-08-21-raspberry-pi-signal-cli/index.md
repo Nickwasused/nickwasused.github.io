@@ -158,3 +158,10 @@ Finally the signal-cli should report it`s version with:
 [https://github.com/AsamK/signal-cli#install-system-wide-on-linux](https://github.com/AsamK/signal-cli#install-system-wide-on-linux)
 [https://github.com/AsamK/signal-cli/wiki/Provide-native-lib-for-libsignal#manual-build](https://github.com/AsamK/signal-cli/wiki/Provide-native-lib-for-libsignal#manual-build)  
 [https://github.com/signalapp/libsignal](https://github.com/signalapp/libsignal)
+
+### archive
+
+The following links are archived versions, as the main ones could break.
+
+[https://github.com/MichaIng/DietPi](https://web.archive.org/web/20240519173122/https://github.com/MichaIng/DietPi)  
+[https://github.com/AsamK/signal-cli/releases](https://web.archive.org/web/20240519173219/https://github.com/AsamK/signal-cli/releases)  

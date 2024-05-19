@@ -123,7 +123,7 @@ You can see the black borders again, the line should be straight but is bent, th
 
 # Using the generated file on the device
 
-To add a `ov2` file to the device, I need to import it [here](https://plan.tomtom.com/de/), Then it will magically transfer through "TomTom MyDrive Connect" onto the device. This happens really fast!
+To add a `ov2` file to the device, I need to import it [here](https://plan.tomtom.com/en/), Then it will magically transfer through "TomTom MyDrive Connect" onto the device. This happens really fast!
 
 
 # sources and notes
@@ -134,6 +134,18 @@ To add a `ov2` file to the device, I need to import it [here](https://plan.tomto
 [4] https://gordthompson.github.io/ov2optimizer/ov2FileFormat.html  
 
 You can find the generated `ov2` files [here](https://github.com/bp-stations/station-data/tree/gh-pages/ov2).
+
+
+### archive
+
+The following links are archived versions, as the main ones could break.
+
+[https://www.tomtom.com/en_us/navigation/mydrive-connect/](https://web.archive.org/web/20240519171216/https://www.tomtom.com/en_us/navigation/mydrive-connect/)  
+[https://gordthompson.github.io/ov2optimizer/](https://web.archive.org/web/20240519171109/https://gordthompson.github.io/ov2optimizer/)  
+[https://bp.com](https://web.archive.org/web/20240519171603/https://www.bp.com/)  
+[https://tankpreise.uk](https://web.archive.org/web/20240519171604/https://tankpreise.uk/)  
+[https://gordthompson.github.io/ov2optimizer/ov2FileFormat.html](https://web.archive.org/web/20240519171127/https://gordthompson.github.io/ov2optimizer/ov2FileFormat.html)  
+[https://plan.tomtom.com/en/](https://web.archive.org/web/20240519172046/https://plan.tomtom.com/en/)  
 
 
 ### tags

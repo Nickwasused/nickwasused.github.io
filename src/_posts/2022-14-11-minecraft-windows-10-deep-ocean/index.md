@@ -16,7 +16,7 @@ But I haven't played the Game since sometime in 2021, so I tried to give it anot
 
 # Deep Ocean
 
-I downloaded the launcher from https://minecraft.net/ and installed it. After that I tried to log in with my Microsoft Account, but every time I clicked on the button an error popped up stating that there was some type of error with the error code being `deep ocean`.  
+I downloaded the launcher from [https://minecraft.net/](https://minecraft.net/) and installed it. After that I tried to log in with my Microsoft Account, but every time I clicked on the button an error popped up stating that there was some type of error with the error code being `deep ocean`.  
   
 So I did the first thing that came to my mind: clicking the info link in the error message. That turned out to be a `404`.  
   
@@ -50,3 +50,11 @@ After logging in again, everything was working.
 - log out of the Microsoft Store, the Minecraft Launcher and the Xbox App
 - log back in
 - enjoy the Game
+
+### archive
+
+The following links are archived versions, as the main ones could break.
+
+[https://minecraft.net/](https://web.archive.org/web/20240519172605/https://www.minecraft.net/en-us)  
+[https://www.youtube.com/watch?v=dmBJaZzQZco](https://web.archive.org/web/20240519173002/https://www.youtube.com/watch?v=dmBJaZzQZco)  
+
