@@ -108,13 +108,21 @@ decoded skipper record: 1 967 17501094 -3678409 17484129 -4126259
 &lt;img src=&quot;https://nickwasused.com/_posts/2024-03-01-ov2-tomtom-adventures/map2.avif&quot; alt=&quot;Map example&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;You can see the black borders again, the line should be straight but is bent, this is just a display issue!&lt;/p&gt;
 &lt;h1&gt;Using the generated file on the device&lt;/h1&gt;
-&lt;p&gt;To add a &lt;code&gt;ov2&lt;/code&gt; file to the device, I need to import it &lt;a href=&quot;https://plan.tomtom.com/de/&quot;&gt;here&lt;/a&gt;, Then it will magically transfer through &amp;quot;TomTom MyDrive Connect&amp;quot; onto the device. This happens really fast!&lt;/p&gt;
+&lt;p&gt;To add a &lt;code&gt;ov2&lt;/code&gt; file to the device, I need to import it &lt;a href=&quot;https://plan.tomtom.com/en/&quot;&gt;here&lt;/a&gt;, Then it will magically transfer through &amp;quot;TomTom MyDrive Connect&amp;quot; onto the device. This happens really fast!&lt;/p&gt;
 &lt;h1&gt;sources and notes&lt;/h1&gt;
 &lt;p&gt;[1] https://archive.org/details/ttnavsdk3_manual_3.0_193&lt;br /&gt;
 [2] https://github.com/gordthompson/ov2optimizer, https://gordthompson.github.io/ov2optimizer/&lt;br /&gt;
 [3] I actually do not know how this exactly works!&lt;br /&gt;
 [4] https://gordthompson.github.io/ov2optimizer/ov2FileFormat.html&lt;/p&gt;
 &lt;p&gt;You can find the generated &lt;code&gt;ov2&lt;/code&gt; files &lt;a href=&quot;https://github.com/bp-stations/station-data/tree/gh-pages/ov2&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;archive&lt;/h3&gt;
+&lt;p&gt;The following links are archived versions, as the main ones could break.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20240519171216/https://www.tomtom.com/en_us/navigation/mydrive-connect/&quot;&gt;https://www.tomtom.com/en_us/navigation/mydrive-connect/&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20240519171109/https://gordthompson.github.io/ov2optimizer/&quot;&gt;https://gordthompson.github.io/ov2optimizer/&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20240519171603/https://www.bp.com/&quot;&gt;https://bp.com&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20240519171604/https://tankpreise.uk/&quot;&gt;https://tankpreise.uk&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20240519171127/https://gordthompson.github.io/ov2optimizer/ov2FileFormat.html&quot;&gt;https://gordthompson.github.io/ov2optimizer/ov2FileFormat.html&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20240519172046/https://plan.tomtom.com/en/&quot;&gt;https://plan.tomtom.com/en/&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;tags&lt;/h3&gt;
 &lt;p&gt;#tomtom #ov2&lt;/p&gt;
 </content>
@@ -228,6 +236,10 @@ WantedBy=multi-user.target
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;To finalize everything, reboot the system: &lt;code&gt;sudo reboot&lt;/code&gt;.&lt;/p&gt;
+&lt;h3&gt;archive&lt;/h3&gt;
+&lt;p&gt;The following links are archived versions, as the main ones could break.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20240519172246/https://snowflake.torproject.org/&quot;&gt;https://snowflake.torproject.org/&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20240519172501/https://go.dev/&quot;&gt;https://go.dev/&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -236,7 +248,7 @@ WantedBy=multi-user.target
     <updated>2023-02-17T00:00:00Z</updated>
     <id>https://nickwasused.com/_posts/2023-02-17-raspberry-pi3-ethernet-led/</id>
     <content xml:lang="en" type="html">&lt;h1&gt;Notice&lt;/h1&gt;
-&lt;p&gt;This is essentially a copy of this Stackexchange post: &lt;a href=&quot;https://web.archive.org/web/20230401143350/https://raspberrypi.stackexchange.com/questions/117632/turn-off-external-leds-on-raspberry-pi-3/130495&quot;&gt;https://raspberrypi.stackexchange.com/questions/117632/turn-off-external-leds-on-raspberry-pi-3/130495#130495&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This is essentially a copy of this Stackexchange post: &lt;a href=&quot;https://raspberrypi.stackexchange.com/questions/117632/turn-off-external-leds-on-raspberry-pi-3/130495#130495&quot;&gt;https://raspberrypi.stackexchange.com/questions/117632/turn-off-external-leds-on-raspberry-pi-3/130495#130495&lt;/a&gt;&lt;/p&gt;
 &lt;h1&gt;Post&lt;/h1&gt;
 &lt;p&gt;At first, check if you have the correct Model of the Raspberry Pi 3b:&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;cat /sys/firmware/devicetree/base/model&lt;/code&gt;&lt;/p&gt;
@@ -251,6 +263,10 @@ WantedBy=multi-user.target
 &lt;p&gt;The following command will disable both Ethernet LEDs.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;sudo ./lan951x-led-ctl --fdx=0 --lnk=0 --spd=0&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;You need to apply this on every restart!&lt;/p&gt;
+&lt;h3&gt;archive&lt;/h3&gt;
+&lt;p&gt;The following links are archived versions, as the main ones could break.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20230401143350/https://raspberrypi.stackexchange.com/questions/117632/turn-off-external-leds-on-raspberry-pi-3/130495&quot;&gt;https://raspberrypi.stackexchange.com/questions/117632/turn-off-external-leds-on-raspberry-pi-3/130495#130495&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20240519172626/https://github.com/dumpsite/lan951x-led-ctl&quot;&gt;https://github.com/dumpsite/lan951x-led-ctl&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -263,7 +279,7 @@ WantedBy=multi-user.target
 &lt;p&gt;After another two emails, I finally migrated my Account in October.&lt;/p&gt;
 &lt;p&gt;But I haven&#39;t played the Game since sometime in 2021, so I tried to give it another shot today.&lt;/p&gt;
 &lt;h1&gt;Deep Ocean&lt;/h1&gt;
-&lt;p&gt;I downloaded the launcher from https://minecraft.net/ and installed it. After that I tried to log in with my Microsoft Account, but every time I clicked on the button an error popped up stating that there was some type of error with the error code being &lt;code&gt;deep ocean&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I downloaded the launcher from &lt;a href=&quot;https://minecraft.net/&quot;&gt;https://minecraft.net/&lt;/a&gt; and installed it. After that I tried to log in with my Microsoft Account, but every time I clicked on the button an error popped up stating that there was some type of error with the error code being &lt;code&gt;deep ocean&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;So I did the first thing that came to my mind: clicking the info link in the error message. That turned out to be a &lt;code&gt;404&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;The next thing I tried was disabling Pi-Hole for 30 seconds and flushing the DNS cache, it was possible that I was blocking some domains that Microsoft needs for their services. But this has not worked.&lt;/p&gt;
 &lt;h1&gt;YouTube tutorials&lt;/h1&gt;
@@ -286,6 +302,10 @@ After logging in again, everything was working.&lt;/p&gt;
 &lt;li&gt;log back in&lt;/li&gt;
 &lt;li&gt;enjoy the Game&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h3&gt;archive&lt;/h3&gt;
+&lt;p&gt;The following links are archived versions, as the main ones could break.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20240519172605/https://www.minecraft.net/en-us&quot;&gt;https://minecraft.net/&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20240519173002/https://www.youtube.com/watch?v=dmBJaZzQZco&quot;&gt;https://www.youtube.com/watch?v=dmBJaZzQZco&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -392,6 +412,10 @@ and finally copy the file to that folder:&lt;br /&gt;
 &lt;p&gt;&lt;a href=&quot;https://github.com/AsamK/signal-cli#install-system-wide-on-linux&quot;&gt;https://github.com/AsamK/signal-cli#install-system-wide-on-linux&lt;/a&gt;
 &lt;a href=&quot;https://github.com/AsamK/signal-cli/wiki/Provide-native-lib-for-libsignal#manual-build&quot;&gt;https://github.com/AsamK/signal-cli/wiki/Provide-native-lib-for-libsignal#manual-build&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&quot;https://github.com/signalapp/libsignal&quot;&gt;https://github.com/signalapp/libsignal&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;archive&lt;/h3&gt;
+&lt;p&gt;The following links are archived versions, as the main ones could break.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20240519173122/https://github.com/MichaIng/DietPi&quot;&gt;https://github.com/MichaIng/DietPi&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20240519173219/https://github.com/AsamK/signal-cli/releases&quot;&gt;https://github.com/AsamK/signal-cli/releases&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -419,6 +443,11 @@ and finally copy the file to that folder:&lt;br /&gt;
 &lt;/ol&gt;
 &lt;p&gt;After you have done that, the PS4 should keep the correct time again.&lt;/p&gt;
 &lt;p&gt;You need to use the network time because only this option sets the correct time in the Kernel-Clock.&lt;/p&gt;
+&lt;h3&gt;archive&lt;/h3&gt;
+&lt;p&gt;The following links are archived versions, as the main ones could break.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20220609110029/https://www.ps4storage.com/functional-cmos-battery-is-inevitably-required-by-ps4-and-ps5-system/&quot;&gt;https://www.ps4storage.com/functional-cmos-battery-is-inevitably-required-by-ps4-and-ps5-system/&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20240519173341/https://github.com/illusion0001/illusion0001.github.io/blob/04223072dd1ba6cb5deb4ee7953bfc2e1430745f/_patch0/orbis/GTA5-Orbis.yml&quot;&gt;https://github.com/illusion0001/illusion0001.github.io/blob/04223072dd1ba6cb5deb4ee7953bfc2e1430745f/_patch0/orbis/GTA5-Orbis.yml&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20240519173456/https://pi-hole.net/&quot;&gt;https://pi-hole.net/&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -521,6 +550,14 @@ ACCESS_TOKEN_SECRET=&amp;quot;&amp;quot;
 &lt;img src=&quot;https://nickwasused.com/_posts/2022-03-15-twitter-block-advertisers/glitch-setup.webp&quot; alt=&quot;glitch-setup&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;After that the Page will tell you how many Accounts got blocked.
 &lt;img src=&quot;https://nickwasused.com/_posts/2022-03-15-twitter-block-advertisers/glitch-final.webp&quot; alt=&quot;glitch-final&quot; /&gt;&lt;/p&gt;
+&lt;h3&gt;archive&lt;/h3&gt;
+&lt;p&gt;The following links are archived versions, as the main ones could break.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20240519173755/https://ublockorigin.com/&quot;&gt;https://ublockorigin.com/&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20221030110754/https://developer.twitter.com/en&quot;&gt;https://developer.twitter.com/&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20240519173959/https://github.com/Nickwasused/twitter-data-export-to-blocklist&quot;&gt;https://github.com/Nickwasused/twitter-data-export-to-blocklist&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20240519112608/https://www.python.org/&quot;&gt;https://www.python.org/&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20240519105333/https://pastebin.com/&quot;&gt;https://pastebin.com&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20240308204003/https://twitter-blocklist-auth.glitch.me/&quot;&gt;https://twitter-blocklist-auth.glitch.me/&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -552,6 +589,11 @@ Step 3,4 and 5:
 &lt;p&gt;After that, you just need to go to &lt;code&gt;http://192.168.1.1&lt;/code&gt; and there is the Web interface.
 The OpenWrt Webinterface LuCI:
 &lt;img src=&quot;https://nickwasused.com/_posts/2022-03-12-tp-link-archer-c7-v5-openwrt/interface.webp&quot; alt=&quot;Webinterface&quot; /&gt;&lt;/p&gt;
+&lt;h3&gt;archive&lt;/h3&gt;
+&lt;p&gt;The following links are archived versions, as the main ones could break.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20220609111144/https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5&quot;&gt;https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20220626170133/https://downloads.openwrt.org/releases/21.02.2/targets/ath79/generic/openwrt-21.02.2-ath79-generic-tplink_archer-a7-v5-squashfs-factory.bin&quot;&gt;https://downloads.openwrt.org/releases/21.02.2/targets/ath79/generic/openwrt-21.02.2-ath79-generic-tplink_archer-a7-v5-squashfs-factory.bin&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20220609111427/https://emulator.tp-link.com/archer-c7-v5/index.html&quot;&gt;https://emulator.tp-link.com/archer-c7-v5/index.html&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -700,9 +742,14 @@ go build
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h1&gt;Source&lt;/h1&gt;
 &lt;h3&gt;For installing GO&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20220505171516/https://www.jeremymorgan.com/tutorials/raspberry-pi/install-go-raspberry-pi/&quot;&gt;https://www.jeremymorgan.com/tutorials/raspberry-pi/install-go-raspberry-pi/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.jeremymorgan.com/tutorials/raspberry-pi/install-go-raspberry-pi/&quot;&gt;https://www.jeremymorgan.com/tutorials/raspberry-pi/install-go-raspberry-pi/&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;Building Tor Snowflake&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&quot;https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/-/wikis/home&quot;&gt;https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/-/wikis/home&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;archive&lt;/h3&gt;
+&lt;p&gt;The following links are archived versions, as the main ones could break.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20240509215400/https://dl.google.com/go/go1.17.8.linux-arm64.tar.gz&quot;&gt;https://go.dev/dl/go1.17.8.linux-arm64.tar.gz&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20220505171516/https://www.jeremymorgan.com/tutorials/raspberry-pi/install-go-raspberry-pi/&quot;&gt;https://www.jeremymorgan.com/tutorials/raspberry-pi/install-go-raspberry-pi/&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20220324185808/https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/-/wikis/home&quot;&gt;https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/-/wikis/home&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -713,7 +760,7 @@ go build
     <content xml:lang="en" type="html">&lt;h1&gt;Disclaimer&lt;/h1&gt;
 &lt;p&gt;This guide is a little outdated, you should use OpenWrt version 21. I have created an updated Guide &lt;a href=&quot;https://nickwasused.com/2022/03/12/tp-link-archer-c7-v5-openwrt&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;h1&gt;The Technical Details&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20220609111144/https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5&quot;&gt;Techdata: TP-Link Archer C7 AC1750 v5&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5&quot;&gt;Techdata: TP-Link Archer C7 AC1750 v5&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;(If you don´t want to read all of this in short it means that the Router should have enough power to run current OpenWrt versions.)&lt;/p&gt;
 &lt;h1&gt;The Problem with the Versions&lt;/h1&gt;
 &lt;p&gt;The Archer C7 is supported by two major versions of OpenWrt: Version 18 and 19. But in the Forum for the Archer C7 are some threads that point out Issues with the latest release. So I am going to use the Router with Version 18 because it seems more stable.&lt;/p&gt;
@@ -726,7 +773,7 @@ go build
 &lt;p&gt;Version 19: &lt;a href=&quot;https://downloads.openwrt.org/releases/19.07.7/targets/ath79/generic/&quot;&gt;https://downloads.openwrt.org/releases/19.07.7/targets/ath79/generic/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Version 18: &lt;a href=&quot;https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/&quot;&gt;https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Version 18 alternative:&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20210405170819/https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/&quot;&gt;https://web.archive.org/web/20210405170819/https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/&quot;&gt;https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;The Latest Version I have found was: &lt;a href=&quot;https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/openwrt-18.06.9-ar71xx-generic-archer-c7-v5-squashfs-factory.bin&quot;&gt;https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/openwrt-18.06.9-ar71xx-generic-archer-c7-v5-squashfs-factory.bin&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;After you have the right image you need to rename it to:&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;firmware.bin&lt;/code&gt;&lt;/p&gt;
@@ -745,6 +792,13 @@ Step 3,4 and 5:
 &lt;p&gt;After that, you just need to go to &lt;code&gt;http://192.168.1.1&lt;/code&gt; and there is the Web interface.
 The OpenWrt Webinterface LuCI:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://nickwasused.com/_posts/2021-04-08-tp-link-archer-c7-v5-openwrt/interface.webp&quot; alt=&quot;Webinterface&quot; /&gt;&lt;/p&gt;
+&lt;h3&gt;archive&lt;/h3&gt;
+&lt;p&gt;The following links are archived versions, as the main ones could break.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20220609111144/https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5&quot;&gt;https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20210322034837/https://downloads.openwrt.org/releases/19.07.7/targets/ath79/generic/&quot;&gt;https://downloads.openwrt.org/releases/19.07.7/targets/ath79/generic/&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20240309142808/https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/&quot;&gt;https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20220619161640/https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/openwrt-18.06.9-ar71xx-generic-archer-c7-v5-squashfs-factory.bin&quot;&gt;https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/openwrt-18.06.9-ar71xx-generic-archer-c7-v5-squashfs-factory.bin&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://web.archive.org/web/20220609111427/https://emulator.tp-link.com/archer-c7-v5/index.html&quot;&gt;https://emulator.tp-link.com/archer-c7-v5/index.html&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
 </feed>
