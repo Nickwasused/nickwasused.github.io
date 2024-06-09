@@ -1,5 +1,5 @@
 html {
-    font-size: 18px;
+    font-size: medium;
     font-family: system-ui, "Segoe UI", "Ubuntu", "Roboto", "Noto Sans", "Droid Sans", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -12,6 +12,19 @@ img {
     display: block;
     padding: 1% 0% 1%;
     width: 50%;
+}
+
+.center {
+    text-align: center;
+    margin-bottom: .335em;
+}
+
+.post {
+    h2 {
+        margin-bottom: .25em;
+    }
+
+    margin-bottom: 1.5em;
 }
 
 .posts a,
@@ -29,6 +42,7 @@ h1 a {
     flex: auto;
     flex-direction: row;
     justify-content: center;
+    margin-bottom: 1.5em;
 
     p {
         padding-right: 1%;
@@ -46,6 +60,20 @@ h1 a {
     width: 75%;
     order: 3;
 
+    h1 {
+        margin-bottom: .335em;
+    }
+
+    h2 {
+        margin-bottom: .75em;
+        margin-top: 2em;
+    }
+
+    h3 {
+        margin-top: 1.5em;
+        margin-bottom: .415em;
+    }
+
     li {
         margin: .5%;
     }
@@ -59,7 +87,7 @@ pre {
     color: #666;
     page-break-inside: avoid;
     font-family: monospace;
-    font-size: 0.8em;
+    font-size: 1rem;
     line-height: 1.6;
     margin-bottom: 1.6em;
     max-width: 100%;
