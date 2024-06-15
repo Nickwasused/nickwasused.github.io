@@ -34,6 +34,7 @@ Exported messages are split into chunks of 10000 messages because if an export f
 In this example, a [server](https://archive.org/details/discord-371265202378899476-12062024) with 1.601.026 messages is shown.
 
 One thing I do not do is export media. Exporting all messages is already taking a while. In the case of the 1.601.026 messages, it took around 13 hours.
+The worst offenders in this case are three types of channels: welcome, goodbye and counting. These channels aren't that worth to archive in my opinion, but I still archive them. (My personal, most hated channel type are the counting channels!)
 
 ## Self bot
 
