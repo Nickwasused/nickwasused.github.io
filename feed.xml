@@ -5,12 +5,92 @@
   <subtitle>This is a Tech focused blog where I write random posts.</subtitle>
   <link href="https://nickwasused.com/feed.xml" rel="self"/>
   <link href="https://nickwasused.com/"/>
-  <updated>2024-03-01T00:00:00Z</updated>
+  <updated>2024-06-15T00:00:00Z</updated>
   <id>https://nickwasused.com/</id>
   <author>
     <name>Nick</name>
     <email>contact@nickwasused.com</email>
   </author>
+  <entry>
+    <title>Archiving Discord Servers</title>
+    <link href="https://nickwasused.com/_posts/2024-06-14-discord-archiving/"/>
+    <updated>2024-06-15T00:00:00Z</updated>
+    <id>https://nickwasused.com/_posts/2024-06-14-discord-archiving/</id>
+    <content xml:lang="en" type="html">&lt;p&gt;(Note: A &lt;code&gt;guild&lt;/code&gt; is a Discord server.)&lt;/p&gt;
+&lt;h1&gt;Closed system&lt;/h1&gt;
+&lt;p&gt;Discord is a social network that requires an account to use; additionally, an invitation to a server is required to see its messages based on a permission system.
+This means no one can request all messages on Discord.
+In contrast, on a forum, I could easily download a copy of all posts or make snapshots of pages with the Wayback Machine.&lt;/p&gt;
+&lt;p&gt;I cannot do this on Discord, and this is a problem!&lt;/p&gt;
+&lt;p&gt;Let&#39;s say we have an admin called &lt;code&gt;steve&lt;/code&gt; with a forum called &amp;quot;I Love USB&amp;quot;. Here are two scenarios:&lt;/p&gt;
+&lt;p&gt;Steve doesn&#39;t like his community anymore:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;He removes his hosted phpBB instance, then there is a good chance that a dump is on archive.org, and if not, then there would be pages saved on the Wayback Machine.&lt;/li&gt;
+&lt;li&gt;He deletes the Discord server: There would be no copy on the Wayback Machine, as it cannot be saved by the crawler. Great, now nothing exists, except maybe a few screenshots of the server. Or not?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;Discord Chat Exporter&lt;/h1&gt;
+&lt;p&gt;The &lt;a href=&quot;https://github.com/Tyrrrz/DiscordChatExporter&quot;&gt;DiscordChatExporter&lt;/a&gt; can export whole Discord servers with threads in &lt;code&gt;json&lt;/code&gt;. These files can then be uploaded to archive.org.
+With the &lt;a href=&quot;https://github.com/slatinsky/DiscordChatExporter-frontend&quot;&gt;DiscordChatExporter-frontend&lt;/a&gt; I can then view the server, like within the Discord client. (Loading messages takes a little longer.)
+&lt;img src=&quot;https://nickwasused.com/_posts/2024-06-14-discord-archiving/export.avif&quot; alt=&quot;Exported Server Example&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Exported messages are split into chunks of 10000 messages because if an export fails at a large channel, I can continue from that point. But usually I try to make one continuous export.&lt;/p&gt;
+&lt;p&gt;In this example, a &lt;a href=&quot;https://archive.org/details/discord-371265202378899476-12062024&quot;&gt;server&lt;/a&gt; with 1.601.026 messages is shown.&lt;/p&gt;
+&lt;p&gt;One thing I do not do is export media. Exporting all messages is already taking a while. In the case of the 1.601.026 messages, it took around 13 hours.&lt;/p&gt;
+&lt;h2&gt;Self bot&lt;/h2&gt;
+&lt;p&gt;The exporter is using my Discord account token. That means I use my account as a self-bot, but this is currently not a problem. I exported multiple large servers in a short time span and did not get banned yet. If I get banned, I will update the post!&lt;/p&gt;
+&lt;h1&gt;Chat Analytics and Channels&lt;/h1&gt;
+&lt;p&gt;Before uploading, I run all files through &lt;a href=&quot;https://github.com/mlomb/chat-analytics&quot;&gt;chat-analytics&lt;/a&gt; to generate &#39;⁣report.html&#39;; an example is linked &lt;a href=&quot;https://nickwasused.com/_posts/2024-06-14-discord-archiving/report.htm&quot;&gt;here&lt;/a&gt;.
+Additionally, all channels are exported to &#39;⁣channels.txt&#39;; this includes all, including the ones you cannot access.&lt;/p&gt;
+&lt;h1&gt;archive.org&lt;/h1&gt;
+&lt;p&gt;When archiving, I had to come up with a way to identify all the items that I and others uploaded.
+First, I saw that the tag &lt;code&gt;DiscordChatExporter&lt;/code&gt; was used a lot, great, so I did too.
+Now that everyone can simply find the items by the tag, I had to find a good way to generate the name, identifier and description.&lt;/p&gt;
+&lt;p&gt;For the identifier, I use the following &lt;a href=&quot;https://archive.org/search?query=subject%3A%22DiscordChatExporter%22&amp;amp;page=2&amp;amp;sort=-publicdate&quot;&gt;format&lt;/a&gt;: &lt;code&gt;discord-[guild-id]-[date &#39;+%d%m%Y&#39;)]&lt;/code&gt; an example would be &lt;code&gt;discord-371265202378899476-12062024&lt;/code&gt;.
+The limitations of this format are that a single export would be possible daily per server, but that&#39;s more than enough for most servers.&lt;/p&gt;
+&lt;p&gt;The description has the following format:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;This contains the Discord messages in JSON format split into chunks the size of 10000 messages.
+channels.txt contains all channels present in the discord at the given date.
+Analytics from https://chatanalytics.app are stored in result.html.
+Messages up to [Current Date], are saved. 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;Putting things together&lt;/h1&gt;
+&lt;p&gt;Doing the archiving steps manually is possible, but why would I do that.
+I use Linux (Ubuntu 22) on &lt;a href=&quot;https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux&quot;&gt;WSL&lt;/a&gt;, with Discord Chat Exporter, Chat Analytics, the archive.org &lt;a href=&quot;https://archive.org/developers/internetarchive/cli.html&quot;&gt;Command-Line Interface&lt;/a&gt; and a custom-written script.&lt;/p&gt;
+&lt;p&gt;The script, named &lt;code&gt;archive.sh&lt;/code&gt; has two parameters: the guild ID and the language in the three-letter format, e.g., &lt;code&gt;eng&lt;/code&gt;, &lt;code&gt;ger&lt;/code&gt;.
+At first, the script will check if the identifier is available, then it will get the server name with the Discord Chat Exporter and generate the identifier and description. After that, all channels are saved to the &lt;code&gt;channels.txt&lt;/code&gt; file.
+Then the exporting begins with the following options: &lt;code&gt;exportguild -f Json --markdown false -p 10000 --include-threads All&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;This will export the given server in JSON; don&#39;t process markdown, split the file at 10000 messages, and include all threads.&lt;/p&gt;
+&lt;p&gt;And this is how I archive Discord servers.&lt;/p&gt;
+&lt;h1&gt;Downsides&lt;/h1&gt;
+&lt;p&gt;The major downside of this approach is that there could be a lot of duplicate data when servers are saved often, as you would export the same messages just with the new ones at the end. In the case of the example server, 13 hours + the new messages. Incremental updates with a identifier format like &lt;code&gt;discord-[guild-id]&lt;/code&gt; would be great, but that would require a per-channel export and custom code.
+Object metadata could then be updated afterward, like the &lt;code&gt;updated&lt;/code&gt; key. Additional information that the object is dynamic could then be added to the description of each object.&lt;/p&gt;
+&lt;p&gt;Another downside is that people think their messages are &amp;quot;private,&amp;quot; as they are not accessible on the internet. This is why I only archive the &amp;quot;public&amp;quot; servers, like for open-source projects or let&#39;s say from twitch streamers.&lt;/p&gt;
+&lt;h1&gt;Usage&lt;/h1&gt;
+&lt;p&gt;The script is available at: &lt;a href=&quot;https://nickwasused.com/_posts/2024-06-14-discord-archiving/archive.sh&quot;&gt;./archive.sh&lt;/a&gt;.
+You require:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Linux (WSL is also ok.)&lt;/li&gt;
+&lt;li&gt;node with NPM and npx&lt;/li&gt;
+&lt;li&gt;the archive.org &lt;a href=&quot;https://archive.org/developers/internetarchive/cli.html&quot;&gt;Command-Line Interface&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;this &lt;a href=&quot;https://nickwasused.com/_posts/2024-06-14-discord-archiving/package.json&quot;&gt;package.json&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/Tyrrrz/DiscordChatExporter&quot;&gt;Discord Chat Exporter&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The folder structure should look like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;/any-folder
+    /archive.sh
+    /ia - archive.org Command-Line Interface
+    /package.json
+    /cli
+        /extract discord chat exporter here
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then install chat-analytics by running: &lt;code&gt;npm install&lt;/code&gt;.
+The last step is to replace &lt;code&gt;your_token&lt;/code&gt; with your &lt;a href=&quot;https://github.com/Tyrrrz/DiscordChatExporter/blob/master/.docs/Token-and-IDs.md&quot;&gt;Discord token&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can now archive a server like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;./archive.sh 485079746158526464 eng
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;tags&lt;/h3&gt;
+&lt;p&gt;#discord #archive.org #archiving&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>OV2 TomTom Adventures</title>
     <link href="https://nickwasused.com/_posts/2024-03-01-ov2-tomtom-adventures/"/>
