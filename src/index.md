@@ -9,7 +9,8 @@ pagination:
 {% for post in pagination.items %}
   <div class="post">
     <a href="{{ post.url }}"><h2>{{post.data.title}}</h2></a>
-    <span>{{post.data.snippet}}</span>
+    <div>{{post.data.snippet}}</div>
+    <div class="date">{{post.data.date | custom_date}}</div>
   </div>
 {% endfor %}
 </div>

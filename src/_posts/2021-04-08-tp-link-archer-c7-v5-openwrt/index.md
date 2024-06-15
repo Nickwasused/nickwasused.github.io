@@ -1,5 +1,5 @@
 ---
-title: "Install OpenWrt on the TP-Link Archer C7 V5 (2021)."
+title: "Install OpenWrt on the TP-Link Archer C7 V5."
 date: 2021-04-08
 background: white
 snippet: This guide is outdated.
