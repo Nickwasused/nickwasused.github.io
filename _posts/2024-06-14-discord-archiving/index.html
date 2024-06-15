@@ -63,7 +63,8 @@ With the <a href="https://github.com/slatinsky/DiscordChatExporter-frontend">Dis
 <img src="./export.avif" alt="Exported Server Example"></p>
 <p>Exported messages are split into chunks of 10000 messages because if an export fails at a large channel, I can continue from that point. But usually I try to make one continuous export.</p>
 <p>In this example, a <a href="https://archive.org/details/discord-371265202378899476-12062024">server</a> with 1.601.026 messages is shown.</p>
-<p>One thing I do not do is export media. Exporting all messages is already taking a while. In the case of the 1.601.026 messages, it took around 13 hours.</p>
+<p>One thing I do not do is export media. Exporting all messages is already taking a while. In the case of the 1.601.026 messages, it took around 13 hours.
+The worst offenders in this case are three types of channels: welcome, goodbye and counting. These channels aren't that worth to archive in my opinion, but I still archive them. (My personal, most hated channel type are the counting channels!)</p>
 <h2>Self bot</h2>
 <p>The exporter is using my Discord account token. That means I use my account as a self-bot, but this is currently not a problem. I exported multiple large servers in a short time span and did not get banned yet. If I get banned, I will update the post!</p>
 <h1>Chat Analytics and Channels</h1>
