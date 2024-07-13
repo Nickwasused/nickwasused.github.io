@@ -11,7 +11,8 @@ LANG=en_us_8859_1
 GID=$1
 G_LANG=$2
 IDENT=$(echo "discord-$GID-$(date '+%d%m%Y')")
-TMP_DIR=$(echo "/home/$USER/$GID")
+# TMP_DIR=$(echo "/home/$USER/$GID")
+TMP_DIR=$(echo "/tmp/$GID")
 TOKEN=your_token
 
 get_name()
@@ -24,7 +25,7 @@ get_name()
 
 echo $IDENT
 
-TMP_RESULT=$(./ia search -f=identifier $TMP_ID | grep $TMP_ID)
+TMP_RESULT=$(./ia search -f=identifier $IDENT)
 
 if [ -z "${TMP_RESULT}" ]; then
     echo "Identifier dosen't exist, continuing"
