@@ -8,16 +8,30 @@ tags: ["Raspberry Pi", "Tor"]
 
 I got made aware that this setup is now deprecated. You can simply follow these instructions here: [https://community.torproject.org/de/relay/setup/snowflake/standalone/debian/](https://community.torproject.org/de/relay/setup/snowflake/standalone/debian/). (Debian 12 - bookworm is required!)
 
-
-
-
-
-
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
 
 ## Notice
 
 **This guide has been overhauled.** See [here](/_posts/2023-04-01-tor-snowflake-v2/).
-
 
 ## Requirements
 
