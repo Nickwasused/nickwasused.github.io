@@ -4,7 +4,17 @@ date: 2022-03-12
 snippet: This is a guide for installing a tor snowflake on your Raspberry Pi as systemd service.
 tags: ["Raspberry Pi", "Tor"]
 ---
-# Notice
+# Notice 2
+
+I got made aware that this setup is now deprecated. You can simply follow these instructions here: [https://community.torproject.org/de/relay/setup/snowflake/standalone/debian/](https://community.torproject.org/de/relay/setup/snowflake/standalone/debian/). (Debian 12 - bookworm is required!)
+
+
+
+
+
+
+
+## Notice
 
 **This guide has been overhauled.** See [here](/_posts/2023-04-01-tor-snowflake-v2/).
 
