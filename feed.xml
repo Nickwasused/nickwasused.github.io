@@ -686,6 +686,26 @@ The OpenWrt Webinterface LuCI:
     <id>https://nickwasused.com/_posts/2022-03-12-tor-snowflake/</id>
     <content xml:lang="en" type="html">&lt;h1&gt;Notice 2&lt;/h1&gt;
 &lt;p&gt;I got made aware that this setup is now deprecated. You can simply follow these instructions here: &lt;a href=&quot;https://community.torproject.org/de/relay/setup/snowflake/standalone/debian/&quot;&gt;https://community.torproject.org/de/relay/setup/snowflake/standalone/debian/&lt;/a&gt;. (Debian 12 - bookworm is required!)&lt;/p&gt;
+&lt;p&gt; 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ &lt;/p&gt;
 &lt;h2&gt;Notice&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;This guide has been overhauled.&lt;/strong&gt; See &lt;a href=&quot;https://nickwasused.com/_posts/2023-04-01-tor-snowflake-v2/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;h2&gt;Requirements&lt;/h2&gt;
