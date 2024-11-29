@@ -2,7 +2,7 @@
 title: "Install Tor Snowflake on the Raspberry Pi with DietPi."
 date: 2023-04-01
 background: white
-snippet: This is a guide for installing a tor snowflake on your Raspberry Pi as systemd service.
+snippet: This is a guide for installing a Tor Snowflake on your Raspberry Pi as systemd service.
 tags: ["Raspberry Pi", "Tor", "dietpi"]
 ---
 # Notice
@@ -30,16 +30,16 @@ I got made aware that this setup is now deprecated. You can simply follow these 
 <br/>
 <br/>
 
-This is a guide for installing a tor snowflake on your Raspberry Pi as systemd service.
+This is a guide for installing Tor Snowflake on your Raspberry Pi as systemd service.
 
-Tor snowflake: ["Allows people from anywhere in the world to access censored websites and applications."](https://snowflake.torproject.org/)
+Tor Snowflake: ["Allows people from anywhere in the world to access censored websites and applications."](https://snowflake.torproject.org/)
 
 ## Requirements
 
 I have certain requirements for this guide. Using this guide on any other system is properly unsupported! Use at your own risk.
 
 - DietPi version v8.15.2 or above
-- Debian version based on bullseye (check with `cat /etc/os-release`)
+- Debian version based on Bullseye (check with `cat /etc/os-release`)
 
 Notice that I am creating this guide from the view of a User account with sudo rights and a headless setup.
 
@@ -52,9 +52,9 @@ We install Go using:
 sudo dietpi-software
 ```
 
-now search for `go` and select the following by pressing space. `Go: Runtime environment and package installer`
+Now search for `go` and select the following by pressing space. `Go: Runtime environment and package installer`
 
-After that press TAB and select confirm, when back on the main page select `install`
+After that, press TAB and select confirm. When back on the main page, select `install`
 
 Now reload your shell by running `exec bash` or reconnect.
 
@@ -78,7 +78,7 @@ and then get ownership of the folder:
 sudo chown -R $USER:$USER snowflake/
 ```
 
-Now we can start to build the program itself: 
+Now we can start building the program itself: 
 ```shell
 cd snowflake/proxy && go build
 ```
@@ -137,7 +137,7 @@ ReadWriteDirectories=/opt/snowflake/
 WantedBy=multi-user.target
 ```
 
-To verify that everything is working as intended, run: `sudo service snowflake start` and after that `sudo service snowflake status`.
+To verify that everything is working as intended, run `sudo service snowflake start` and after that `sudo service snowflake status`.
 
 The output should look like this:
 ![Snowflake service status](./snowflake-service.webp "")
@@ -163,13 +163,13 @@ To see the new log, wait up to 10 minutes or restart the `snowflake` service lik
 
 You can now see the log like this: `sudo tail -f /var/log/snowflake.log` or this: `sudo cat /var/log/snowflake.log`.
 
-After some time the log should have lines like: `2023/04/01 15:54:08 In the last 10m0s, there were 0 connections. Traffic Relayed ↓ 0 KB, ↑ 0 KB.`, these indicate the usage of the proxy you are hosting.
+After some time, the log should have lines like `2023/04/01 15:54:08 In the last 10m0s, there were 0 connections. Traffic Relayed ↓ 0 KB, ↑ 0 KB.`; these indicate the usage of the proxy you are hosting.
 
 ## Logrotate
 
 Logrotate is used to keep older logs and compress them with a defined limit.
 
-Start by creating a config file for snowflake: `sudo nano /etc/logrotate.d/snowflake` with the following content:
+Start by creating a config file for Snowflake: `sudo nano /etc/logrotate.d/snowflake` with the following content:
 ```bash
 /var/log/snowflake.log { 
     su root root

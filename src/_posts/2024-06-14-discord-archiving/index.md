@@ -16,7 +16,7 @@ In contrast, on a forum, I could easily download a copy of all posts or make sna
 
 I cannot do this on Discord, and this is a problem!
 
-Let's say we have an admin called `steve` with a forum called "I Love USB". Here are two scenarios:
+Let's say we have an admin called `steve` with a forum called "I Love USB." Here are two scenarios:
 
 Steve doesn't like his community anymore:
 
@@ -26,17 +26,17 @@ Steve doesn't like his community anymore:
 # Discord Chat Exporter
 
 The [DiscordChatExporter](https://github.com/Tyrrrz/DiscordChatExporter) can export whole Discord servers with threads in `json`. These files can then be uploaded to archive.org.
-With the [DiscordChatExporter-frontend](https://github.com/slatinsky/DiscordChatExporter-frontend) I can then view the server, like within the Discord client. (Loading messages takes a little longer.)
+With the [DiscordChatExporter-frontend](https://github.com/slatinsky/DiscordChatExporter-frontend) I can then view the server, like within the Discord client, but loading messages takes a little longer.
 ![Exported Server Example](./export.avif "")
 
-Exported messages are split into chunks of 10000 messages because if an export fails at a large channel, I can continue from that point. But usually I try to make one continuous export.
+Exported messages are split into chunks of 10000 messages because if an export fails at a large channel, I can continue from that point. But usually, I try to make one continuous export.
 
 In this example, a [server](https://archive.org/details/discord-371265202378899476-12062024) with 1.601.026 messages is shown.
 
 One thing I do not do is export media. Exporting all messages is already taking a while. In the case of the 1.601.026 messages, it took around 13 hours.
-The worst offenders in this case are three types of channels: welcome, goodbye and counting. These channels aren't that worth to archive in my opinion, but I still archive them. (My personal, most hated channel type are the counting channels!)
+The worst offenders in this case are three types of channels: welcome, goodbye and counting. These channels aren't that worth archiving, in my opinion, but I still archive them. (My personal, most hated channel type are the counting channels!)
 
-## Self bot
+## Self-bot
 
 The exporter is using my Discord account token. That means I use my account as a self-bot, but this is currently not a problem. I exported multiple large servers in a short time span and did not get banned yet. If I get banned, I will update the post!
 
@@ -48,10 +48,10 @@ Additionally, all channels are exported to '⁣channels.txt'; this includes all,
 # archive.org
 
 When archiving, I had to come up with a way to identify all the items that I and others uploaded.
-First, I saw that the tag `DiscordChatExporter` was used a lot, great, so I did too.
+First, I noticed that the tag `DiscordChatExporter` was used a lot, great, so I did too.
 Now that everyone can simply find the items by the tag, I had to find a good way to generate the name, identifier and description.
 
-For the identifier, I use the following [format](https://archive.org/search?query=subject%3A%22DiscordChatExporter%22&page=2&sort=-publicdate): `discord-[guild-id]-[date '+%d%m%Y')]` an example would be `discord-371265202378899476-12062024`.
+For the identifier, I use the following [format](https://archive.org/search?query=subject%3A%22DiscordChatExporter%22&page=2&sort=-publicdate): `discord-[guild-id]-[date '+%d%m%Y')]` An example would be `discord-371265202378899476-12062024`.
 The limitations of this format are that a single export would be possible daily per server, but that's more than enough for most servers.
 
 The description has the following format:
@@ -80,7 +80,7 @@ And this is how I archive Discord servers.
 The major downside of this approach is that there could be a lot of duplicate data when servers are saved often, as you would export the same messages just with the new ones at the end. In the case of the example server, 13 hours + the new messages. Incremental updates with a identifier format like `discord-[guild-id]` would be great, but that would require a per-channel export and custom code.
 Object metadata could then be updated afterward, like the `updated` key. Additional information that the object is dynamic could then be added to the description of each object.
 
-Another downside is that people think their messages are "private," as they are not accessible on the internet. This is why I only archive the "public" servers, like for open-source projects or let's say from twitch streamers.
+Another downside is that people think their messages are "private," as they are not accessible on the internet. This is why I only archive the "public" servers, like for open-source projects or, let's say, from Twitch streamers.
 
 # Usage
 
@@ -89,7 +89,7 @@ You require:
 - Linux (WSL is also ok.)
 - node with NPM and npx
 - the archive.org [Command-Line Interface](https://archive.org/developers/internetarchive/cli.html)
-- this [package.json](./package.json)
+- This [package.json](./package.json)
 - [Discord Chat Exporter](https://github.com/Tyrrrz/DiscordChatExporter)
 
 The folder structure should look like this:

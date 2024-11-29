@@ -8,9 +8,9 @@ tags: ["Raspberry Pi", "Signal"]
 
 # Notice
 
-As of 31.03.2023 this guide is not working correctly! Because of that reason the script got renamed to `signal-cli-install-old.sh`.
+As of 31/03/2023, this guide is not working correctly! Because of that reason, the script got renamed to `signal-cli-install-old.sh`.
 
-At the time of writing this, the signal-cli is at version: `0.11.3` with the libsignal-client being at version: `0.20.0`.  
+At the time of writing this, the signal-cli is at version `0.11.3` with the libsignal-client being at version `0.20.0`.  
 The OS that I use is [DietPi](https://github.com/MichaIng/DietPi).
 
 # Usage
@@ -40,7 +40,7 @@ You need to check the size of your `/tmp` directory with the following command:
 There will be a line that looks like this:  
 `tmpfs           1.0G  1.0M 1023M   1% /tmp`
 
-Notice that is reads `1.0G`. This is too small as the installation requires about 1.25G.
+Notice that it reads `1.0G`. This is too small, as the installation requires about 1.25G.
 
 You can expand the size of your `/tmp` directory with this command:  
 `sudo mount -o remount,size=2G /tmp/`
@@ -50,7 +50,7 @@ You can expand the size of your `/tmp` directory with this command:
 For this guide, `curl` and `zip` are required. Install them with:  
 `sudo apt install curl zip`
 
-(If there is an error try to run `sudo apt update`)
+(If there is an error, try to run `sudo apt update`)
 
 ## Basic install
 First, we need to set the Version of the signal-cli we are installing. You can find the Version code [here](https://github.com/AsamK/signal-cli/releases).  
@@ -61,7 +61,7 @@ After that, we download the signal-cli version:
 `curl --proto '=https' --tlsv1.2 -o signal-cli-"${VERSION}"-Linux.tar.gz https://github.com/AsamK/signal-cli/releases/download/v"${VERSION}"/signal-cli-"${VERSION}"-Linux.tar.gz`  
 and unpack it to `/opt`:  
 `sudo tar xf signal-cli-"${VERSION}"-Linux.tar.gz -C /opt`. 
-After extracting the code remove the file:  
+After extracting the code, remove the file:  
 `sudo rm signal-cli-"${VERSION}"-Linux.tar.gz`  
 Finally, we link it to `/usr/local/bin` so we can use the signal-cli:  
 `sudo ln -sf /opt/signal-cli-"${VERSION}"/bin/signal-cli /usr/local/bin/`.  
@@ -75,9 +75,9 @@ If we try to run `signal-cli` now, then it will fail! (But only if your system t
 
 ## Building the libsignal_jni.so
 
-To fix the problem, we need to build the "native lib for libsignal".
+To resolve the problem, we need to build the "native lib for libsignal".
 
-Notice! If you have a 1GB Raspberry Pi then please read [#1-gb-ram](#1-gb-ram).
+Notice! If you have a 1GB Raspberry Pi, then please read [#1-gb-ram](#1-gb-ram).
 
 ### Dependencies
 
@@ -94,34 +94,34 @@ First, we need to install some dependencies:
 Let's create a temporary directory to store files:  
 `sudo mkdir /tmp/signal-cli-install && cd /tmp/signal-cli-install`
 
-Before starting to download the libsignal source-code, we need to find the matching version code:   
+Before starting to download the libsignal source code, we have to find the matching version code:   
 `export LIBVERSION=$(find /opt/signal-cli-"${VERSION}"/lib/ -maxdepth 1 -mindepth 1 -name 'libsignal-client-*' | sed -E 's/\/opt\/signal-cli-[0-9]{1,}.[0-9]{1,}.[0-9]{1,}\/lib\/libsignal-client-*//g' | sed -E 's/.jar//g')`  
 
 After that, we download the source code:  
 `sudo curl --proto '=https' --tlsv1.2 -o /tmp/signal-cli-install/v"${LIBVERSION}".tar.gz https://github.com/signalapp/libsignal/archive/refs/tags/v"${LIBVERSION}".tar.gz`
 
-And now we need to unpack the downloaded code:  
+And now we have to unpack the downloaded code:  
 `sudo tar xf /tmp/signal-cli-install/v"${LIBVERSION}".tar.gz -C /tmp/signal-cli-install/ && mv libsignal-"${LIBVERSION}" libsignal`   
 
-After extracting the code remove the archive as it is no longer needed:
+After extracting the code, remove the archive as it is no longer needed.
 `sudo rm /tmp/signal-cli-install/v"${LIBVERSION}".tar.gz`
 
 Change into the java directory of the downloaded code:  
 `cd libsignal/java`  
 
-We disable some android stuff as we don\`t want to build for android:  
+We disable some Android stuff as we don't want to build for Android:  
 `sudo sed -i "s/include ':android'//" /tmp/signal-cli-install/libsignal/java/settings.gradle`  
 
 #### 1 GB Ram
 
-While building libsignal I ran into a problem with the ram usage on the Raspberry Pi 3b, because eventually, the 1 GB of ram would be full. This would result in a locked-up Pi that I had to hard reset. We can work around this problem by limiting the CPU usage to 1 Core.  
+While building libsignal I ran into a problem with the RAM usage on the Raspberry Pi 3b because eventually, the 1 GB of RAM would be full. This would result in a locked-up Pi that I had to hard reset. We can work around this problem by limiting the CPU usage to 1 Core.  
 (I don't know if a 2 GB Raspberry Pi 4 can run all 4 Cores.)
 
 `sudo sed -i "s/cargo build /cargo build -j ${CORE_COUNT} /" /tmp/signal-cli-install/libsignal/java/build_jni.sh`
 
 ##### Update 08.10.2022
 
-I could not get libsignal to compile on a Raspberry Pi with 1GB of ram.  
+I could not get libsignal to compile on a Raspberry Pi with 1GB of RAM.  
 
 #### Starting the Build
 
@@ -133,8 +133,8 @@ We need to remove the bundled `libsignal_jni.so` from `/opt/signal-cli-${VERSION
 and add our own:  
 `sudo zip /opt/signal-cli-${VERSION}/lib/libsignal-client-*.jar /tmp/signal-cli-install/libsignal/target/release/libsignal_jni.so`
 
-Since Version 0.11.3 the replacing is not working for me, because of that we add the `libsignal_jni.so` to the default Java library path.  
-For that create it if it dosen\`t exist: 
+Since Version 0.11.3, the replacement is not working for me; for that reason, we added the `libsignal_jni.so` to the default Java library path.  
+For that, create it if it doesn't exist: 
 `sudo mkdir -p /usr/java/packages/lib`  
 and finally copy the file to that folder:  
 `sudo cp /tmp/signal-cli-install/libsignal/target/release/libsignal_jni.so /usr/java/packages/lib`
@@ -150,7 +150,7 @@ We should set the permissions for the new files:
 
 Now we should be able to use the `signal-cli` command with no problems.
 
-Finally the signal-cli should report it`s version with:  
+Finally, the signal-cli should report its version with:  
 `signal-cli --version`
 
 # Source
