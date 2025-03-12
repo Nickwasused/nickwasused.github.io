@@ -13,13 +13,13 @@
     <meta property="og:title" content="Install 32-bit BOINC on a 64-bit Raspberry Pi." />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:description" content="This guide helps you to install the 32-Bit Boinc version instead of the 64-Bit one." />
-    <meta name="description" content="This guide helps you to install the 32-Bit Boinc version instead of the 64-Bit one.">
+    <meta property="og:description" content="This guide helps you to install the 32-Bit BOINC version instead of the 64-Bit one." />
+    <meta name="description" content="This guide helps you to install the 32-Bit BOINC version instead of the 64-Bit one.">
     <meta property="og:site_name" content="Nick's Site" />
     <meta property="article:published_time" content="2022-03-16" />
     <meta property="article:section" content="Technology" />
     <meta property="article:tag" content="Raspberry Pi" />
-    <meta property="article:tag" content="Boinc" />
+    <meta property="article:tag" content="BOINC" />
     
 
 </head>
@@ -47,17 +47,17 @@
                 <h2>Why would you do this?</h2>
 <ul>
 <li>Projects like UNIVERSE@HOME have no aarch64 Tasks.</li>
-<li>A Raspberry Pi 3b can´t run ROSETTA@HOME because it doesn't have enough ram.</li>
+<li>A Raspberry Pi 3b can’t run ROSETTA@HOME because it doesn't have enough RAM.</li>
 <li>DietPi, a popular OS for the Raspberry Pi, uses 64Bit.</li>
 </ul>
 <h2>Requirements</h2>
 <ul>
-<li>64-bit Raspberry Pi e.g. DietPi</li>
+<li>64-bit Raspberry Pi, e.g., DietPi</li>
 </ul>
 <p>Type:</p>
 <pre><code class="language-Shell">uname -a
 </code></pre>
-<p>the output should contain the following: <code>aarch64</code> if there is <code>armhf</code> in the output then you can skip to the
+<p>The output should contain the following: <code>aarch64</code> if there is <code>armhf</code> in the output, then you can skip to the
 <a href="false" title="Install">Install</a> section.
 Example output: <code>Linux raspberrypi-1 5.10.103-v8+ #1530 SMP PREEMPT Tue Mar 8 13:06:35 GMT 2022 aarch64 GNU/Linux</code></p>
 <h2>Architecture</h2>
@@ -67,15 +67,15 @@ Example output: <code>Linux raspberrypi-1 5.10.103-v8+ #1530 SMP PREEMPT Tue Mar
 <p>Now you need to update the package list:</p>
 <pre><code class="language-Shell">sudo apt update
 </code></pre>
-<h2>Remove 64-bit Boinc</h2>
-<p>To remove the 64-bit version of the Boinc-Client type:</p>
+<h2>Remove 64-bit BOINC</h2>
+<p>To remove the 64-bit version of the BOINC-Client type:</p>
 <pre><code class="language-Shell">sudo apt remove boinc-client -y
 </code></pre>
-<h2>Install 32-bit Boinc</h2>
-<p>If the output of <code>uname -a</code> is <code>armhf</code> then type:</p>
+<h2>Install 32-bit BOINC</h2>
+<p>If the output  is, <code>armhf</code> then type:</p>
 <pre><code class="language-Shell">sudo apt install boinc-client
 </code></pre>
-<p>To install the 32-bit version of the Boinc-Client type:</p>
+<p>To install the 32-bit version of the BOINC-Client type:</p>
 <pre><code class="language-Shell">sudo apt install boinc-client:armhf -y
 </code></pre>
 

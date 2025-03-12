@@ -5,12 +5,90 @@
   <subtitle>This is a Tech focused blog where I write random posts.</subtitle>
   <link href="https://nickwasused.com/feed.xml" rel="self"/>
   <link href="https://nickwasused.com/"/>
-  <updated>2024-06-15T00:00:00Z</updated>
+  <updated>2025-03-12T00:00:00Z</updated>
   <id>https://nickwasused.com/</id>
   <author>
     <name>Nick</name>
     <email>contact@nickwasused.com</email>
   </author>
+  <entry>
+    <title>Self-Host Wikipedia</title>
+    <link href="https://nickwasused.com/_posts/2025-03-12-self-host-wikipedia/"/>
+    <updated>2025-03-12T00:00:00Z</updated>
+    <id>https://nickwasused.com/_posts/2025-03-12-self-host-wikipedia/</id>
+    <content xml:lang="en" type="html">&lt;p&gt;This is my method to self-hosting Wikipedia, but it&#39;s &lt;strong&gt;not&lt;/strong&gt; a full guide!&lt;/p&gt;
+&lt;h2&gt;Kiwix&lt;/h2&gt;
+&lt;p&gt;First, we need a copy of the Wikipedia &lt;code&gt;.zim&lt;/code&gt; file.&lt;/p&gt;
+&lt;p&gt;Then install and setup kiwix.&lt;/p&gt;
+&lt;p&gt;I use the following systemd-service based on https://ounapuu.ee/posts/2021/12/09/self-hosting-wikipedia/:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[Unit]
+Description=Serve all the ZIM files loaded on this server
+
+[Service]
+Restart=always
+RestartSec=15
+User=kiwix
+ExecStart=/usr/bin/bash -c &amp;quot;kiwix-serve -t 2 -i 127.0.0.1 --port=8080 /dir_with_zims/*.zim&amp;quot;
+
+[Install]
+WantedBy=network-online.target
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;nginx&lt;/h2&gt;
+&lt;p&gt;After that, I set up nginx with the following configuration:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;server {
+        root /var/www/html;
+
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name YOUR_DOMAIN;
+
+        location /robots.txt {
+                root /var/www/html/;
+        }
+
+        location / {
+                proxy_pass http://127.0.0.1:8080;
+                proxy_http_version 1.1;
+                proxy_set_header Host $host;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Real-Ip $remote_addr;
+                proxy_redirect off;
+                proxy_intercept_errors on;
+                error_page 502 503 504 = @redirect_to_wikipedia_de;
+                error_page 404 = @redirect_to_wikipedia_en;
+        }
+
+        location @redirect_to_wikipedia_de {
+                set $last_segment &#39;&#39;;
+                if ($request_uri ~ /([^/]+)$) {
+                        set $last_segment $1;
+                }
+                return 302 https://de.wikipedia.org/wiki/$last_segment ;
+        }
+        location @redirect_to_wikipedia_en {
+                set $last_segment &#39;&#39;;
+                if ($request_uri ~ /([^/]+)$) {
+                        set $last_segment $1;
+                }
+                return 301 https://en.wikipedia.org/wiki/$last_segment ;
+        }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This config tries to get a valid response from our local copy, but when an entry is missing, it will redirect to wikipedia.org.
+When the local copy is offline or errors out, then it will redirect to the German version of wikipedia.org.&lt;/p&gt;
+&lt;h2&gt;Using our copy&lt;/h2&gt;
+&lt;h3&gt;Kagi&lt;/h3&gt;
+&lt;p&gt;With Kagi you can set up a redirect with the following regex: &lt;code&gt;^https://(.*).wikipedia.org/(.*)&#92;/(.*)|https://YOUR_DOMAIN/wikipedia/A/$3&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Notice that the path &lt;code&gt;/wikipedia&lt;/code&gt; is based on the &lt;code&gt;*zim&lt;/code&gt; file name, e.g. for &lt;code&gt;/wikipedia&lt;/code&gt; it needs to be &lt;code&gt;wikipedia.zim&lt;/code&gt;&lt;/p&gt;
+&lt;h3&gt;redirector&lt;/h3&gt;
+&lt;p&gt;You can set up the redirector extension the following way:
+&lt;img src=&quot;https://nickwasused.com/_posts/2025-03-12-self-host-wikipedia/redirector.avif&quot; alt=&quot;redirector config&quot; /&gt;&lt;/p&gt;
+&lt;h1&gt;security&lt;/h1&gt;
+&lt;p&gt;I have blocked some cloud providers ip-ranges in a firewall.&lt;/p&gt;
+&lt;h2&gt;scraping&lt;/h2&gt;
+&lt;p&gt;Additionally, I have a &lt;code&gt;robots.txt&lt;/code&gt; for the bots that follow that. I use this: https://robotstxt.com/ai&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Archiving Discord Servers</title>
     <link href="https://nickwasused.com/_posts/2024-06-14-discord-archiving/"/>
@@ -22,7 +100,7 @@
 This means no one can request all messages on Discord.
 In contrast, on a forum, I could easily download a copy of all posts or make snapshots of pages with the Wayback Machine.&lt;/p&gt;
 &lt;p&gt;I cannot do this on Discord, and this is a problem!&lt;/p&gt;
-&lt;p&gt;Let&#39;s say we have an admin called &lt;code&gt;steve&lt;/code&gt; with a forum called &amp;quot;I Love USB&amp;quot;. Here are two scenarios:&lt;/p&gt;
+&lt;p&gt;Let&#39;s say we have an admin called &lt;code&gt;steve&lt;/code&gt; with a forum called &amp;quot;I Love USB.&amp;quot; Here are two scenarios:&lt;/p&gt;
 &lt;p&gt;Steve doesn&#39;t like his community anymore:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;He removes his hosted phpBB instance, then there is a good chance that a dump is on archive.org, and if not, then there would be pages saved on the Wayback Machine.&lt;/li&gt;
@@ -30,22 +108,22 @@ In contrast, on a forum, I could easily download a copy of all posts or make sna
 &lt;/ul&gt;
 &lt;h1&gt;Discord Chat Exporter&lt;/h1&gt;
 &lt;p&gt;The &lt;a href=&quot;https://github.com/Tyrrrz/DiscordChatExporter&quot;&gt;DiscordChatExporter&lt;/a&gt; can export whole Discord servers with threads in &lt;code&gt;json&lt;/code&gt;. These files can then be uploaded to archive.org.
-With the &lt;a href=&quot;https://github.com/slatinsky/DiscordChatExporter-frontend&quot;&gt;DiscordChatExporter-frontend&lt;/a&gt; I can then view the server, like within the Discord client. (Loading messages takes a little longer.)
+With the &lt;a href=&quot;https://github.com/slatinsky/DiscordChatExporter-frontend&quot;&gt;DiscordChatExporter-frontend&lt;/a&gt; I can then view the server, like within the Discord client, but loading messages takes a little longer.
 &lt;img src=&quot;https://nickwasused.com/_posts/2024-06-14-discord-archiving/export.avif&quot; alt=&quot;Exported Server Example&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;Exported messages are split into chunks of 10000 messages because if an export fails at a large channel, I can continue from that point. But usually I try to make one continuous export.&lt;/p&gt;
+&lt;p&gt;Exported messages are split into chunks of 10000 messages because if an export fails at a large channel, I can continue from that point. But usually, I try to make one continuous export.&lt;/p&gt;
 &lt;p&gt;In this example, a &lt;a href=&quot;https://archive.org/details/discord-371265202378899476-12062024&quot;&gt;server&lt;/a&gt; with 1.601.026 messages is shown.&lt;/p&gt;
 &lt;p&gt;One thing I do not do is export media. Exporting all messages is already taking a while. In the case of the 1.601.026 messages, it took around 13 hours.
-The worst offenders in this case are three types of channels: welcome, goodbye and counting. These channels aren&#39;t that worth to archive in my opinion, but I still archive them. (My personal, most hated channel type are the counting channels!)&lt;/p&gt;
-&lt;h2&gt;Self bot&lt;/h2&gt;
+The worst offenders in this case are three types of channels: welcome, goodbye and counting. These channels aren&#39;t that worth archiving, in my opinion, but I still archive them. (My personal, most hated channel type are the counting channels!)&lt;/p&gt;
+&lt;h2&gt;Self-bot&lt;/h2&gt;
 &lt;p&gt;The exporter is using my Discord account token. That means I use my account as a self-bot, but this is currently not a problem. I exported multiple large servers in a short time span and did not get banned yet. If I get banned, I will update the post!&lt;/p&gt;
 &lt;h1&gt;Chat Analytics and Channels&lt;/h1&gt;
 &lt;p&gt;Before uploading, I run all files through &lt;a href=&quot;https://github.com/mlomb/chat-analytics&quot;&gt;chat-analytics&lt;/a&gt; to generate &#39;⁣report.html&#39;; an example is linked &lt;a href=&quot;https://nickwasused.com/_posts/2024-06-14-discord-archiving/report.htm&quot;&gt;here&lt;/a&gt;.
 Additionally, all channels are exported to &#39;⁣channels.txt&#39;; this includes all, including the ones you cannot access.&lt;/p&gt;
 &lt;h1&gt;archive.org&lt;/h1&gt;
 &lt;p&gt;When archiving, I had to come up with a way to identify all the items that I and others uploaded.
-First, I saw that the tag &lt;code&gt;DiscordChatExporter&lt;/code&gt; was used a lot, great, so I did too.
+First, I noticed that the tag &lt;code&gt;DiscordChatExporter&lt;/code&gt; was used a lot, great, so I did too.
 Now that everyone can simply find the items by the tag, I had to find a good way to generate the name, identifier and description.&lt;/p&gt;
-&lt;p&gt;For the identifier, I use the following &lt;a href=&quot;https://archive.org/search?query=subject%3A%22DiscordChatExporter%22&amp;amp;page=2&amp;amp;sort=-publicdate&quot;&gt;format&lt;/a&gt;: &lt;code&gt;discord-[guild-id]-[date &#39;+%d%m%Y&#39;)]&lt;/code&gt; an example would be &lt;code&gt;discord-371265202378899476-12062024&lt;/code&gt;.
+&lt;p&gt;For the identifier, I use the following &lt;a href=&quot;https://archive.org/search?query=subject%3A%22DiscordChatExporter%22&amp;amp;page=2&amp;amp;sort=-publicdate&quot;&gt;format&lt;/a&gt;: &lt;code&gt;discord-[guild-id]-[date &#39;+%d%m%Y&#39;)]&lt;/code&gt; An example would be &lt;code&gt;discord-371265202378899476-12062024&lt;/code&gt;.
 The limitations of this format are that a single export would be possible daily per server, but that&#39;s more than enough for most servers.&lt;/p&gt;
 &lt;p&gt;The description has the following format:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;This contains the Discord messages in JSON format split into chunks the size of 10000 messages.
@@ -64,7 +142,7 @@ Then the exporting begins with the following options: &lt;code&gt;exportguild -f
 &lt;h1&gt;Downsides&lt;/h1&gt;
 &lt;p&gt;The major downside of this approach is that there could be a lot of duplicate data when servers are saved often, as you would export the same messages just with the new ones at the end. In the case of the example server, 13 hours + the new messages. Incremental updates with a identifier format like &lt;code&gt;discord-[guild-id]&lt;/code&gt; would be great, but that would require a per-channel export and custom code.
 Object metadata could then be updated afterward, like the &lt;code&gt;updated&lt;/code&gt; key. Additional information that the object is dynamic could then be added to the description of each object.&lt;/p&gt;
-&lt;p&gt;Another downside is that people think their messages are &amp;quot;private,&amp;quot; as they are not accessible on the internet. This is why I only archive the &amp;quot;public&amp;quot; servers, like for open-source projects or let&#39;s say from twitch streamers.&lt;/p&gt;
+&lt;p&gt;Another downside is that people think their messages are &amp;quot;private,&amp;quot; as they are not accessible on the internet. This is why I only archive the &amp;quot;public&amp;quot; servers, like for open-source projects or, let&#39;s say, from Twitch streamers.&lt;/p&gt;
 &lt;h1&gt;Usage&lt;/h1&gt;
 &lt;p&gt;The script is available at: &lt;a href=&quot;https://nickwasused.com/_posts/2024-06-14-discord-archiving/archive.sh&quot;&gt;./archive.sh&lt;/a&gt;.
 You require:&lt;/p&gt;
@@ -72,7 +150,7 @@ You require:&lt;/p&gt;
 &lt;li&gt;Linux (WSL is also ok.)&lt;/li&gt;
 &lt;li&gt;node with NPM and npx&lt;/li&gt;
 &lt;li&gt;the archive.org &lt;a href=&quot;https://archive.org/developers/internetarchive/cli.html&quot;&gt;Command-Line Interface&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;this &lt;a href=&quot;https://nickwasused.com/_posts/2024-06-14-discord-archiving/package.json&quot;&gt;package.json&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;This &lt;a href=&quot;https://nickwasused.com/_posts/2024-06-14-discord-archiving/package.json&quot;&gt;package.json&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://github.com/Tyrrrz/DiscordChatExporter&quot;&gt;Discord Chat Exporter&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;The folder structure should look like this:&lt;/p&gt;
@@ -97,33 +175,33 @@ The last step is to replace &lt;code&gt;your_token&lt;/code&gt; with your &lt;a 
     <link href="https://nickwasused.com/_posts/2024-03-01-ov2-tomtom-adventures/"/>
     <updated>2024-03-01T00:00:00Z</updated>
     <id>https://nickwasused.com/_posts/2024-03-01-ov2-tomtom-adventures/</id>
-    <content xml:lang="en" type="html">&lt;p&gt;By chance, I have received an old version of the &lt;a href=&quot;https://tomtom.com/&quot;&gt;TomTom&lt;/a&gt; Start 52. The device has no Internet connection by itself, only through the TomTom software &amp;quot;&lt;a href=&quot;https://www.tomtom.com/en_us/navigation/mydrive-connect/&quot;&gt;TomTom MyDrive Connect&lt;/a&gt;&amp;quot;.&lt;/p&gt;
-&lt;p&gt;On first connect, the Map of Europe got updated to the newest Version, as TomTom Devices usually get lifelong Map updates, at least for the one included at the time of purchase. I knew that you can save your own &lt;strong&gt;Points of Interest&lt;/strong&gt;&#39;s, in short &lt;strong&gt;POI&lt;/strong&gt;, as there were some saved already, but there is also the method of importing them, with &lt;strong&gt;OV2&lt;/strong&gt; files. (I still don&#39;t know what &lt;strong&gt;OV2&lt;/strong&gt; stands for.)&lt;/p&gt;
+    <content xml:lang="en" type="html">&lt;p&gt;By chance, I have received an outdated version of the &lt;a href=&quot;https://tomtom.com/&quot;&gt;TomTom&lt;/a&gt; Start 52. The device has no Internet connection by itself, only through the TomTom software &amp;quot;&lt;a href=&quot;https://www.tomtom.com/en_us/navigation/mydrive-connect/&quot;&gt;TomTom MyDrive Connect.&lt;/a&gt;&amp;quot;&lt;/p&gt;
+&lt;p&gt;On first connect, the Map of Europe got updated to the newest Version, as TomTom Devices usually get lifelong Map updates, at least for the one included at the time of purchase. I knew that you can save your own &lt;strong&gt;Points of Interest&lt;/strong&gt;&#39;s, in short &lt;strong&gt;POI&lt;/strong&gt;, as there were some saved already, but there is also the method of importing them with &lt;strong&gt;OV2&lt;/strong&gt; files. (I still don&#39;t know what &lt;strong&gt;OV2&lt;/strong&gt; stands for.)&lt;/p&gt;
 &lt;h2&gt;POI (ov2) file format&lt;/h2&gt;
-&lt;p&gt;A &lt;code&gt;ov2&lt;/code&gt; file is a POI database, they contain multiple POIs. For that, the can have 4 record types:&lt;/p&gt;
+&lt;p&gt;A &lt;code&gt;ov2&lt;/code&gt; file is a POI database; they contain multiple POIs. For that, they can have 4 record types:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;deleted records&lt;/li&gt;
-&lt;li&gt;skipper records&lt;/li&gt;
-&lt;li&gt;simple records&lt;/li&gt;
-&lt;li&gt;extended records&lt;/li&gt;
+&lt;li&gt;Deleted records&lt;/li&gt;
+&lt;li&gt;Skipper records&lt;/li&gt;
+&lt;li&gt;Simple records&lt;/li&gt;
+&lt;li&gt;Extended records&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;We only take a look at skipper and simple records, but I have linked a document, that describes the others as well, below. [1]&lt;/p&gt;
-&lt;p&gt;A simple record is, as the name says, very simple. It consists of:&lt;/p&gt;
+&lt;p&gt;We only take a look at skipper and simple records, but I have linked a document that describes the others as well, below. [1]&lt;/p&gt;
+&lt;p&gt;A simple record is, as the name says, simple. It consists of:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;a (little-endian) Byte for the Type. For a simple record, this is always a 2.&lt;/li&gt;
 &lt;li&gt;4 bytes that define the length of the whole record&lt;/li&gt;
 &lt;li&gt;4 bytes signed integer for the longitude&lt;/li&gt;
 &lt;li&gt;4 bytes signed integer for the latitude&lt;/li&gt;
-&lt;li&gt;a &amp;quot;zero−terminated ASCII string specifying the name of the POI&amp;quot; [1, p.12]&lt;/li&gt;
+&lt;li&gt;a &amp;quot;zero−terminated ASCII string specifying the name of the POI&amp;quot; [1, p. 12].&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Or in short: Coordinates and the Name, e.g. A Point in the USA with the Name of &amp;quot;McDonald&#39;s&amp;quot;&lt;/p&gt;
+&lt;p&gt;Or, in short, Coordinates and the Name, e.g. A Point in the USA with the Name of &amp;quot;McDonald&#39;s.&amp;quot;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;The latitude/longitude needs to be divided by &lt;strong&gt;100000&lt;/strong&gt;!&lt;/li&gt;
+&lt;li&gt;The latitude/longitude needs to be divided by &lt;strong&gt;100,000&lt;/strong&gt;!&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;adding some files&lt;/h2&gt;
-&lt;p&gt;So I started adding some POI files from &lt;a href=&quot;https://www.poibase.com/&quot;&gt;POIbase&lt;/a&gt; that contain current construction zones, Hospitals and some more. That is where I got suspicious: The Hospital POI file had a lot of Points! How was a very weak device capable of showing them &lt;strong&gt;all&lt;/strong&gt; on a Map?&lt;/p&gt;
+&lt;p&gt;So I started adding some POI files from &lt;a href=&quot;https://www.poibase.com/&quot;&gt;POIbase&lt;/a&gt; that contain current construction zones, Hospitals and some more. That is where I got suspicious: The Hospital POI file had numerous Points! How was a weak device capable of showing them &lt;strong&gt;all&lt;/strong&gt; on a Map?&lt;/p&gt;
 &lt;h2&gt;Checking Performance&lt;/h2&gt;
-&lt;p&gt;While searching about the file format, I stumbled about &lt;a href=&quot;https://gordthompson.github.io/ov2optimizer/&quot;&gt;https://gordthompson.github.io/ov2optimizer/&lt;/a&gt;, especially the page about &amp;quot;How Indexing Helps&amp;quot;. What I now knew was that there should be a reasonable amount of skipper records: I set my requirement to 1 skipper record per 20 simple records, as mentioned on the page multiple times.&lt;/p&gt;
+&lt;p&gt;While searching for the file format, I stumbled about &lt;a href=&quot;https://gordthompson.github.io/ov2optimizer/&quot;&gt;https://gordthompson.github.io/ov2optimizer/&lt;/a&gt;, especially the page about &amp;quot;How Indexing Helps.&amp;quot; What I now knew was that there should be a reasonable amount of skipper records. I set my requirement to 1 skipper record per 20 simple records, as mentioned on the page multiple times.&lt;/p&gt;
 &lt;p&gt;One more great thing about the page is that there are tools available &lt;code&gt;ov2scan&lt;/code&gt; and &lt;code&gt;ov2optimizer&lt;/code&gt;. So I ran &lt;code&gt;ov2scan&lt;/code&gt; on the Hospital file:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;PS C:&#92;Users&#92;Nick&#92;Desktop&#92;in&amp;gt; ov2scan.exe .&#92;Hospitals.ov2
 deleted POI records (type 0): 0
@@ -133,14 +211,14 @@ extended POI records (type 3): 0
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;That&#39;s more than enough, great!&lt;/p&gt;
 &lt;h2&gt;Creating a &lt;code&gt;ov2&lt;/code&gt; file&lt;/h2&gt;
-&lt;p&gt;As a small project, I generate data of all &lt;a href=&quot;https://bp.com/&quot;&gt;BP&lt;/a&gt; gas stations. That is because I usually go to a sub-brand of them, &amp;quot;Aral&amp;quot;. While using their official website, I noticed that it was too packed, so I created &lt;a href=&quot;https://tankpreise.uk/&quot;&gt;https://tankpreise.uk&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;As a small project, I generate data for all &lt;a href=&quot;https://bp.com/&quot;&gt;BP&lt;/a&gt; gas stations. That is because I usually go to a sub-brand of them, &amp;quot;Aral.&amp;quot; While using their official website, I noticed that it was too packed, so I created &lt;a href=&quot;https://tankpreise.uk/&quot;&gt;https://tankpreise.uk&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;The project uses &lt;code&gt;.json&lt;/code&gt; and &lt;code&gt;sqlite3&lt;/code&gt;, but it would be a great test to generate &lt;code&gt;ov2&lt;/code&gt; files!&lt;/p&gt;
-&lt;p&gt;So let&#39;s say I want to use a list of all &lt;a href=&quot;https://bp.com/&quot;&gt;BP&lt;/a&gt; gas stations worldwide and show them when I get near them: That is around &lt;strong&gt;18,000&lt;/strong&gt; POIs. How will the device handle that?&lt;/p&gt;
+&lt;p&gt;So let&#39;s say I want to use a list of all &lt;a href=&quot;https://bp.com/&quot;&gt;BP&lt;/a&gt; gas stations worldwide and show them when I get near them. That is around &lt;strong&gt;18,000&lt;/strong&gt; POIs. How will the device handle that?&lt;/p&gt;
 &lt;p&gt;A good thing is that I don&#39;t have to test that, as it has been done already. [2] The device needs to calculate the distance to all 18,000 Points! That can&#39;t be good.
 And is even worse, if you show them on the Map, then the Device will do that for every &amp;quot;Screen Update&amp;quot; while driving.&lt;/p&gt;
 &lt;h3&gt;Introduce the skipper record.&lt;/h3&gt;
-&lt;p&gt;As seen &lt;a href=&quot;https://nickwasused.com/_posts/2024-03-01-ov2-tomtom-adventures/#checking-performance&quot;&gt;above&lt;/a&gt;: A skipper record can skip a certain part of the file when it is not in range.
-Let&#39;s say I have 20 records in New Zealand. Then a skipper record defines the borders of all 20 POIs and the size to skip. So when I am in South Africa, the device only needs to check 2 locations: the border of the skipper record. If we are not near it [3] then we skip the defined size of the 20 records.&lt;/p&gt;
+&lt;p&gt;As seen &lt;a href=&quot;https://nickwasused.com/_posts/2024-03-01-ov2-tomtom-adventures/#checking-performance&quot;&gt;above&lt;/a&gt;, A skipper record can skip a certain part of the file when it is not in range.
+Let&#39;s say I have 20 records in New Zealand. Then a skipper record defines the borders of all 20 POIs and the size to skip. So when I am in South Africa, the device only needs to check 2 locations: the border of the skipper record. If we are not near it [3], then we skip the defined size of the 20 records.&lt;/p&gt;
 &lt;p&gt;Here is an example:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;decoded skipper record: 1 1050 17658722 -3833799 17507574 -4121712
 decoded simple record: 2 82 176.58722 -39.94494 [NZ-None] BP 
@@ -156,17 +234,17 @@ decoded simple record: 2 100 175.07574 -41.12353 [NZ-None] BP
 decoded simple record: 2 101 175.45792 -41.21712 [NZ-None] BP 2go 
 decoded skipper record: 1 967 17501094 -3678409 17484129 -4126259
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;Update 14.03.2024&lt;/strong&gt; I am not so sure about the skipper record structure that I defined below. It is based on the official documentation, but when I used that in my scripts it was not working on the Start 52. But the structure defined on &lt;a href=&quot;https://gordthompson.github.io/ov2optimizer/ov2FileFormat.html&quot;&gt;[4]&lt;/a&gt; is working!&lt;/p&gt;
-&lt;p&gt;The structure of this skipper record is as follows &lt;code&gt;decoded skipper record: 1 1050 17658722 -3833799 17507574 -4121712&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Update 14.03.2024:&lt;/strong&gt; I am not so sure about the skipper record structure that I defined below. It is based on the official documentation, but when I used that in my scripts, it was not working on the Start 52. But the structure defined on &lt;a href=&quot;https://gordthompson.github.io/ov2optimizer/ov2FileFormat.html&quot;&gt;[4]&lt;/a&gt; is working!&lt;/p&gt;
+&lt;p&gt;The structure of this skipper record is as follows: &lt;code&gt;decoded skipper record: 1 1050 17658722 -3833799 17507574 -4121712&lt;/code&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;1&lt;/code&gt;: type = skipper record&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;1050&lt;/code&gt;: If you are not near me then skip &lt;strong&gt;1050&lt;/strong&gt; bytes including this record&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;1050&lt;/code&gt;: If you are not near me, then skip &lt;strong&gt;1050&lt;/strong&gt; bytes, including this record.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;17658722&lt;/code&gt;: Longitude of the west edge&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;-3833799&lt;/code&gt;: Latitude of the south edge&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;17507574&lt;/code&gt;: Longitude of the east edge&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;-4121712&lt;/code&gt;: Latitude of the north edge&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;The structure of this simple record is as follows &lt;code&gt;decoded simple record: 2 82 176.58722 -39.94494 [NZ-None] BP&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;The structure of this simple record is as follows: &lt;code&gt;decoded simple record: 2 82 176.58722 -39.94494 [NZ-None] BP&lt;/code&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;2&lt;/code&gt;: type = simple record&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;82&lt;/code&gt;: total length of this record&lt;/li&gt;
@@ -187,13 +265,13 @@ decoded skipper record: 1 967 17501094 -3678409 17484129 -4126259
 &lt;p&gt;In the map example are Blue points that represent gas stations. The black boxes around them are the defined borders of the skipper records. I have a maximum of 20 POIs in one box. The device would have to do &lt;strong&gt;10&lt;/strong&gt; latitude/longitude comparisons.&lt;/p&gt;
 &lt;p&gt;Here is another one:
 &lt;img src=&quot;https://nickwasused.com/_posts/2024-03-01-ov2-tomtom-adventures/map2.avif&quot; alt=&quot;Map example&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;You can see the black borders again, the line should be straight but is bent, this is just a display issue!&lt;/p&gt;
+&lt;p&gt;You can see the black borders again; the line should be straight but is bent; this is just a display issue.&lt;/p&gt;
 &lt;h1&gt;Using the generated file on the device&lt;/h1&gt;
-&lt;p&gt;To add a &lt;code&gt;ov2&lt;/code&gt; file to the device, I need to import it &lt;a href=&quot;https://plan.tomtom.com/en/&quot;&gt;here&lt;/a&gt;, Then it will magically transfer through &amp;quot;TomTom MyDrive Connect&amp;quot; onto the device. This happens really fast!&lt;/p&gt;
-&lt;h1&gt;sources and notes&lt;/h1&gt;
+&lt;p&gt;To add a &lt;code&gt;ov2&lt;/code&gt; file to the device, I need to import it &lt;a href=&quot;https://plan.tomtom.com/en/&quot;&gt;here&lt;/a&gt;. Then it will magically transfer through &amp;quot;TomTom MyDrive Connect&amp;quot; onto the device. This happens really fast.&lt;/p&gt;
+&lt;h1&gt;Sources and notes&lt;/h1&gt;
 &lt;p&gt;[1] https://archive.org/details/ttnavsdk3_manual_3.0_193&lt;br /&gt;
 [2] https://github.com/gordthompson/ov2optimizer, https://gordthompson.github.io/ov2optimizer/&lt;br /&gt;
-[3] I actually do not know how this exactly works!&lt;br /&gt;
+[3] I actually do not know how this exactly works!
 [4] https://gordthompson.github.io/ov2optimizer/ov2FileFormat.html&lt;/p&gt;
 &lt;p&gt;You can find the generated &lt;code&gt;ov2&lt;/code&gt; files &lt;a href=&quot;https://github.com/bp-stations/station-data/tree/gh-pages/ov2&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;h3&gt;archive&lt;/h3&gt;
@@ -235,13 +313,13 @@ decoded skipper record: 1 967 17501094 -3678409 17484129 -4126259
 &lt;br /&gt;
 &lt;br /&gt;
 &lt;br /&gt;
-&lt;p&gt;This is a guide for installing a tor snowflake on your Raspberry Pi as systemd service.&lt;/p&gt;
-&lt;p&gt;Tor snowflake: &lt;a href=&quot;https://snowflake.torproject.org/&quot;&gt;&amp;quot;Allows people from anywhere in the world to access censored websites and applications.&amp;quot;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This is a guide for installing Tor Snowflake on your Raspberry Pi as systemd service.&lt;/p&gt;
+&lt;p&gt;Tor Snowflake: &lt;a href=&quot;https://snowflake.torproject.org/&quot;&gt;&amp;quot;Allows people from anywhere in the world to access censored websites and applications.&amp;quot;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Requirements&lt;/h2&gt;
 &lt;p&gt;I have certain requirements for this guide. Using this guide on any other system is properly unsupported! Use at your own risk.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;DietPi version v8.15.2 or above&lt;/li&gt;
-&lt;li&gt;Debian version based on bullseye (check with &lt;code&gt;cat /etc/os-release&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Debian version based on Bullseye (check with &lt;code&gt;cat /etc/os-release&lt;/code&gt;)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Notice that I am creating this guide from the view of a User account with sudo rights and a headless setup.&lt;/p&gt;
 &lt;h2&gt;Install GO&lt;/h2&gt;
@@ -249,8 +327,8 @@ decoded skipper record: 1 967 17501094 -3678409 17484129 -4126259
 &lt;p&gt;We install Go using:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;sudo dietpi-software
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;now search for &lt;code&gt;go&lt;/code&gt; and select the following by pressing space. &lt;code&gt;Go: Runtime environment and package installer&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;After that press TAB and select confirm, when back on the main page select &lt;code&gt;install&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Now search for &lt;code&gt;go&lt;/code&gt; and select the following by pressing space. &lt;code&gt;Go: Runtime environment and package installer&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;After that, press TAB and select confirm. When back on the main page, select &lt;code&gt;install&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Now reload your shell by running &lt;code&gt;exec bash&lt;/code&gt; or reconnect.&lt;/p&gt;
 &lt;p&gt;To verify the Go install run &lt;code&gt;go version&lt;/code&gt;, it should output something like &lt;code&gt;go version go1.20.2 linux/arm64&lt;/code&gt;. Just make sure that the version is 1.13 or higher.&lt;/p&gt;
 &lt;h2&gt;Snowflake&lt;/h2&gt;
@@ -263,7 +341,7 @@ decoded skipper record: 1 967 17501094 -3678409 17484129 -4126259
 &lt;p&gt;and then get ownership of the folder:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;sudo chown -R $USER:$USER snowflake/
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Now we can start to build the program itself:&lt;/p&gt;
+&lt;p&gt;Now we can start building the program itself:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;cd snowflake/proxy &amp;amp;&amp;amp; go build
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;To verify that the build is working, run &lt;code&gt;./proxy&lt;/code&gt;. The output should look like: &lt;code&gt;2023/04/01 15:29:14 Proxy starting&lt;/code&gt;&lt;/p&gt;
@@ -308,7 +386,7 @@ ReadWriteDirectories=/opt/snowflake/
 [Install]
 WantedBy=multi-user.target
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To verify that everything is working as intended, run: &lt;code&gt;sudo service snowflake start&lt;/code&gt; and after that &lt;code&gt;sudo service snowflake status&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;To verify that everything is working as intended, run &lt;code&gt;sudo service snowflake start&lt;/code&gt; and after that &lt;code&gt;sudo service snowflake status&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;The output should look like this:
 &lt;img src=&quot;https://nickwasused.com/_posts/2023-04-01-tor-snowflake-v2/snowflake-service.webp&quot; alt=&quot;Snowflake service status&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;To enable the automatic start on reboot, run:&lt;/p&gt;
@@ -322,10 +400,10 @@ WantedBy=multi-user.target
 &lt;p&gt;To apply this change, restart &lt;code&gt;rsyslog&lt;/code&gt;: &lt;code&gt;sudo service rsyslog restart&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;To see the new log, wait up to 10 minutes or restart the &lt;code&gt;snowflake&lt;/code&gt; service like this: &lt;code&gt;sudo service snowflake restart&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;You can now see the log like this: &lt;code&gt;sudo tail -f /var/log/snowflake.log&lt;/code&gt; or this: &lt;code&gt;sudo cat /var/log/snowflake.log&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;After some time the log should have lines like: &lt;code&gt;2023/04/01 15:54:08 In the last 10m0s, there were 0 connections. Traffic Relayed ↓ 0 KB, ↑ 0 KB.&lt;/code&gt;, these indicate the usage of the proxy you are hosting.&lt;/p&gt;
+&lt;p&gt;After some time, the log should have lines like &lt;code&gt;2023/04/01 15:54:08 In the last 10m0s, there were 0 connections. Traffic Relayed ↓ 0 KB, ↑ 0 KB.&lt;/code&gt;; these indicate the usage of the proxy you are hosting.&lt;/p&gt;
 &lt;h2&gt;Logrotate&lt;/h2&gt;
 &lt;p&gt;Logrotate is used to keep older logs and compress them with a defined limit.&lt;/p&gt;
-&lt;p&gt;Start by creating a config file for snowflake: &lt;code&gt;sudo nano /etc/logrotate.d/snowflake&lt;/code&gt; with the following content:&lt;/p&gt;
+&lt;p&gt;Start by creating a config file for Snowflake: &lt;code&gt;sudo nano /etc/logrotate.d/snowflake&lt;/code&gt; with the following content:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;/var/log/snowflake.log { 
     su root root
     daily
@@ -351,7 +429,7 @@ WantedBy=multi-user.target
     <updated>2023-02-17T00:00:00Z</updated>
     <id>https://nickwasused.com/_posts/2023-02-17-raspberry-pi3-ethernet-led/</id>
     <content xml:lang="en" type="html">&lt;h1&gt;Notice&lt;/h1&gt;
-&lt;p&gt;This is essentially a copy of this Stackexchange post: &lt;a href=&quot;https://raspberrypi.stackexchange.com/questions/117632/turn-off-external-leds-on-raspberry-pi-3/130495#130495&quot;&gt;https://raspberrypi.stackexchange.com/questions/117632/turn-off-external-leds-on-raspberry-pi-3/130495#130495&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This is essentially a copy of this Stack Exchange post: &lt;a href=&quot;https://raspberrypi.stackexchange.com/questions/117632/turn-off-external-leds-on-raspberry-pi-3/130495#130495&quot;&gt;https://raspberrypi.stackexchange.com/questions/117632/turn-off-external-leds-on-raspberry-pi-3/130495#130495&lt;/a&gt;&lt;/p&gt;
 &lt;h1&gt;Post&lt;/h1&gt;
 &lt;p&gt;At first, check if you have the correct Model of the Raspberry Pi 3b:&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;cat /sys/firmware/devicetree/base/model&lt;/code&gt;&lt;/p&gt;
@@ -378,22 +456,22 @@ WantedBy=multi-user.target
     <updated>2022-11-14T00:00:00Z</updated>
     <id>https://nickwasused.com/_posts/2022-14-11-minecraft-windows-10-deep-ocean/</id>
     <content xml:lang="en" type="html">&lt;h1&gt;Microsoft&lt;/h1&gt;
-&lt;p&gt;On February 8, 2022 I received an email from Mojang stating that I need to migrate my Account to a Microsoft one.&lt;/p&gt;
+&lt;p&gt;On February 8, 2022, I received an email from Mojang stating that I needed to migrate my Account to a Microsoft one.&lt;/p&gt;
 &lt;p&gt;After another two emails, I finally migrated my Account in October.&lt;/p&gt;
 &lt;p&gt;But I haven&#39;t played the Game since sometime in 2021, so I tried to give it another shot today.&lt;/p&gt;
 &lt;h1&gt;Deep Ocean&lt;/h1&gt;
-&lt;p&gt;I downloaded the launcher from &lt;a href=&quot;https://minecraft.net/&quot;&gt;https://minecraft.net/&lt;/a&gt; and installed it. After that I tried to log in with my Microsoft Account, but every time I clicked on the button an error popped up stating that there was some type of error with the error code being &lt;code&gt;deep ocean&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;So I did the first thing that came to my mind: clicking the info link in the error message. That turned out to be a &lt;code&gt;404&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;The next thing I tried was disabling Pi-Hole for 30 seconds and flushing the DNS cache, it was possible that I was blocking some domains that Microsoft needs for their services. But this has not worked.&lt;/p&gt;
+&lt;p&gt;I downloaded the launcher from &lt;a href=&quot;https://minecraft.net/&quot;&gt;https://minecraft.net/&lt;/a&gt; and installed it. After that, I tried to log in with my Microsoft Account, but every time I clicked on the button, an error popped up stating that there was some type of error with the error code being &lt;code&gt;deep ocean&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;So I did the first thing that came to mind: clicking the info link in the error message. That turned out to be a &lt;code&gt;404&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The next thing I tried was disabling Pi-Hole for 30 seconds and flushing the DNS cache. It was possible that I was blocking some domains that Microsoft needs for their services. But this has not worked.&lt;/p&gt;
 &lt;h1&gt;YouTube tutorials&lt;/h1&gt;
-&lt;p&gt;After that, I searched &amp;quot;Minecraft Windows 10 deep ocean error&amp;quot;. There were a lot of &lt;a href=&quot;https://www.youtube.com/watch?v=dmBJaZzQZco&quot;&gt;recent videos&lt;/a&gt; that showed the same steps: to enable some Xbox Services. After trying to reset the Microsoft Store and Minecraft Launcher, I noticed that there could be a problem with the Xbox stuff because I used a debloat script on my Windows installation.&lt;/p&gt;
+&lt;p&gt;After that, I searched &amp;quot;Minecraft Windows 10 deep ocean error.&amp;quot; There were many &lt;a href=&quot;https://www.youtube.com/watch?v=dmBJaZzQZco&quot;&gt;recent videos&lt;/a&gt; that showed the same steps: to enable some Xbox Services. After trying to reset the Microsoft Store and Minecraft Launcher, I noticed that there could be a problem with the Xbox stuff because I used a debloat script on my Windows installation.&lt;/p&gt;
 &lt;h1&gt;XBOX&lt;/h1&gt;
-&lt;p&gt;In the Windows 10 settings is a category called &amp;quot;Gaming&amp;quot; and a point called &amp;quot;Xbox-Network&amp;quot;. In there is a status for the Xbox-Network e.g. Internet Connectivity, Xbox Live-Services and Xbox Live-Multiplayer.
-Under the point Xbox Live-Multiplayer is the status for Server connectivity, but for me that was disconnected/unavailable.&lt;/p&gt;
+&lt;p&gt;In the Windows 10 settings is a category called &amp;quot;Gaming&amp;quot; and a point called &amp;quot;Xbox-Network.&amp;quot; There is a status for the Xbox  Network, e.g., Internet Connectivity, Xbox Live  Services, and Xbox Live Multiplayer.
+Under the point, Xbox Live-Multiplayer is the status for Server connectivity, but for me, that was disconnected/unavailable.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://nickwasused.com/_posts/2022-14-11-minecraft-windows-10-deep-ocean/xbox-settings.webp&quot; alt=&quot;Xbox Settings&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;So I went to the Microsoft Store and searched for &amp;quot;Xbox&amp;quot; and there it was: the Xbox App got uninstalled by the Debloat script.&lt;/p&gt;
+&lt;p&gt;So I went to the Microsoft Store and searched for &amp;quot;Xbox,&amp;quot; and there it was: the Xbox App got uninstalled by the Debloat script.&lt;/p&gt;
 &lt;h1&gt;Fix&lt;/h1&gt;
-&lt;p&gt;I installed the Xbox App, logged in, installed some missing components and started the Minecraft Launcher, but it was still not working. I was in a loop of having a Game license and playing the Demo.&lt;/p&gt;
+&lt;p&gt;I installed the Xbox App, logged in, installed some missing components, and started the Minecraft Launcher, but it was still not working. I was in a loop of having a Game license and playing the Demo.&lt;/p&gt;
 &lt;p&gt;So I logged out from the Microsoft Store, the Minecraft Launcher and the Xbox App.
 After logging in again, everything was working.&lt;/p&gt;
 &lt;h1&gt;TL;DR&lt;/h1&gt;
@@ -417,8 +495,8 @@ After logging in again, everything was working.&lt;/p&gt;
     <updated>2022-08-21T00:00:00Z</updated>
     <id>https://nickwasused.com/_posts/2022-08-21-raspberry-pi-signal-cli/</id>
     <content xml:lang="en" type="html">&lt;h1&gt;Notice&lt;/h1&gt;
-&lt;p&gt;As of 31.03.2023 this guide is not working correctly! Because of that reason the script got renamed to &lt;code&gt;signal-cli-install-old.sh&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;At the time of writing this, the signal-cli is at version: &lt;code&gt;0.11.3&lt;/code&gt; with the libsignal-client being at version: &lt;code&gt;0.20.0&lt;/code&gt;.&lt;br /&gt;
+&lt;p&gt;As of 31/03/2023, this guide is not working correctly! Because of that reason, the script got renamed to &lt;code&gt;signal-cli-install-old.sh&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;At the time of writing this, the signal-cli is at version &lt;code&gt;0.11.3&lt;/code&gt; with the libsignal-client being at version &lt;code&gt;0.20.0&lt;/code&gt;.&lt;br /&gt;
 The OS that I use is &lt;a href=&quot;https://github.com/MichaIng/DietPi&quot;&gt;DietPi&lt;/a&gt;.&lt;/p&gt;
 &lt;h1&gt;Usage&lt;/h1&gt;
 &lt;p&gt;The signal-cli could be useful for sending automatic messages, e.g. when a service/job fails.
@@ -437,13 +515,13 @@ Now you can run the script:&lt;br /&gt;
 &lt;code&gt;df -h&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;There will be a line that looks like this:&lt;br /&gt;
 &lt;code&gt;tmpfs           1.0G  1.0M 1023M   1% /tmp&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Notice that is reads &lt;code&gt;1.0G&lt;/code&gt;. This is too small as the installation requires about 1.25G.&lt;/p&gt;
+&lt;p&gt;Notice that it reads &lt;code&gt;1.0G&lt;/code&gt;. This is too small, as the installation requires about 1.25G.&lt;/p&gt;
 &lt;p&gt;You can expand the size of your &lt;code&gt;/tmp&lt;/code&gt; directory with this command:&lt;br /&gt;
 &lt;code&gt;sudo mount -o remount,size=2G /tmp/&lt;/code&gt;&lt;/p&gt;
 &lt;h1&gt;required tools&lt;/h1&gt;
 &lt;p&gt;For this guide, &lt;code&gt;curl&lt;/code&gt; and &lt;code&gt;zip&lt;/code&gt; are required. Install them with:&lt;br /&gt;
 &lt;code&gt;sudo apt install curl zip&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;(If there is an error try to run &lt;code&gt;sudo apt update&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;(If there is an error, try to run &lt;code&gt;sudo apt update&lt;/code&gt;)&lt;/p&gt;
 &lt;h2&gt;Basic install&lt;/h2&gt;
 &lt;p&gt;First, we need to set the Version of the signal-cli we are installing. You can find the Version code &lt;a href=&quot;https://github.com/AsamK/signal-cli/releases&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Set the signal-cli version with:&lt;br /&gt;
@@ -452,7 +530,7 @@ After that, we download the signal-cli version:&lt;br /&gt;
 &lt;code&gt;curl --proto &#39;=https&#39; --tlsv1.2 -o signal-cli-&amp;quot;${VERSION}&amp;quot;-Linux.tar.gz https://github.com/AsamK/signal-cli/releases/download/v&amp;quot;${VERSION}&amp;quot;/signal-cli-&amp;quot;${VERSION}&amp;quot;-Linux.tar.gz&lt;/code&gt;&lt;br /&gt;
 and unpack it to &lt;code&gt;/opt&lt;/code&gt;:&lt;br /&gt;
 &lt;code&gt;sudo tar xf signal-cli-&amp;quot;${VERSION}&amp;quot;-Linux.tar.gz -C /opt&lt;/code&gt;.
-After extracting the code remove the file:&lt;br /&gt;
+After extracting the code, remove the file:&lt;br /&gt;
 &lt;code&gt;sudo rm signal-cli-&amp;quot;${VERSION}&amp;quot;-Linux.tar.gz&lt;/code&gt;&lt;br /&gt;
 Finally, we link it to &lt;code&gt;/usr/local/bin&lt;/code&gt; so we can use the signal-cli:&lt;br /&gt;
 &lt;code&gt;sudo ln -sf /opt/signal-cli-&amp;quot;${VERSION}&amp;quot;/bin/signal-cli /usr/local/bin/&lt;/code&gt;.&lt;/p&gt;
@@ -461,8 +539,8 @@ Finally, we link it to &lt;code&gt;/usr/local/bin&lt;/code&gt; so we can use the
 &lt;h3&gt;Info&lt;/h3&gt;
 &lt;p&gt;If we try to run &lt;code&gt;signal-cli&lt;/code&gt; now, then it will fail! (But only if your system type is not &lt;code&gt;x86_64&lt;/code&gt;)&lt;/p&gt;
 &lt;h2&gt;Building the libsignal_jni.so&lt;/h2&gt;
-&lt;p&gt;To fix the problem, we need to build the &amp;quot;native lib for libsignal&amp;quot;.&lt;/p&gt;
-&lt;p&gt;Notice! If you have a 1GB Raspberry Pi then please read &lt;a href=&quot;https://nickwasused.com/_posts/2022-08-21-raspberry-pi-signal-cli/#1-gb-ram&quot;&gt;#1-gb-ram&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To resolve the problem, we need to build the &amp;quot;native lib for libsignal&amp;quot;.&lt;/p&gt;
+&lt;p&gt;Notice! If you have a 1GB Raspberry Pi, then please read &lt;a href=&quot;https://nickwasused.com/_posts/2022-08-21-raspberry-pi-signal-cli/#1-gb-ram&quot;&gt;#1-gb-ram&lt;/a&gt;.&lt;/p&gt;
 &lt;h3&gt;Dependencies&lt;/h3&gt;
 &lt;p&gt;First, we need to install some dependencies:&lt;/p&gt;
 &lt;h4&gt;apt&lt;/h4&gt;
@@ -472,24 +550,24 @@ Finally, we link it to &lt;code&gt;/usr/local/bin&lt;/code&gt; so we can use the
 &lt;h3&gt;Build libsignal&lt;/h3&gt;
 &lt;p&gt;Let&#39;s create a temporary directory to store files:&lt;br /&gt;
 &lt;code&gt;sudo mkdir /tmp/signal-cli-install &amp;amp;&amp;amp; cd /tmp/signal-cli-install&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Before starting to download the libsignal source-code, we need to find the matching version code:&lt;br /&gt;
+&lt;p&gt;Before starting to download the libsignal source code, we have to find the matching version code:&lt;br /&gt;
 &lt;code&gt;export LIBVERSION=$(find /opt/signal-cli-&amp;quot;${VERSION}&amp;quot;/lib/ -maxdepth 1 -mindepth 1 -name &#39;libsignal-client-*&#39; | sed -E &#39;s/&#92;/opt&#92;/signal-cli-[0-9]{1,}.[0-9]{1,}.[0-9]{1,}&#92;/lib&#92;/libsignal-client-*//g&#39; | sed -E &#39;s/.jar//g&#39;)&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;After that, we download the source code:&lt;br /&gt;
 &lt;code&gt;sudo curl --proto &#39;=https&#39; --tlsv1.2 -o /tmp/signal-cli-install/v&amp;quot;${LIBVERSION}&amp;quot;.tar.gz https://github.com/signalapp/libsignal/archive/refs/tags/v&amp;quot;${LIBVERSION}&amp;quot;.tar.gz&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;And now we need to unpack the downloaded code:&lt;br /&gt;
+&lt;p&gt;And now we have to unpack the downloaded code:&lt;br /&gt;
 &lt;code&gt;sudo tar xf /tmp/signal-cli-install/v&amp;quot;${LIBVERSION}&amp;quot;.tar.gz -C /tmp/signal-cli-install/ &amp;amp;&amp;amp; mv libsignal-&amp;quot;${LIBVERSION}&amp;quot; libsignal&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;After extracting the code remove the archive as it is no longer needed:
+&lt;p&gt;After extracting the code, remove the archive as it is no longer needed.
 &lt;code&gt;sudo rm /tmp/signal-cli-install/v&amp;quot;${LIBVERSION}&amp;quot;.tar.gz&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Change into the java directory of the downloaded code:&lt;br /&gt;
 &lt;code&gt;cd libsignal/java&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;We disable some android stuff as we don`t want to build for android:&lt;br /&gt;
+&lt;p&gt;We disable some Android stuff as we don&#39;t want to build for Android:&lt;br /&gt;
 &lt;code&gt;sudo sed -i &amp;quot;s/include &#39;:android&#39;//&amp;quot; /tmp/signal-cli-install/libsignal/java/settings.gradle&lt;/code&gt;&lt;/p&gt;
 &lt;h4&gt;1 GB Ram&lt;/h4&gt;
-&lt;p&gt;While building libsignal I ran into a problem with the ram usage on the Raspberry Pi 3b, because eventually, the 1 GB of ram would be full. This would result in a locked-up Pi that I had to hard reset. We can work around this problem by limiting the CPU usage to 1 Core.&lt;br /&gt;
+&lt;p&gt;While building libsignal I ran into a problem with the RAM usage on the Raspberry Pi 3b because eventually, the 1 GB of RAM would be full. This would result in a locked-up Pi that I had to hard reset. We can work around this problem by limiting the CPU usage to 1 Core.&lt;br /&gt;
 (I don&#39;t know if a 2 GB Raspberry Pi 4 can run all 4 Cores.)&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;sudo sed -i &amp;quot;s/cargo build /cargo build -j ${CORE_COUNT} /&amp;quot; /tmp/signal-cli-install/libsignal/java/build_jni.sh&lt;/code&gt;&lt;/p&gt;
 &lt;h5&gt;Update 08.10.2022&lt;/h5&gt;
-&lt;p&gt;I could not get libsignal to compile on a Raspberry Pi with 1GB of ram.&lt;/p&gt;
+&lt;p&gt;I could not get libsignal to compile on a Raspberry Pi with 1GB of RAM.&lt;/p&gt;
 &lt;h4&gt;Starting the Build&lt;/h4&gt;
 &lt;p&gt;We can start the build with:
 &lt;code&gt;sudo /tmp/signal-cli-install/libsignal/java/build_jni.sh desktop&lt;/code&gt;&lt;/p&gt;
@@ -497,8 +575,8 @@ Finally, we link it to &lt;code&gt;/usr/local/bin&lt;/code&gt; so we can use the
 &lt;code&gt;sudo zip -d /opt/signal-cli-${VERSION}/lib/libsignal-client-*.jar libsignal_jni.so&lt;/code&gt;&lt;br /&gt;
 and add our own:&lt;br /&gt;
 &lt;code&gt;sudo zip /opt/signal-cli-${VERSION}/lib/libsignal-client-*.jar /tmp/signal-cli-install/libsignal/target/release/libsignal_jni.so&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Since Version 0.11.3 the replacing is not working for me, because of that we add the &lt;code&gt;libsignal_jni.so&lt;/code&gt; to the default Java library path.&lt;br /&gt;
-For that create it if it dosen`t exist:
+&lt;p&gt;Since Version 0.11.3, the replacement is not working for me; for that reason, we added the &lt;code&gt;libsignal_jni.so&lt;/code&gt; to the default Java library path.&lt;br /&gt;
+For that, create it if it doesn&#39;t exist:
 &lt;code&gt;sudo mkdir -p /usr/java/packages/lib&lt;/code&gt;&lt;br /&gt;
 and finally copy the file to that folder:&lt;br /&gt;
 &lt;code&gt;sudo cp /tmp/signal-cli-install/libsignal/target/release/libsignal_jni.so /usr/java/packages/lib&lt;/code&gt;&lt;/p&gt;
@@ -510,7 +588,8 @@ and finally copy the file to that folder:&lt;br /&gt;
 &lt;code&gt;sudo chmod 755 -R /opt/signal-cli-${VERSION}&lt;/code&gt;&lt;br /&gt;
 &lt;code&gt;sudo chown root:root -R /opt/signal-cli-${VERSION}&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Now we should be able to use the &lt;code&gt;signal-cli&lt;/code&gt; command with no problems.&lt;/p&gt;
-&lt;p&gt;Finally the signal-cli should report it&lt;code&gt;s version with:   &lt;/code&gt;signal-cli --version`&lt;/p&gt;
+&lt;p&gt;Finally, the signal-cli should report its version with:&lt;br /&gt;
+&lt;code&gt;signal-cli --version&lt;/code&gt;&lt;/p&gt;
 &lt;h1&gt;Source&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&quot;https://github.com/AsamK/signal-cli#install-system-wide-on-linux&quot;&gt;https://github.com/AsamK/signal-cli#install-system-wide-on-linux&lt;/a&gt;
 &lt;a href=&quot;https://github.com/AsamK/signal-cli/wiki/Provide-native-lib-for-libsignal#manual-build&quot;&gt;https://github.com/AsamK/signal-cli/wiki/Provide-native-lib-for-libsignal#manual-build&lt;/a&gt;&lt;br /&gt;
@@ -527,21 +606,21 @@ and finally copy the file to that folder:&lt;br /&gt;
     <updated>2022-03-27T00:00:00Z</updated>
     <id>https://nickwasused.com/_posts/2022-03-27-ps4-time-wrong-after-cmos-change-900/</id>
     <content xml:lang="en" type="html">&lt;h2&gt;The Problem&lt;/h2&gt;
-&lt;p&gt;After I replaced the CMOS Battery on my Base Model PS4, I noticed that it couldn&#39;t keep the time after a power loss. The PS4 is on firmware Version 9.0 where the &lt;a href=&quot;https://web.archive.org/web/20220609110029/https://www.ps4storage.com/functional-cmos-battery-is-inevitably-required-by-ps4-and-ps5-system/&quot;&gt;CMOS Time Bomb&lt;/a&gt; was fixed. However, despite the fix, some games like Grand Theft Auto V (Version 1.38) with the &lt;a href=&quot;https://github.com/illusion0001/illusion0001.github.io/blob/04223072dd1ba6cb5deb4ee7953bfc2e1430745f/_patch0/orbis/GTA5-Orbis.yml&quot;&gt;No Intro&lt;/a&gt; Patch were not able to start correctly (stuck at 90% Loading and heavy flickering).&lt;/p&gt;
+&lt;p&gt;After I replaced the CMOS Battery on my Base Model PS4, I noticed that it couldn&#39;t keep the time after a power loss. The PS4 is on firmware Version 9.0, where the &lt;a href=&quot;https://web.archive.org/web/20220609110029/https://www.ps4storage.com/functional-cmos-battery-is-inevitably-required-by-ps4-and-ps5-system/&quot;&gt;CMOS Time Bomb&lt;/a&gt; was fixed. However, despite the fix, some games like Grand Theft Auto V (Version 1.38) with the &lt;a href=&quot;https://github.com/illusion0001/illusion0001.github.io/blob/04223072dd1ba6cb5deb4ee7953bfc2e1430745f/_patch0/orbis/GTA5-Orbis.yml&quot;&gt;No Intro&lt;/a&gt; Patch were unable to start correctly (stuck at 90% Loading and heavy flickering).&lt;/p&gt;
 &lt;h2&gt;The Fix&lt;/h2&gt;
-&lt;p&gt;The fix is very simple, but a little scary to do on a Jailbroken PS4. You need to sync the time with a PSN Time Server. &lt;strong&gt;This has to be done once,&lt;/strong&gt; after that the time will stay saved even after a power loss. The Time Server is probably just an NTP server.&lt;/p&gt;
+&lt;p&gt;The fix is basic, but a little scary to do on a Jailbroken PS4. You need to sync the time with a PSN Time Server. &lt;strong&gt;This has to be done once;&lt;/strong&gt; after that, the time will stay saved even after a power loss. The Time Server is probably just an NTP server.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Make sure to do at least one of the following steps before:&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Have a Pi-hole setup on your Network and whitelist the following Domain for: &lt;code&gt;csla.np.community.playstation.net&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;Have a payload that Blocks the Update&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;If you don`t know what Pi-hole is the look &lt;a href=&quot;https://pi-hole.net/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;If you don’t know what Pi-hole is, look &lt;a href=&quot;https://pi-hole.net/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;It is important that you have some sort of Update-block in place!&lt;/strong&gt;&lt;/p&gt;
 &lt;h3&gt;Steps&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;Block the Updates&lt;/li&gt;
-&lt;li&gt;Connect to the Internet (preferable a LAN Cable, because you can unplug that quickly.)&lt;/li&gt;
-&lt;li&gt;Go to the Settings and sync the Time using &amp;quot;Network Time&amp;quot;&lt;/li&gt;
+&lt;li&gt;Connect to the Internet (preferably a LAN Cable because you can unplug that quickly).&lt;/li&gt;
+&lt;li&gt;Go to the Settings and sync the Time using &amp;quot;Network Time.&amp;quot;&lt;/li&gt;
 &lt;li&gt;Disconnect from the Internet&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;After you have done that, the PS4 should keep the correct time again.&lt;/p&gt;
@@ -561,17 +640,17 @@ and finally copy the file to that folder:&lt;br /&gt;
     <content xml:lang="en" type="html">&lt;h2&gt;Why would you do this?&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Projects like UNIVERSE@HOME have no aarch64 Tasks.&lt;/li&gt;
-&lt;li&gt;A Raspberry Pi 3b can´t run ROSETTA@HOME because it doesn&#39;t have enough ram.&lt;/li&gt;
+&lt;li&gt;A Raspberry Pi 3b can’t run ROSETTA@HOME because it doesn&#39;t have enough RAM.&lt;/li&gt;
 &lt;li&gt;DietPi, a popular OS for the Raspberry Pi, uses 64Bit.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Requirements&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;64-bit Raspberry Pi e.g. DietPi&lt;/li&gt;
+&lt;li&gt;64-bit Raspberry Pi, e.g., DietPi&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Type:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;uname -a
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;the output should contain the following: &lt;code&gt;aarch64&lt;/code&gt; if there is &lt;code&gt;armhf&lt;/code&gt; in the output then you can skip to the
+&lt;p&gt;The output should contain the following: &lt;code&gt;aarch64&lt;/code&gt; if there is &lt;code&gt;armhf&lt;/code&gt; in the output, then you can skip to the
 &lt;a href=&quot;https://nickwasused.com/_posts/2022-03-16-boinc-32bit-on-64bit-pi-dietpi/false&quot; title=&quot;Install&quot;&gt;Install&lt;/a&gt; section.
 Example output: &lt;code&gt;Linux raspberrypi-1 5.10.103-v8+ #1530 SMP PREEMPT Tue Mar 8 13:06:35 GMT 2022 aarch64 GNU/Linux&lt;/code&gt;&lt;/p&gt;
 &lt;h2&gt;Architecture&lt;/h2&gt;
@@ -581,15 +660,15 @@ Example output: &lt;code&gt;Linux raspberrypi-1 5.10.103-v8+ #1530 SMP PREEMPT T
 &lt;p&gt;Now you need to update the package list:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;sudo apt update
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Remove 64-bit Boinc&lt;/h2&gt;
-&lt;p&gt;To remove the 64-bit version of the Boinc-Client type:&lt;/p&gt;
+&lt;h2&gt;Remove 64-bit BOINC&lt;/h2&gt;
+&lt;p&gt;To remove the 64-bit version of the BOINC-Client type:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;sudo apt remove boinc-client -y
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Install 32-bit Boinc&lt;/h2&gt;
-&lt;p&gt;If the output of &lt;code&gt;uname -a&lt;/code&gt; is &lt;code&gt;armhf&lt;/code&gt; then type:&lt;/p&gt;
+&lt;h2&gt;Install 32-bit BOINC&lt;/h2&gt;
+&lt;p&gt;If the output  is, &lt;code&gt;armhf&lt;/code&gt; then type:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;sudo apt install boinc-client
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To install the 32-bit version of the Boinc-Client type:&lt;/p&gt;
+&lt;p&gt;To install the 32-bit version of the BOINC-Client type:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-Shell&quot;&gt;sudo apt install boinc-client:armhf -y
 &lt;/code&gt;&lt;/pre&gt;
 </content>
@@ -600,28 +679,28 @@ Example output: &lt;code&gt;Linux raspberrypi-1 5.10.103-v8+ #1530 SMP PREEMPT T
     <updated>2022-03-15T00:00:00Z</updated>
     <id>https://nickwasused.com/_posts/2022-03-15-twitter-block-advertisers/</id>
     <content xml:lang="en" type="html">&lt;h1&gt;Notice&lt;/h1&gt;
-&lt;p&gt;As of 31.03.2023 this method is not a good way of blocking Advertising on Twitter, you should just use something like &lt;a href=&quot;https://ublockorigin.com/&quot;&gt;uBlock Origin&lt;/a&gt; or alternative Apps.&lt;/p&gt;
+&lt;p&gt;As of March 31, 2023, this method is not a good way of blocking Advertising on Twitter; you should just use something like &lt;a href=&quot;https://ublockorigin.com/&quot;&gt;uBlock Origin&lt;/a&gt; or alternative Apps.&lt;/p&gt;
 &lt;h2&gt;Requirements&lt;/h2&gt;
-&lt;p&gt;For following this Guide you need the following:&lt;/p&gt;
+&lt;p&gt;For following this Guide, you need the following:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://developer.twitter.com/&quot;&gt;a Twitter Developer Account&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://twitter.com/settings/download_your_data&quot;&gt;your Twitter Data Archive&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/Nickwasused/twitter-data-export-to-blocklist&quot;&gt;the programm&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.python.org/&quot;&gt;python3 and pip3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://developer.twitter.com/&quot;&gt;a Twitter Developer Account&lt;/a&gt;
+Your Twitter Data Archive](https://twitter.com/settings/download_your_data)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/Nickwasused/twitter-data-export-to-blocklist&quot;&gt;the program&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.python.org/&quot;&gt;Python3 and pip3&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Program Setup&lt;/h2&gt;
 &lt;p&gt;Let&#39;s start by getting the Program set up.&lt;/p&gt;
 &lt;p&gt;First, we need to install the requirements by running&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;pip3 install -r requirements.txt --user
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;After that you need to copy the &lt;code&gt;.env.example&lt;/code&gt; file to &lt;code&gt;.env&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Now you need to get your Twitter Developer Credential and fill them in the &lt;code&gt;.env&lt;/code&gt; file.&lt;/p&gt;
+&lt;p&gt;After that, you need to copy the &lt;code&gt;.env.example&lt;/code&gt; file to &lt;code&gt;.env&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Now you have to get your Twitter Developer Credential and fill it in the &lt;code&gt;.env&lt;/code&gt; file.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-plaintext&quot;&gt;API_KEY=&amp;quot;&amp;quot;
 API_SECRET=&amp;quot;&amp;quot;
 ACCESS_TOKEN=&amp;quot;&amp;quot;
 ACCESS_TOKEN_SECRET=&amp;quot;&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;You need to get them on the Twitter Developer Site &amp;gt; your App &amp;gt; Keys and Tokens:
+&lt;p&gt;You have to get them on the Twitter Developer Site &amp;gt; your App &amp;gt; Keys and Tokens:
 &lt;img src=&quot;https://nickwasused.com/_posts/2022-03-15-twitter-block-advertisers/twitter-dev.webp&quot; alt=&quot;Twitter Dev&quot; /&gt;&lt;/p&gt;
 &lt;h2&gt;Twitter Data&lt;/h2&gt;
 &lt;p&gt;Now &lt;a href=&quot;https://twitter.com/settings/download_your_data&quot;&gt;get your Twitter Data Archive from here&lt;/a&gt;&lt;/p&gt;
@@ -638,29 +717,39 @@ ACCESS_TOKEN_SECRET=&amp;quot;&amp;quot;
 ...
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;Get the List&lt;/h2&gt;
-&lt;p&gt;Now you just need to run&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;python3 main.py
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The script will output a file called &lt;code&gt;export.csv&lt;/code&gt; and tell you how many Advertising Accounts you have seen. For me, it was around 750 Accounts, but in this example, I will use a list of 3 Accounts.&lt;/p&gt;
-&lt;h2&gt;Block the Accounts&lt;/h2&gt;
-&lt;p&gt;To Block the Accounts you need to upload the &lt;code&gt;export.csv&lt;/code&gt; content to &lt;a href=&quot;https://pastebin.com/&quot;&gt;pastebin&lt;/a&gt; or another site.&lt;/p&gt;
-&lt;p&gt;Paste the contents of &lt;code&gt;export.csv&lt;/code&gt; in the input field and click &lt;code&gt;create Paste&lt;/code&gt;.
-&lt;img src=&quot;https://nickwasused.com/_posts/2022-03-15-twitter-block-advertisers/pastebin-paste.webp&quot; alt=&quot;pastebin-paste&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;Now you are redirected to your paste. Click on &lt;code&gt;raw&lt;/code&gt; and copy the link.
-&lt;img src=&quot;https://nickwasused.com/_posts/2022-03-15-twitter-block-advertisers/pastebin-raw.webp&quot; alt=&quot;pastebin-raw&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;Now go to this site &lt;a href=&quot;https://twitter-blocklist-auth.glitch.me/&quot;&gt;https://twitter-blocklist-auth.glitch.me/&lt;/a&gt; and log in.&lt;/p&gt;
-&lt;p&gt;Now you can paste the Url you have copied before in the field and click Submit.
-&lt;img src=&quot;https://nickwasused.com/_posts/2022-03-15-twitter-block-advertisers/glitch-setup.webp&quot; alt=&quot;glitch-setup&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;After that the Page will tell you how many Accounts got blocked.
-&lt;img src=&quot;https://nickwasused.com/_posts/2022-03-15-twitter-block-advertisers/glitch-final.webp&quot; alt=&quot;glitch-final&quot; /&gt;&lt;/p&gt;
-&lt;h3&gt;archive&lt;/h3&gt;
-&lt;p&gt;The following links are archived versions, as the main ones could break.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20240519173755/https://ublockorigin.com/&quot;&gt;https://ublockorigin.com/&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://web.archive.org/web/20221030110754/https://developer.twitter.com/en&quot;&gt;https://developer.twitter.com/&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://web.archive.org/web/20240519173959/https://github.com/Nickwasused/twitter-data-export-to-blocklist&quot;&gt;https://github.com/Nickwasused/twitter-data-export-to-blocklist&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://web.archive.org/web/20240519112608/https://www.python.org/&quot;&gt;https://www.python.org/&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://web.archive.org/web/20240519105333/https://pastebin.com/&quot;&gt;https://pastebin.com&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://web.archive.org/web/20240308204003/https://twitter-blocklist-auth.glitch.me/&quot;&gt;https://twitter-blocklist-auth.glitch.me/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Now you just must run: ```bash
+python3 main.py&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+The script will output a file called ```export.csv``` and tell you how many Advertising Accounts you have seen. For me, it was around 750 Accounts, but in this example, I will use a list of 3 Accounts.
+
+## Block the Accounts
+
+To Block the accounts, you need to upload the ```export.csv``` content to [Pastebin](https://pastebin.com) or another site.
+
+Paste the contents ```export.csv``` in the input field and click ```create Paste```. 
+![Pastebin-paste](./pastebin-paste.webp &amp;quot;&amp;quot;)
+
+Now you are redirected to your paste. Click on ```raw``` and copy the link. 
+![Pastebin-raw](./pastebin-raw.webp &amp;quot;&amp;quot;)
+
+Now go to this site: [https://twitter-blocklist-auth.glitch.me/](https://twitter-blocklist-auth.glitch.me/) and log in.
+
+Now you can paste the URL you have copied before in the field and click Submit.
+![Glitch-setup](./glitch-setup.webp &amp;quot;&amp;quot;)
+
+After that, the Page will tell you how many Accounts got blocked.
+![Glitch-final](./glitch-final.webp &amp;quot;&amp;quot;)
+
+### archive
+
+The following links are archived versions, as the main ones could break.
+
+[https://ublockorigin.com/](https://web.archive.org/web/20240519173755/https://ublockorigin.com/)  
+[https://developer.twitter.com/](https://web.archive.org/web/20221030110754/https://developer.twitter.com/en)  
+[https://github.com/Nickwasused/twitter-data-export-to-blocklist](https://web.archive.org/web/20240519173959/https://github.com/Nickwasused/twitter-data-export-to-blocklist)  
+[https://www.python.org/](https://web.archive.org/web/20240519112608/https://www.python.org/)  
+[https://pastebin.com](https://web.archive.org/web/20240519105333/https://pastebin.com/)  
+[https://twitter-blocklist-auth.glitch.me/](https://web.archive.org/web/20240308204003/https://twitter-blocklist-auth.glitch.me/)  &lt;/code&gt;&lt;/pre&gt;
 </content>
   </entry>
   <entry>
@@ -669,29 +758,29 @@ ACCESS_TOKEN_SECRET=&amp;quot;&amp;quot;
     <updated>2022-03-12T00:00:00Z</updated>
     <id>https://nickwasused.com/_posts/2022-03-12-tp-link-archer-c7-v5-openwrt/</id>
     <content xml:lang="en" type="html">&lt;h1&gt;The Technical Details&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20220609111144/https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5&quot;&gt;Techdata: TP-Link Archer C7 AC1750 v5&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;(If you don´t want to read all of this in short it means that the Router should have enough power to run current OpenWrt versions.)&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20220609111144/https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5&quot;&gt;Tech data: TP-Link Archer C7 AC1750 v5&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;(If you don’t want to read all of this in short, it means that the Router should have enough power to run current OpenWrt versions.)&lt;/p&gt;
 &lt;h1&gt;The right Firmware Image&lt;/h1&gt;
-&lt;p&gt;When installing OpenWrt for the first time you search for a Firmware image that looks like that:&lt;/p&gt;
+&lt;p&gt;When installing OpenWrt for the first time, you search for a Firmware image that looks like that:&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;tplink_archer-a7-v5-squashfs-factory.bin&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Version 21: &lt;a href=&quot;https://downloads.openwrt.org/releases/21.02.2/targets/ath79/generic/openwrt-21.02.2-ath79-generic-tplink_archer-a7-v5-squashfs-factory.bin&quot;&gt;https://downloads.openwrt.org/releases/21.02.2/targets/ath79/generic/openwrt-21.02.2-ath79-generic-tplink_archer-a7-v5-squashfs-factory.bin&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;After you have the right image you need to rename it to:&lt;/p&gt;
+&lt;p&gt;After you have the correct image, you need to rename it to:&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;firmware.bin&lt;/code&gt;&lt;/p&gt;
-&lt;h1&gt;Flashing the Firmware (Web interface Methode)&lt;/h1&gt;
+&lt;h1&gt;Flashing the Firmware (Web Interface Method)&lt;/h1&gt;
 &lt;p&gt;I am going to use the Web interface method because it is stable enough on my Stock firmware version.&lt;/p&gt;
-&lt;p&gt;Connect to the Router via Wifi and set up a Password. After that, you can connect with an Ethernet Cable and log in. (The Stock Web interface is located here: &lt;code&gt;192.168.0.1&lt;/code&gt;)&lt;/p&gt;
-&lt;p&gt;(The Images Below are from the &lt;a href=&quot;https://emulator.tp-link.com/archer-c7-v5/index.html&quot;&gt;TP-Link Emulator&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;Connect to the Router via Wi-Fi and set up a Password. After that, you can connect with an Ethernet Cable and log in. (The Stock Web interface is located here: &lt;code&gt;192.168.0.1&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;(The Images Below are from the &lt;a href=&quot;https://emulator.tp-link.com/archer-c7-v5/index.html&quot;&gt;TP-Link Emulator.&lt;/a&gt;)&lt;/p&gt;
 &lt;p&gt;You just need to go to Advanced &amp;gt; System Tools &amp;gt; Firmware Upgrade
 Step 1:
 &lt;img src=&quot;https://nickwasused.com/_posts/2022-03-12-tp-link-archer-c7-v5-openwrt/step1.webp&quot; alt=&quot;Step 1&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;Step 2:
 &lt;img src=&quot;https://nickwasused.com/_posts/2022-03-12-tp-link-archer-c7-v5-openwrt/step2.webp&quot; alt=&quot;Step 2&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;Then select the firmware.bin and click on upgrade. This process can take up to 5 Minutes.
-Step 3,4 and 5:
+Steps 3, 4 and 5:
 &lt;img src=&quot;https://nickwasused.com/_posts/2022-03-12-tp-link-archer-c7-v5-openwrt/step3.webp&quot; alt=&quot;Step 3, 4 and 5&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;After that, you just need to go to &lt;code&gt;http://192.168.1.1&lt;/code&gt; and there is the Web interface.
-The OpenWrt Webinterface LuCI:
-&lt;img src=&quot;https://nickwasused.com/_posts/2022-03-12-tp-link-archer-c7-v5-openwrt/interface.webp&quot; alt=&quot;Webinterface&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;After that, you just need to go to, &lt;code&gt;http://192.168.1.1&lt;/code&gt; and there is the Web interface.
+The OpenWrt Web interface LuCI:
+&lt;img src=&quot;https://nickwasused.com/_posts/2022-03-12-tp-link-archer-c7-v5-openwrt/interface.webp&quot; alt=&quot;Web interface&quot; /&gt;&lt;/p&gt;
 &lt;h3&gt;archive&lt;/h3&gt;
 &lt;p&gt;The following links are archived versions, as the main ones could break.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20220609111144/https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5&quot;&gt;https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5&lt;/a&gt;&lt;br /&gt;
@@ -883,40 +972,40 @@ go build
     <updated>2021-04-08T00:00:00Z</updated>
     <id>https://nickwasused.com/_posts/2021-04-08-tp-link-archer-c7-v5-openwrt/</id>
     <content xml:lang="en" type="html">&lt;h1&gt;Disclaimer&lt;/h1&gt;
-&lt;p&gt;This guide is a little outdated, you should use OpenWrt version 21. I have created an updated Guide &lt;a href=&quot;https://nickwasused.com/2022/03/12/tp-link-archer-c7-v5-openwrt&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This guide is a little outdated; you should use OpenWrt version 21. I have created an updated Guide &lt;a href=&quot;https://nickwasused.com/2022/03/12/tp-link-archer-c7-v5-openwrt&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;h1&gt;The Technical Details&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&quot;https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5&quot;&gt;Techdata: TP-Link Archer C7 AC1750 v5&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;(If you don´t want to read all of this in short it means that the Router should have enough power to run current OpenWrt versions.)&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5&quot;&gt;Tech data: TP-Link Archer C7 AC1750 v5&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;(If you don’t want to read all of this, in short, it means that the Router should have enough power to run current OpenWrt versions.)&lt;/p&gt;
 &lt;h1&gt;The Problem with the Versions&lt;/h1&gt;
-&lt;p&gt;The Archer C7 is supported by two major versions of OpenWrt: Version 18 and 19. But in the Forum for the Archer C7 are some threads that point out Issues with the latest release. So I am going to use the Router with Version 18 because it seems more stable.&lt;/p&gt;
+&lt;p&gt;The Archer C7 is supported by two major versions of OpenWrt: Version 18 and 19. But in the Forum for the Archer C7 are some threads that point out issues with the latest release. So I am going to use the Router with Version 18 because it seems more stable.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://nickwasused.com/_posts/2021-04-08-tp-link-archer-c7-v5-openwrt/forum.webp&quot; alt=&quot;Forum&quot; /&gt;&lt;/p&gt;
 &lt;h1&gt;The right Firmware Image&lt;/h1&gt;
-&lt;p&gt;When installing OpenWrt for the first time you search for a Firmware image that looks like that:&lt;/p&gt;
+&lt;p&gt;When installing OpenWrt for the first time, you search for a Firmware image that looks like that:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-plaintext&quot;&gt;    openwrt-19.07.7-ath79-generic-tplink_archer-c7-v5-squashfs-factory.bin
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The place to search for the right Firmware is on the OpenWrt page of the router, but because I don´t want the latest version I need to search on the Download Server:&lt;/p&gt;
+&lt;p&gt;The place to search for the right Firmware is on the OpenWrt page of the router, but because I don’t want the latest version, I need to search on the Download Server:&lt;/p&gt;
 &lt;p&gt;Version 19: &lt;a href=&quot;https://downloads.openwrt.org/releases/19.07.7/targets/ath79/generic/&quot;&gt;https://downloads.openwrt.org/releases/19.07.7/targets/ath79/generic/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Version 18: &lt;a href=&quot;https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/&quot;&gt;https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Version 18 alternative:&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/&quot;&gt;https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;The Latest Version I have found was: &lt;a href=&quot;https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/openwrt-18.06.9-ar71xx-generic-archer-c7-v5-squashfs-factory.bin&quot;&gt;https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/openwrt-18.06.9-ar71xx-generic-archer-c7-v5-squashfs-factory.bin&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;After you have the right image you need to rename it to:&lt;/p&gt;
+&lt;p&gt;After you have the right image, you need to rename it to:&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;firmware.bin&lt;/code&gt;&lt;/p&gt;
-&lt;h1&gt;Flashing the Firmware (Web interface Methode)&lt;/h1&gt;
+&lt;h1&gt;Flashing the Firmware (Web Interface Method)&lt;/h1&gt;
 &lt;p&gt;I am going to use the Web interface method because it is stable enough on my Stock firmware version.&lt;/p&gt;
-&lt;p&gt;Connect to the Router via Wifi and set up a Password. After that, you can connect with an Ethernet Cable and log in. (The Stock Web interface is located here: &lt;code&gt;192.168.0.1&lt;/code&gt;)&lt;/p&gt;
-&lt;p&gt;(The Images Below are from the &lt;a href=&quot;https://emulator.tp-link.com/archer-c7-v5/index.html&quot;&gt;TP-Link Emulator&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;Connect to the Router via Wi-Fi and set up a Password. After that, you can connect with an Ethernet Cable and log in. (The Stock Web interface is located here: &lt;code&gt;192.168.0.1&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;(The Images Below are from the &lt;a href=&quot;https://emulator.tp-link.com/archer-c7-v5/index.html&quot;&gt;TP-Link Emulator.&lt;/a&gt;)&lt;/p&gt;
 &lt;p&gt;You just need to go to Advanced &amp;gt; System Tools &amp;gt; Firmware Upgrade
 Step 1:
 &lt;img src=&quot;https://nickwasused.com/_posts/2021-04-08-tp-link-archer-c7-v5-openwrt/step1.webp&quot; alt=&quot;Step 1&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;Step 2:
 &lt;img src=&quot;https://nickwasused.com/_posts/2021-04-08-tp-link-archer-c7-v5-openwrt/step2.webp&quot; alt=&quot;Step 2&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;Then select the firmware.bin and click on upgrade. This process can take up to 5 Minutes.
-Step 3,4 and 5:
+Steps 3, 4 and 5:
 &lt;img src=&quot;https://nickwasused.com/_posts/2021-04-08-tp-link-archer-c7-v5-openwrt/step3.webp&quot; alt=&quot;Step 3, 4 and 5&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;After that, you just need to go to &lt;code&gt;http://192.168.1.1&lt;/code&gt; and there is the Web interface.
-The OpenWrt Webinterface LuCI:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://nickwasused.com/_posts/2021-04-08-tp-link-archer-c7-v5-openwrt/interface.webp&quot; alt=&quot;Webinterface&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;After that, you just need to go to, &lt;code&gt;http://192.168.1.1&lt;/code&gt; and there is the Web interface.
+The OpenWrt Web interface LuCI:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://nickwasused.com/_posts/2021-04-08-tp-link-archer-c7-v5-openwrt/interface.webp&quot; alt=&quot;Web interface&quot; /&gt;&lt;/p&gt;
 &lt;h3&gt;archive&lt;/h3&gt;
 &lt;p&gt;The following links are archived versions, as the main ones could break.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://web.archive.org/web/20220609111144/https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5&quot;&gt;https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5&lt;/a&gt;&lt;br /&gt;

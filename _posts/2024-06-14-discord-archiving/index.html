@@ -51,7 +51,7 @@
 This means no one can request all messages on Discord.
 In contrast, on a forum, I could easily download a copy of all posts or make snapshots of pages with the Wayback Machine.</p>
 <p>I cannot do this on Discord, and this is a problem!</p>
-<p>Let's say we have an admin called <code>steve</code> with a forum called &quot;I Love USB&quot;. Here are two scenarios:</p>
+<p>Let's say we have an admin called <code>steve</code> with a forum called &quot;I Love USB.&quot; Here are two scenarios:</p>
 <p>Steve doesn't like his community anymore:</p>
 <ul>
 <li>He removes his hosted phpBB instance, then there is a good chance that a dump is on archive.org, and if not, then there would be pages saved on the Wayback Machine.</li>
@@ -59,22 +59,22 @@ In contrast, on a forum, I could easily download a copy of all posts or make sna
 </ul>
 <h1>Discord Chat Exporter</h1>
 <p>The <a href="https://github.com/Tyrrrz/DiscordChatExporter">DiscordChatExporter</a> can export whole Discord servers with threads in <code>json</code>. These files can then be uploaded to archive.org.
-With the <a href="https://github.com/slatinsky/DiscordChatExporter-frontend">DiscordChatExporter-frontend</a> I can then view the server, like within the Discord client. (Loading messages takes a little longer.)
+With the <a href="https://github.com/slatinsky/DiscordChatExporter-frontend">DiscordChatExporter-frontend</a> I can then view the server, like within the Discord client, but loading messages takes a little longer.
 <img src="./export.avif" alt="Exported Server Example"></p>
-<p>Exported messages are split into chunks of 10000 messages because if an export fails at a large channel, I can continue from that point. But usually I try to make one continuous export.</p>
+<p>Exported messages are split into chunks of 10000 messages because if an export fails at a large channel, I can continue from that point. But usually, I try to make one continuous export.</p>
 <p>In this example, a <a href="https://archive.org/details/discord-371265202378899476-12062024">server</a> with 1.601.026 messages is shown.</p>
 <p>One thing I do not do is export media. Exporting all messages is already taking a while. In the case of the 1.601.026 messages, it took around 13 hours.
-The worst offenders in this case are three types of channels: welcome, goodbye and counting. These channels aren't that worth to archive in my opinion, but I still archive them. (My personal, most hated channel type are the counting channels!)</p>
-<h2>Self bot</h2>
+The worst offenders in this case are three types of channels: welcome, goodbye and counting. These channels aren't that worth archiving, in my opinion, but I still archive them. (My personal, most hated channel type are the counting channels!)</p>
+<h2>Self-bot</h2>
 <p>The exporter is using my Discord account token. That means I use my account as a self-bot, but this is currently not a problem. I exported multiple large servers in a short time span and did not get banned yet. If I get banned, I will update the post!</p>
 <h1>Chat Analytics and Channels</h1>
 <p>Before uploading, I run all files through <a href="https://github.com/mlomb/chat-analytics">chat-analytics</a> to generate '⁣report.html'; an example is linked <a href="./report.htm">here</a>.
 Additionally, all channels are exported to '⁣channels.txt'; this includes all, including the ones you cannot access.</p>
 <h1>archive.org</h1>
 <p>When archiving, I had to come up with a way to identify all the items that I and others uploaded.
-First, I saw that the tag <code>DiscordChatExporter</code> was used a lot, great, so I did too.
+First, I noticed that the tag <code>DiscordChatExporter</code> was used a lot, great, so I did too.
 Now that everyone can simply find the items by the tag, I had to find a good way to generate the name, identifier and description.</p>
-<p>For the identifier, I use the following <a href="https://archive.org/search?query=subject%3A%22DiscordChatExporter%22&amp;page=2&amp;sort=-publicdate">format</a>: <code>discord-[guild-id]-[date '+%d%m%Y')]</code> an example would be <code>discord-371265202378899476-12062024</code>.
+<p>For the identifier, I use the following <a href="https://archive.org/search?query=subject%3A%22DiscordChatExporter%22&amp;page=2&amp;sort=-publicdate">format</a>: <code>discord-[guild-id]-[date '+%d%m%Y')]</code> An example would be <code>discord-371265202378899476-12062024</code>.
 The limitations of this format are that a single export would be possible daily per server, but that's more than enough for most servers.</p>
 <p>The description has the following format:</p>
 <pre><code>This contains the Discord messages in JSON format split into chunks the size of 10000 messages.
@@ -93,7 +93,7 @@ Then the exporting begins with the following options: <code>exportguild -f Json 
 <h1>Downsides</h1>
 <p>The major downside of this approach is that there could be a lot of duplicate data when servers are saved often, as you would export the same messages just with the new ones at the end. In the case of the example server, 13 hours + the new messages. Incremental updates with a identifier format like <code>discord-[guild-id]</code> would be great, but that would require a per-channel export and custom code.
 Object metadata could then be updated afterward, like the <code>updated</code> key. Additional information that the object is dynamic could then be added to the description of each object.</p>
-<p>Another downside is that people think their messages are &quot;private,&quot; as they are not accessible on the internet. This is why I only archive the &quot;public&quot; servers, like for open-source projects or let's say from twitch streamers.</p>
+<p>Another downside is that people think their messages are &quot;private,&quot; as they are not accessible on the internet. This is why I only archive the &quot;public&quot; servers, like for open-source projects or, let's say, from Twitch streamers.</p>
 <h1>Usage</h1>
 <p>The script is available at: <a href="./archive.sh">./archive.sh</a>.
 You require:</p>
@@ -101,7 +101,7 @@ You require:</p>
 <li>Linux (WSL is also ok.)</li>
 <li>node with NPM and npx</li>
 <li>the archive.org <a href="https://archive.org/developers/internetarchive/cli.html">Command-Line Interface</a></li>
-<li>this <a href="./package.json">package.json</a></li>
+<li>This <a href="./package.json">package.json</a></li>
 <li><a href="https://github.com/Tyrrrz/DiscordChatExporter">Discord Chat Exporter</a></li>
 </ul>
 <p>The folder structure should look like this:</p>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no" />
+    <title>Self-Host Wikipedia</title>
+    <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="Nick's Site" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="/basic-4fa2674f.css" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+    <meta property="og:title" content="Self-Host Wikipedia" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:description" content="My method of self-hosting a copy of Wikipedia." />
+    <meta name="description" content="My method of self-hosting a copy of Wikipedia.">
+    <meta property="og:site_name" content="Nick's Site" />
+    <meta property="article:published_time" content="2025-03-12" />
+    <meta property="article:section" content="Technology" />
+    <meta property="article:tag" content="wikipedia" />
+    <meta property="article:tag" content="kiwix" />
+    <meta property="article:tag" content="self-host" />
+    
+
+</head>
+<body>
+    <header>
+        <a id="top"></a>
+        <h1 class="center"><a href="/">Nick's Site</a></h1>
+
+        <div class="menu">
+            <p><a href="/sites/recommendations">Blog recommendations</a></p>
+            <p><a href="/sites/links">link collection</a></p>
+            <p><a href="/sites/privacy">Privacy Policy</a></p>
+            <p><a href="/sites/imprint">Imprint</a></p>
+            <p><a href="/feed.xml">RSS</a></p>
+        </div>
+    </header>
+    <main>
+        <span class="menu">
+            <article class="content">
+                
+                    <div>
+                        <h1>Self-Host Wikipedia (12.03.2025)</h1>
+                    </div>
+                
+                <p>This is my method to self-hosting Wikipedia, but it's <strong>not</strong> a full guide!</p>
+<h2>Kiwix</h2>
+<p>First, we need a copy of the Wikipedia <code>.zim</code> file.</p>
+<p>Then install and setup kiwix.</p>
+<p>I use the following systemd-service based on https://ounapuu.ee/posts/2021/12/09/self-hosting-wikipedia/:</p>
+<pre><code>[Unit]
+Description=Serve all the ZIM files loaded on this server
+
+[Service]
+Restart=always
+RestartSec=15
+User=kiwix
+ExecStart=/usr/bin/bash -c &quot;kiwix-serve -t 2 -i 127.0.0.1 --port=8080 /dir_with_zims/*.zim&quot;
+
+[Install]
+WantedBy=network-online.target
+</code></pre>
+<h2>nginx</h2>
+<p>After that, I set up nginx with the following configuration:</p>
+<pre><code>server {
+        root /var/www/html;
+
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name YOUR_DOMAIN;
+
+        location /robots.txt {
+                root /var/www/html/;
+        }
+
+        location / {
+                proxy_pass http://127.0.0.1:8080;
+                proxy_http_version 1.1;
+                proxy_set_header Host $host;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Real-Ip $remote_addr;
+                proxy_redirect off;
+                proxy_intercept_errors on;
+                error_page 502 503 504 = @redirect_to_wikipedia_de;
+                error_page 404 = @redirect_to_wikipedia_en;
+        }
+
+        location @redirect_to_wikipedia_de {
+                set $last_segment '';
+                if ($request_uri ~ /([^/]+)$) {
+                        set $last_segment $1;
+                }
+                return 302 https://de.wikipedia.org/wiki/$last_segment ;
+        }
+        location @redirect_to_wikipedia_en {
+                set $last_segment '';
+                if ($request_uri ~ /([^/]+)$) {
+                        set $last_segment $1;
+                }
+                return 301 https://en.wikipedia.org/wiki/$last_segment ;
+        }
+}
+</code></pre>
+<p>This config tries to get a valid response from our local copy, but when an entry is missing, it will redirect to wikipedia.org.
+When the local copy is offline or errors out, then it will redirect to the German version of wikipedia.org.</p>
+<h2>Using our copy</h2>
+<h3>Kagi</h3>
+<p>With Kagi you can set up a redirect with the following regex: <code>^https://(.*).wikipedia.org/(.*)\/(.*)|https://YOUR_DOMAIN/wikipedia/A/$3</code></p>
+<p>Notice that the path <code>/wikipedia</code> is based on the <code>*zim</code> file name, e.g. for <code>/wikipedia</code> it needs to be <code>wikipedia.zim</code></p>
+<h3>redirector</h3>
+<p>You can set up the redirector extension the following way:
+<img src="./redirector.avif" alt="redirector config"></p>
+<h1>security</h1>
+<p>I have blocked some cloud providers ip-ranges in a firewall.</p>
+<h2>scraping</h2>
+<p>Additionally, I have a <code>robots.txt</code> for the bots that follow that. I use this: https://robotstxt.com/ai</p>
+
+                <hr />
+                <a href="#top" style="padding-bottom: 1.5%;">Back to top</a>
+            </article>
+        </span>
+    </main>
+</body>
+<footer>
+    <script async defer src="https://tracking.nickwasused.com/tracker.js" data-website-id="clz8folj200017udh53abr7ny"></script>
+</footer>
+</html>

@@ -45,8 +45,8 @@
                     </div>
                 
                 <h1>Notice</h1>
-<p>As of 31.03.2023 this guide is not working correctly! Because of that reason the script got renamed to <code>signal-cli-install-old.sh</code>.</p>
-<p>At the time of writing this, the signal-cli is at version: <code>0.11.3</code> with the libsignal-client being at version: <code>0.20.0</code>.<br>
+<p>As of 31/03/2023, this guide is not working correctly! Because of that reason, the script got renamed to <code>signal-cli-install-old.sh</code>.</p>
+<p>At the time of writing this, the signal-cli is at version <code>0.11.3</code> with the libsignal-client being at version <code>0.20.0</code>.<br>
 The OS that I use is <a href="https://github.com/MichaIng/DietPi">DietPi</a>.</p>
 <h1>Usage</h1>
 <p>The signal-cli could be useful for sending automatic messages, e.g. when a service/job fails.
@@ -65,13 +65,13 @@ Now you can run the script:<br>
 <code>df -h</code></p>
 <p>There will be a line that looks like this:<br>
 <code>tmpfs           1.0G  1.0M 1023M   1% /tmp</code></p>
-<p>Notice that is reads <code>1.0G</code>. This is too small as the installation requires about 1.25G.</p>
+<p>Notice that it reads <code>1.0G</code>. This is too small, as the installation requires about 1.25G.</p>
 <p>You can expand the size of your <code>/tmp</code> directory with this command:<br>
 <code>sudo mount -o remount,size=2G /tmp/</code></p>
 <h1>required tools</h1>
 <p>For this guide, <code>curl</code> and <code>zip</code> are required. Install them with:<br>
 <code>sudo apt install curl zip</code></p>
-<p>(If there is an error try to run <code>sudo apt update</code>)</p>
+<p>(If there is an error, try to run <code>sudo apt update</code>)</p>
 <h2>Basic install</h2>
 <p>First, we need to set the Version of the signal-cli we are installing. You can find the Version code <a href="https://github.com/AsamK/signal-cli/releases">here</a>.</p>
 <p>Set the signal-cli version with:<br>
@@ -80,7 +80,7 @@ After that, we download the signal-cli version:<br>
 <code>curl --proto '=https' --tlsv1.2 -o signal-cli-&quot;${VERSION}&quot;-Linux.tar.gz https://github.com/AsamK/signal-cli/releases/download/v&quot;${VERSION}&quot;/signal-cli-&quot;${VERSION}&quot;-Linux.tar.gz</code><br>
 and unpack it to <code>/opt</code>:<br>
 <code>sudo tar xf signal-cli-&quot;${VERSION}&quot;-Linux.tar.gz -C /opt</code>.
-After extracting the code remove the file:<br>
+After extracting the code, remove the file:<br>
 <code>sudo rm signal-cli-&quot;${VERSION}&quot;-Linux.tar.gz</code><br>
 Finally, we link it to <code>/usr/local/bin</code> so we can use the signal-cli:<br>
 <code>sudo ln -sf /opt/signal-cli-&quot;${VERSION}&quot;/bin/signal-cli /usr/local/bin/</code>.</p>
@@ -89,8 +89,8 @@ Finally, we link it to <code>/usr/local/bin</code> so we can use the signal-cli:
 <h3>Info</h3>
 <p>If we try to run <code>signal-cli</code> now, then it will fail! (But only if your system type is not <code>x86_64</code>)</p>
 <h2>Building the libsignal_jni.so</h2>
-<p>To fix the problem, we need to build the &quot;native lib for libsignal&quot;.</p>
-<p>Notice! If you have a 1GB Raspberry Pi then please read <a href="#1-gb-ram">#1-gb-ram</a>.</p>
+<p>To resolve the problem, we need to build the &quot;native lib for libsignal&quot;.</p>
+<p>Notice! If you have a 1GB Raspberry Pi, then please read <a href="#1-gb-ram">#1-gb-ram</a>.</p>
 <h3>Dependencies</h3>
 <p>First, we need to install some dependencies:</p>
 <h4>apt</h4>
@@ -100,24 +100,24 @@ Finally, we link it to <code>/usr/local/bin</code> so we can use the signal-cli:
 <h3>Build libsignal</h3>
 <p>Let's create a temporary directory to store files:<br>
 <code>sudo mkdir /tmp/signal-cli-install &amp;&amp; cd /tmp/signal-cli-install</code></p>
-<p>Before starting to download the libsignal source-code, we need to find the matching version code:<br>
+<p>Before starting to download the libsignal source code, we have to find the matching version code:<br>
 <code>export LIBVERSION=$(find /opt/signal-cli-&quot;${VERSION}&quot;/lib/ -maxdepth 1 -mindepth 1 -name 'libsignal-client-*' | sed -E 's/\/opt\/signal-cli-[0-9]{1,}.[0-9]{1,}.[0-9]{1,}\/lib\/libsignal-client-*//g' | sed -E 's/.jar//g')</code></p>
 <p>After that, we download the source code:<br>
 <code>sudo curl --proto '=https' --tlsv1.2 -o /tmp/signal-cli-install/v&quot;${LIBVERSION}&quot;.tar.gz https://github.com/signalapp/libsignal/archive/refs/tags/v&quot;${LIBVERSION}&quot;.tar.gz</code></p>
-<p>And now we need to unpack the downloaded code:<br>
+<p>And now we have to unpack the downloaded code:<br>
 <code>sudo tar xf /tmp/signal-cli-install/v&quot;${LIBVERSION}&quot;.tar.gz -C /tmp/signal-cli-install/ &amp;&amp; mv libsignal-&quot;${LIBVERSION}&quot; libsignal</code></p>
-<p>After extracting the code remove the archive as it is no longer needed:
+<p>After extracting the code, remove the archive as it is no longer needed.
 <code>sudo rm /tmp/signal-cli-install/v&quot;${LIBVERSION}&quot;.tar.gz</code></p>
 <p>Change into the java directory of the downloaded code:<br>
 <code>cd libsignal/java</code></p>
-<p>We disable some android stuff as we don`t want to build for android:<br>
+<p>We disable some Android stuff as we don't want to build for Android:<br>
 <code>sudo sed -i &quot;s/include ':android'//&quot; /tmp/signal-cli-install/libsignal/java/settings.gradle</code></p>
 <h4>1 GB Ram</h4>
-<p>While building libsignal I ran into a problem with the ram usage on the Raspberry Pi 3b, because eventually, the 1 GB of ram would be full. This would result in a locked-up Pi that I had to hard reset. We can work around this problem by limiting the CPU usage to 1 Core.<br>
+<p>While building libsignal I ran into a problem with the RAM usage on the Raspberry Pi 3b because eventually, the 1 GB of RAM would be full. This would result in a locked-up Pi that I had to hard reset. We can work around this problem by limiting the CPU usage to 1 Core.<br>
 (I don't know if a 2 GB Raspberry Pi 4 can run all 4 Cores.)</p>
 <p><code>sudo sed -i &quot;s/cargo build /cargo build -j ${CORE_COUNT} /&quot; /tmp/signal-cli-install/libsignal/java/build_jni.sh</code></p>
 <h5>Update 08.10.2022</h5>
-<p>I could not get libsignal to compile on a Raspberry Pi with 1GB of ram.</p>
+<p>I could not get libsignal to compile on a Raspberry Pi with 1GB of RAM.</p>
 <h4>Starting the Build</h4>
 <p>We can start the build with:
 <code>sudo /tmp/signal-cli-install/libsignal/java/build_jni.sh desktop</code></p>
@@ -125,8 +125,8 @@ Finally, we link it to <code>/usr/local/bin</code> so we can use the signal-cli:
 <code>sudo zip -d /opt/signal-cli-${VERSION}/lib/libsignal-client-*.jar libsignal_jni.so</code><br>
 and add our own:<br>
 <code>sudo zip /opt/signal-cli-${VERSION}/lib/libsignal-client-*.jar /tmp/signal-cli-install/libsignal/target/release/libsignal_jni.so</code></p>
-<p>Since Version 0.11.3 the replacing is not working for me, because of that we add the <code>libsignal_jni.so</code> to the default Java library path.<br>
-For that create it if it dosen`t exist:
+<p>Since Version 0.11.3, the replacement is not working for me; for that reason, we added the <code>libsignal_jni.so</code> to the default Java library path.<br>
+For that, create it if it doesn't exist:
 <code>sudo mkdir -p /usr/java/packages/lib</code><br>
 and finally copy the file to that folder:<br>
 <code>sudo cp /tmp/signal-cli-install/libsignal/target/release/libsignal_jni.so /usr/java/packages/lib</code></p>
@@ -138,7 +138,8 @@ and finally copy the file to that folder:<br>
 <code>sudo chmod 755 -R /opt/signal-cli-${VERSION}</code><br>
 <code>sudo chown root:root -R /opt/signal-cli-${VERSION}</code></p>
 <p>Now we should be able to use the <code>signal-cli</code> command with no problems.</p>
-<p>Finally the signal-cli should report it<code>s version with:   </code>signal-cli --version`</p>
+<p>Finally, the signal-cli should report its version with:<br>
+<code>signal-cli --version</code></p>
 <h1>Source</h1>
 <p><a href="https://github.com/AsamK/signal-cli#install-system-wide-on-linux">https://github.com/AsamK/signal-cli#install-system-wide-on-linux</a>
 <a href="https://github.com/AsamK/signal-cli/wiki/Provide-native-lib-for-libsignal#manual-build">https://github.com/AsamK/signal-cli/wiki/Provide-native-lib-for-libsignal#manual-build</a><br>

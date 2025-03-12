@@ -13,8 +13,8 @@
     <meta property="og:title" content="Install Tor Snowflake on the Raspberry Pi with DietPi." />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:description" content="This is a guide for installing a tor snowflake on your Raspberry Pi as systemd service." />
-    <meta name="description" content="This is a guide for installing a tor snowflake on your Raspberry Pi as systemd service.">
+    <meta property="og:description" content="This is a guide for installing a Tor Snowflake on your Raspberry Pi as systemd service." />
+    <meta name="description" content="This is a guide for installing a Tor Snowflake on your Raspberry Pi as systemd service.">
     <meta property="og:site_name" content="Nick's Site" />
     <meta property="article:published_time" content="2023-04-01" />
     <meta property="article:section" content="Technology" />
@@ -67,13 +67,13 @@
 <br/>
 <br/>
 <br/>
-<p>This is a guide for installing a tor snowflake on your Raspberry Pi as systemd service.</p>
-<p>Tor snowflake: <a href="https://snowflake.torproject.org/">&quot;Allows people from anywhere in the world to access censored websites and applications.&quot;</a></p>
+<p>This is a guide for installing Tor Snowflake on your Raspberry Pi as systemd service.</p>
+<p>Tor Snowflake: <a href="https://snowflake.torproject.org/">&quot;Allows people from anywhere in the world to access censored websites and applications.&quot;</a></p>
 <h2>Requirements</h2>
 <p>I have certain requirements for this guide. Using this guide on any other system is properly unsupported! Use at your own risk.</p>
 <ul>
 <li>DietPi version v8.15.2 or above</li>
-<li>Debian version based on bullseye (check with <code>cat /etc/os-release</code>)</li>
+<li>Debian version based on Bullseye (check with <code>cat /etc/os-release</code>)</li>
 </ul>
 <p>Notice that I am creating this guide from the view of a User account with sudo rights and a headless setup.</p>
 <h2>Install GO</h2>
@@ -81,8 +81,8 @@
 <p>We install Go using:</p>
 <pre><code class="language-shell">sudo dietpi-software
 </code></pre>
-<p>now search for <code>go</code> and select the following by pressing space. <code>Go: Runtime environment and package installer</code></p>
-<p>After that press TAB and select confirm, when back on the main page select <code>install</code></p>
+<p>Now search for <code>go</code> and select the following by pressing space. <code>Go: Runtime environment and package installer</code></p>
+<p>After that, press TAB and select confirm. When back on the main page, select <code>install</code></p>
 <p>Now reload your shell by running <code>exec bash</code> or reconnect.</p>
 <p>To verify the Go install run <code>go version</code>, it should output something like <code>go version go1.20.2 linux/arm64</code>. Just make sure that the version is 1.13 or higher.</p>
 <h2>Snowflake</h2>
@@ -95,7 +95,7 @@
 <p>and then get ownership of the folder:</p>
 <pre><code class="language-shell">sudo chown -R $USER:$USER snowflake/
 </code></pre>
-<p>Now we can start to build the program itself:</p>
+<p>Now we can start building the program itself:</p>
 <pre><code class="language-shell">cd snowflake/proxy &amp;&amp; go build
 </code></pre>
 <p>To verify that the build is working, run <code>./proxy</code>. The output should look like: <code>2023/04/01 15:29:14 Proxy starting</code></p>
@@ -140,7 +140,7 @@ ReadWriteDirectories=/opt/snowflake/
 [Install]
 WantedBy=multi-user.target
 </code></pre>
-<p>To verify that everything is working as intended, run: <code>sudo service snowflake start</code> and after that <code>sudo service snowflake status</code>.</p>
+<p>To verify that everything is working as intended, run <code>sudo service snowflake start</code> and after that <code>sudo service snowflake status</code>.</p>
 <p>The output should look like this:
 <img src="./snowflake-service.webp" alt="Snowflake service status"></p>
 <p>To enable the automatic start on reboot, run:</p>
@@ -154,10 +154,10 @@ WantedBy=multi-user.target
 <p>To apply this change, restart <code>rsyslog</code>: <code>sudo service rsyslog restart</code>.</p>
 <p>To see the new log, wait up to 10 minutes or restart the <code>snowflake</code> service like this: <code>sudo service snowflake restart</code>.</p>
 <p>You can now see the log like this: <code>sudo tail -f /var/log/snowflake.log</code> or this: <code>sudo cat /var/log/snowflake.log</code>.</p>
-<p>After some time the log should have lines like: <code>2023/04/01 15:54:08 In the last 10m0s, there were 0 connections. Traffic Relayed ↓ 0 KB, ↑ 0 KB.</code>, these indicate the usage of the proxy you are hosting.</p>
+<p>After some time, the log should have lines like <code>2023/04/01 15:54:08 In the last 10m0s, there were 0 connections. Traffic Relayed ↓ 0 KB, ↑ 0 KB.</code>; these indicate the usage of the proxy you are hosting.</p>
 <h2>Logrotate</h2>
 <p>Logrotate is used to keep older logs and compress them with a defined limit.</p>
-<p>Start by creating a config file for snowflake: <code>sudo nano /etc/logrotate.d/snowflake</code> with the following content:</p>
+<p>Start by creating a config file for Snowflake: <code>sudo nano /etc/logrotate.d/snowflake</code> with the following content:</p>
 <pre><code class="language-bash">/var/log/snowflake.log { 
     su root root
     daily
