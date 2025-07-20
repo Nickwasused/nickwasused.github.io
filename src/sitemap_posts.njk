@@ -9,9 +9,9 @@ eleventyExcludeFromCollections: true
   <url>
     <loc>https://nickwasused.com{{ absoluteUrl }}</loc>
 		{% if page.url == '/' %}
-    <lastmod>{{ collections.posts | rssLastUpdatedDate }}</lastmod>
+    <lastmod>{{ collections.posts | getNewestCollectionItemDate | dateToRfc822 }}</lastmod>
     {% else %}
-    <lastmod>{{ page.date | rssDate }}</lastmod>
+    <lastmod>{{ page.date | dateToRfc822 }}</lastmod>
 		{% endif %}
   </url>
 {%- endfor %}

@@ -19,26 +19,27 @@ img {
     margin-bottom: .335em;
 }
 
+.post h2 {
+    margin-bottom: 0.25em;
+}
+
 .post {
-    h2 {
-        margin-bottom: .25em;
-    }
-
     margin-bottom: 1.5em;
+}
 
-    .date {
-        padding-top: 0.3em;
-    }
+.post .date {
+    padding-top: 0.3em;
 }
 
 .posts a,
 h1 a {
     text-decoration: none;
     color: black;
-    
-    &:hover {
-        text-decoration: underline;
-    }
+}
+
+.posts a:hover,
+h1 a:hover {
+    text-decoration: underline;
 }
 
 .menu {
@@ -47,10 +48,10 @@ h1 a {
     flex-direction: row;
     justify-content: center;
     margin-bottom: 1.5em;
+}
 
-    p {
-        padding-right: 1%;
-    }
+.menu p {
+    padding-right: 1%;
 }
 
 @media screen and (max-width: 701px) {
@@ -63,27 +64,26 @@ h1 a {
 .content {
     width: 75%;
     order: 3;
-
-    h1 {
-        margin-bottom: .335em;
-    }
-
-    h2 {
-        margin-bottom: .75em;
-        margin-top: 2em;
-    }
-
-    h3 {
-        margin-top: 1.5em;
-        margin-bottom: .415em;
-    }
-
-    li {
-        margin: .5%;
-    }
 }
 
-// https://stackoverflow.com/a/48694906
+.content h1 {
+    margin-bottom: 0.335em;
+}
+
+.content h2 {
+    margin-bottom: 0.75em;
+    margin-top: 2em;
+}
+
+.content h3 {
+    margin-top: 1.5em;
+    margin-bottom: 0.415em;
+}
+
+.content li {
+    margin: 0.5%;
+}
+
 pre {
     background: #f4f4f4;
     border: 1px solid #ddd;

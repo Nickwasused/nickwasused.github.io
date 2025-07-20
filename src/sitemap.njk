@@ -6,11 +6,11 @@ eleventyExcludeFromCollections: true
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
    <sitemap>
       <loc>https://nickwasused.com/sitemap_pages.xml</loc>
-      <lastmod>{{ page.date | rssDate }}</lastmod>
+      <lastmod>{{ page.date | dateToRfc822 }}</lastmod>
    </sitemap>
    <sitemap>
       <loc>https://nickwasused.com/sitemap_posts.xml</loc>
-      <lastmod>{{ page.date | rssDate }}</lastmod>
+      <lastmod>{{ page.date | dateToRfc822 }}</lastmod>
    </sitemap>
 </sitemapindex>
 
