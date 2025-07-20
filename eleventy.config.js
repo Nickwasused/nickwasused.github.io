@@ -7,7 +7,6 @@ export default async function(eleventyConfig) {
       day: "2-digit",
     }) });
     eleventyConfig.addFilter("custom_date_iso", function(value) { return value.toISOString().split('T')[0] });
-    eleventyConfig.addPassthroughCopy({"src/basic.css": "basic.css"});
     eleventyConfig.addPassthroughCopy({"src/_headers": "_headers"});
     eleventyConfig.addPassthroughCopy({"src/_redirects": "_redirects"});
     eleventyConfig.addPassthroughCopy({"src/CNAME": "CNAME"});
