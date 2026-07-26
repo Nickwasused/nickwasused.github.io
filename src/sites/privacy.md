@@ -1,14 +1,14 @@
 # Privacy Policy
 
-This website is hosted on [Github Pages](hhttps://pages.github.com/). You can find their privacy policy here: <https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement>
+This website is hosted on [bunny.net](https://bunny.net/). You can find their privacy policy here: <https://bunny.net/privacy/> and <https://bunny.net/gdpr/>
 
 # §1 information collected
 
 ## hosting
 
-[Github (Pages) is collecting data](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#data-collection)
+[bunny.net is collecting data](https://bunny.net/privacy/)
 
-Examples of data collected by Github:
+Examples of data collected by bunny.net:
 - IP addresses
 
 

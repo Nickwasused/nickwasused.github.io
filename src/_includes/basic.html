@@ -140,7 +140,14 @@
         <span class="menu">
             <article class="content">
                 {% if snippet %}<div><h1>{{ title }} ({{ date | custom_date }})</h1></div>{% endif %}
+                {% if outdated %}
+                <details>
+                <summary>⚠️ This post is outdated and may no longer be accurate. Click here to read the post regardless.</summary>
+                {{content}}
+                </details>
+                {% else %}
                 {{ content }}
+                {% endif %}
                 <hr />
                 {% if snippet %}<a href="#top" style="padding-bottom: 1.5%;">Back to top</a>{% endif %}
             </article>

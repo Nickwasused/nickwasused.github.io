@@ -4,11 +4,12 @@ date: 2022-08-21
 background: white
 snippet: This is a guide for installing the signal-cli on the Raspberry Pi.
 tags: ["Raspberry Pi", "Signal"]
+outdated: true
 ---
 
 # Notice
 
-As of 31/03/2023, this guide is not working correctly! Because of that reason, the script got renamed to `signal-cli-install-old.sh`.
+As of 31.03.2023, this guide is not working correctly! Because of that reason, the script got renamed to `signal-cli-install-old.sh`.
 
 At the time of writing this, the signal-cli is at version `0.11.3` with the libsignal-client being at version `0.20.0`.  
 The OS that I use is [DietPi](https://github.com/MichaIng/DietPi).
@@ -71,13 +72,13 @@ As the last step for the basic install, we install the required Java version:
 
 ### Info
 
-If we try to run `signal-cli` now, then it will fail! (But only if your system type is not `x86_64`)
+If we try to run `signal-cli` now, then it will fail! (But only if your system type is not <abbr title="64-bit">`x86_64`</abbr>)
 
 ## Building the libsignal_jni.so
 
 To resolve the problem, we need to build the "native lib for libsignal".
 
-Notice! If you have a 1GB Raspberry Pi, then please read [#1-gb-ram](#1-gb-ram).
+Notice! If you have a 1<abbr title="Gigabyte">GB</abbr> Raspberry Pi, then please read [#1-gb-ram](#1-gb-ram).
 
 ### Dependencies
 

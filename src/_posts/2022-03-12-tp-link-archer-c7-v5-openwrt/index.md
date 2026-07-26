@@ -4,6 +4,7 @@ date: 2022-03-12
 background: white
 snippet: This is a guide for installing OpenWrt on a TP-Link Archer C7 V5.
 tags: ["OpenWrt", "TP-Link Archer C7 V5"]
+outdated: true
 ---
 # The Technical Details
 [Tech data: TP-Link Archer C7 AC1750 v5](https://web.archive.org/web/20220609111144/https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5)

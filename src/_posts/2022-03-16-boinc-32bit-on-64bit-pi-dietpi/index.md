@@ -4,10 +4,11 @@ date: 2022-03-16
 background: white
 snippet: This guide helps you to install the 32-Bit BOINC version instead of the 64-Bit one.
 tags: ["Raspberry Pi", "BOINC"]
+outdated: true
 ---
 ## Why would you do this?
 
-- Projects like UNIVERSE@HOME have no aarch64 Tasks.
+- Projects like UNIVERSE@HOME have no <abbr title="ARM64">aarch64</abbr> Tasks.
 - A Raspberry Pi 3b can’t run ROSETTA@HOME because it doesn't have enough RAM.
 - DietPi, a popular OS for the Raspberry Pi, uses 64Bit.
 

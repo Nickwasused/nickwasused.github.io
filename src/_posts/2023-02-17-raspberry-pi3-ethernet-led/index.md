@@ -25,7 +25,7 @@ Now, you need to install `libusb-1.0-0-dev`, `make`, `build-essential` and `gcc`
 
 After that, you clone this repository: [https://github.com/dumpsite/lan951x-led-ctl](https://github.com/dumpsite/lan951x-led-ctl)
 
-`git clone git@github.com:dumpsite/lan951x-led-ctl.git`
+`git clone https://github.com/dumpsite/lan951x-led-ctl.git`
 
 Now build the project:
 

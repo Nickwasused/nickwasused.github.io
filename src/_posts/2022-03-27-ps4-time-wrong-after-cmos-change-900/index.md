@@ -7,11 +7,11 @@ tags: ["PS4"]
 ---
 ## The Problem
 
-After I replaced the CMOS Battery on my Base Model PS4, I noticed that it couldn't keep the time after a power loss. The PS4 is on firmware Version 9.0, where the [CMOS Time Bomb](https://web.archive.org/web/20220609110029/https://www.ps4storage.com/functional-cmos-battery-is-inevitably-required-by-ps4-and-ps5-system/) was fixed. However, despite the fix, some games like Grand Theft Auto V (Version 1.38) with the [No Intro](https://github.com/illusion0001/illusion0001.github.io/blob/04223072dd1ba6cb5deb4ee7953bfc2e1430745f/_patch0/orbis/GTA5-Orbis.yml) Patch were unable to start correctly (stuck at 90% Loading and heavy flickering).
+After I replaced the <abbr title="Complementary metal-oxide-semiconductor">CMOS</abbr> Battery on my Base Model <abbr title="Playstation 4">PS4</abbr>, I noticed that it couldn't keep the time after a power loss. The PS4 is on firmware Version 9.0, where the [CMOS Time Bomb](https://web.archive.org/web/20220609110029/https://www.ps4storage.com/functional-cmos-battery-is-inevitably-required-by-ps4-and-ps5-system/) was fixed. However, despite the fix, some games like Grand Theft Auto V (Version 1.38) with the [No Intro](https://github.com/illusion0001/illusion0001.github.io/blob/04223072dd1ba6cb5deb4ee7953bfc2e1430745f/_patch0/orbis/GTA5-Orbis.yml) Patch were unable to start correctly (stuck at 90% Loading and heavy flickering).
 
 ## The Fix
 
-The fix is basic, but a little scary to do on a Jailbroken PS4. You need to sync the time with a PSN Time Server. **This has to be done once;** after that, the time will stay saved even after a power loss. The Time Server is probably just an NTP server.
+The fix is basic, but a little scary to do on a Jailbroken PS4. You need to sync the time with a PSN Time Server. **This has to be done once;** after that, the time will stay saved even after a power loss. The Time Server is probably just an <abbr title="Network Time Protocol">NTP</abbr> server.
 
 **Make sure to do at least one of the following steps before:**
 

@@ -6,6 +6,13 @@ snippet: My method of archiving Discord servers.
 tags: ["discord", "archive.org", "archiving"]
 ---
 
+
+
+<details>
+<summary>
+⚠️ Many users report that they are getting banned for using DiscordChatExporter, as of 26.07.2026: https://github.com/Tyrrrz/DiscordChatExporter/issues/1497</br>Click to read the post regardless.
+</summary>
+
 (Note: A `guild` is a Discord server.)
 
 # Closed system
@@ -112,3 +119,5 @@ You can now archive a server like this:
 
 ### tags
 #discord #archive.org #archiving
+
+</details>

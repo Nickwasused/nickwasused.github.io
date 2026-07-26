@@ -3,17 +3,24 @@ title: "Self-Host Wikipedia"
 date: 2025-03-12
 background: white
 snippet: My method of self-hosting a copy of Wikipedia.
-tags: ["wikipedia", "kiwix", "self-host"]
+tags: ["wikipedia", "kiwix", "self-hosting"]
 ---
+# Update
+
+I don't use this setup any more, but there is nothing wrong with it.
+
+<br />
+<br />
+
 This is my method to self-hosting Wikipedia, but it's **not** a full guide!
 
 ## Kiwix
 
-First, we need a copy of the Wikipedia `.zim` file.
+First, we need a copy of the Wikipedia <abbr title="Zeno improved">`.zim`</abbr> file.
 
 Then install and setup kiwix.
 
-I use the following systemd-service based on https://ounapuu.ee/posts/2021/12/09/self-hosting-wikipedia/:
+I use the following systemd-service based on [https://ounapuu.ee/posts/2021/12/09/self-hosting-wikipedia/](https://ounapuu.ee/posts/2021/12/09/self-hosting-wikipedia/):
 ```
 [Unit]
 Description=Serve all the ZIM files loaded on this server
@@ -95,3 +102,12 @@ I have blocked some cloud providers ip-ranges in a firewall.
 ## scraping
 
 Additionally, I have a `robots.txt` for the bots that follow that. I use this: https://robotstxt.com/ai
+
+### tags
+#self-hosting #wikipedia #kiwix
+
+### archive
+
+The following links are archived versions, as the main ones could break.
+
+[https://ounapuu.ee/posts/2021/12/09/self-hosting-wikipedia/](https://web.archive.org/web/20260726162112/https://ounapuu.ee/posts/2021/12/09/self-hosting-wikipedia/)

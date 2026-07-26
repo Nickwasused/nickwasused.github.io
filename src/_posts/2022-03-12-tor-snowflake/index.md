@@ -3,6 +3,7 @@ title: "Install Tor Snowflake on the Raspberry Pi with DietPi."
 date: 2022-03-12
 snippet: This is a guide for installing a tor snowflake on your Raspberry Pi as systemd service.
 tags: ["Raspberry Pi", "Tor"]
+outdated: true
 ---
 # Notice 2
 

@@ -51,14 +51,13 @@ That's more than enough, great!
 
 ## Creating a `ov2` file
 
-As a small project, I generate data for all [BP](https://bp.com) gas stations. That is because I usually go to a sub-brand of them, "Aral." While using their official website, I noticed that it was too packed, so I created [https://tankpreise.uk](https://tankpreise.uk).
+As a small project, I generate data for all [BP](https://bp.com) gas stations. That is because I usually go to a sub-brand of them, "Aral." While using their official website, I noticed that it was too packed, so I created [https://mein-auto-tanken.de](https://mein-auto-tanken.de).
 
 The project uses `.json` and `sqlite3`, but it would be a great test to generate `ov2` files!
 
 So let's say I want to use a list of all [BP](https://bp.com) gas stations worldwide and show them when I get near them. That is around **18,000** POIs. How will the device handle that?
 
-A good thing is that I don't have to test that, as it has been done already. [2] The device needs to calculate the distance to all 18,000 Points! That can't be good.
-And is even worse, if you show them on the Map, then the Device will do that for every "Screen Update" while driving.
+A good thing is that I don't have to test that, as it has been done already. [2] The device needs to calculate the distance to all 18,000 Points.
 
 ### Introduce the skipper record.
 

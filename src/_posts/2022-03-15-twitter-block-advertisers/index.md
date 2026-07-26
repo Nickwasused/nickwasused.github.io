@@ -4,6 +4,7 @@ date: 2022-03-15
 background: white
 snippet: This guide allows you to block all Twitter advertising accounts that have been in your timeline.
 tags: ["Twitter", "Python3"]
+outdated: true
 ---
 # Notice
 
@@ -60,7 +61,8 @@ The directory structure should look like this now:
 
 ## Get the List
 
-Now you just must run: ```bash
+Now you just must run: 
+```bash
 python3 main.py
 ```
 
