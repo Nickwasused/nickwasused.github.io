@@ -18,29 +18,15 @@
 		</h1>
 
 		<p>
-			<xsl:value-of select="/atom:feed/atom:subtitle"/>
+			This is the Atom&#xa0; news feed&#xa0;my website.
 		</p>
 
-		<p>
-			This is the Atom&#xa0;<a href="https://www.feed.style/what-is-a-feed.html">news feed</a>&#xa0;for the&#xa0; 
-			<a><xsl:attribute name="href">
-				<xsl:value-of select="/atom:feed/atom:link[@rel='alternate']/@href | /atom:feed/atom:link[not(@rel)]/@href"/>
-			</xsl:attribute>
-			<xsl:value-of select="/atom:feed/atom:title"/></a>&#xa0;
-			website.
-		</p>
-
-		<p>It is meant for&#xa0;<a href="https://www.feed.style/newsreaders.html">news readers</a>, not humans.  Please copy-and-paste the URL into your news reader!</p>
+		<p>It is meant fornews readers, not humans.  Please copy-and-paste the URL into your news reader!</p>
 
 		<p>
 			<pre>
 				<code id="feedurl"><xsl:value-of select="/atom:feed/atom:link[@rel='self']/@href"/></code>    
 			</pre>
-			<button
-				class="clipboard"
-				data-clipboard-target="#feedurl">
-				Copy to clipboard
-			</button>
 		</p>
 
 		<xsl:for-each select="/atom:feed/atom:entry">
@@ -64,11 +50,6 @@
 				</details>
 		</xsl:for-each>
 		<p><xsl:value-of select="count(/atom:feed/atom:entry)"/> news items.</p>
-		<p><small>Powered by <a href="https://www.feed.style/"><img referrerpolicy="origin" src="https://www.feed.style/favicon.svg" style="height:1em;padding-right:0.25em;vertical-align:middle;" />Feed.Style</a></small></p>
-		<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>    
-		<script>
-			new ClipboardJS('.clipboard');
-		</script>
 	</body>
 </html>
 	</xsl:template>
