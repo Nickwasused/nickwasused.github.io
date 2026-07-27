@@ -152,7 +152,7 @@
                 {{content}}
                 {% if archived %}
                     <h3>archive</h3><br />
-                    <span>The following links are archived versions, as the main ones could break.</span><br />
+                    <p>The following links are archived versions, as the main ones could break.</p>
                     {% for archive in archived %}
                         <a href="{{ archive.archived }}" target="_blank">{{archive.url}}</a><br />
                     {% endfor %}
@@ -162,7 +162,7 @@
                 {{ content }}
                     {% if archived %}
                         <h3>archive</h3>
-                        <p>The following links are archived versions, as the main ones could break.</p><br />
+                        <p>The following links are archived versions, as the main ones could break.</p>
                         {% for archive in archived %}
                             <a href="{{ archive.archived }}" target="_blank">{{archive.url}}</a><br />
                         {% endfor %}
