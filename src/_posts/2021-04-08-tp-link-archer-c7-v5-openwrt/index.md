@@ -1,9 +1,20 @@
 ---
 title: "Install OpenWrt on the TP-Link Archer C7 V5."
 date: 2021-04-08
-background: white
 tags: ["OpenWrt", "TP-Link Archer C7 V5"]
 outdated: true
+archived: [
+    {"url": "https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5", 
+    "archived": "https://web.archive.org/web/20220609111144/https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5"},
+    {"url": "https://downloads.openwrt.org/releases/19.07.7/targets/ath79/generic/", 
+    "archived": "https://web.archive.org/web/20210322034837/https://downloads.openwrt.org/releases/19.07.7/targets/ath79/generic/"},
+    {"url": "https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/", 
+    "archived": "https://web.archive.org/web/20240309142808/https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/"},
+    {"url": "https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/openwrt-18.06.9-ar71xx-generic-archer-c7-v5-squashfs-factory.bin", 
+    "archived": "https://web.archive.org/web/20220619161640/https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/openwrt-18.06.9-ar71xx-generic-archer-c7-v5-squashfs-factory.bin"},
+    {"url": "https://emulator.tp-link.com/archer-c7-v5/index.html", 
+    "archived": https://web.archive.org/web/20220609111427/https://emulator.tp-link.com/archer-c7-v5/index.html"}
+    ]
 ---
 # Disclaimer
 
@@ -67,13 +78,3 @@ After that, you just need to go to, ```http://192.168.1.1``` and there is the We
 The OpenWrt Web interface LuCI: 
 
 ![Web interface](./interface.webp "")
-
-### archive
-
-The following links are archived versions, as the main ones could break.
-
-[https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5](https://web.archive.org/web/20220609111144/https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5)  
-[https://downloads.openwrt.org/releases/19.07.7/targets/ath79/generic/](https://web.archive.org/web/20210322034837/https://downloads.openwrt.org/releases/19.07.7/targets/ath79/generic/)  
-[https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/](https://web.archive.org/web/20240309142808/https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/)  
-[https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/openwrt-18.06.9-ar71xx-generic-archer-c7-v5-squashfs-factory.bin](https://web.archive.org/web/20220619161640/https://downloads.openwrt.org/releases/18.06.9/targets/ar71xx/generic/openwrt-18.06.9-ar71xx-generic-archer-c7-v5-squashfs-factory.bin)  
-[https://emulator.tp-link.com/archer-c7-v5/index.html](https://web.archive.org/web/20220609111427/https://emulator.tp-link.com/archer-c7-v5/index.html)  

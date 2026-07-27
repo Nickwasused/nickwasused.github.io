@@ -4,8 +4,16 @@ date: 2022-03-27
 background: white
 snippet: This is a quick fix for the time problem on the PS4 after a CMOS change.
 tags: ["PS4"]
+archived: [
+    {"url": "https://www.ps4storage.com/functional-cmos-battery-is-inevitably-required-by-ps4-and-ps5-system/", 
+    "archived": "https://web.archive.org/web/20220609110029/https://www.ps4storage.com/functional-cmos-battery-is-inevitably-required-by-ps4-and-ps5-system/"},
+    {"url": "https://github.com/illusion0001/illusion0001.github.io/blob/04223072dd1ba6cb5deb4ee7953bfc2e1430745f/_patch0/orbis/GTA5-Orbis.yml", 
+    "archived": "https://web.archive.org/web/20240519173341/https://github.com/illusion0001/illusion0001.github.io/blob/04223072dd1ba6cb5deb4ee7953bfc2e1430745f/_patch0/orbis/GTA5-Orbis.yml"},
+    {"url": "https://pi-hole.net/", 
+    "archived": "https://web.archive.org/web/20240519173456/https://pi-hole.net/"}
+    ]
 ---
-## The Problem
+## My Problem
 
 After I replaced the <abbr title="Complementary metal-oxide-semiconductor">CMOS</abbr> Battery on my Base Model <abbr title="Playstation 4">PS4</abbr>, I noticed that it couldn't keep the time after a power loss. The PS4 is on firmware Version 9.0, where the [CMOS Time Bomb](https://web.archive.org/web/20220609110029/https://www.ps4storage.com/functional-cmos-battery-is-inevitably-required-by-ps4-and-ps5-system/) was fixed. However, despite the fix, some games like Grand Theft Auto V (Version 1.38) with the [No Intro](https://github.com/illusion0001/illusion0001.github.io/blob/04223072dd1ba6cb5deb4ee7953bfc2e1430745f/_patch0/orbis/GTA5-Orbis.yml) Patch were unable to start correctly (stuck at 90% Loading and heavy flickering).
 
@@ -32,11 +40,3 @@ If you don’t know what Pi-hole is, look [here](https://pi-hole.net/).
 After you have done that, the PS4 should keep the correct time again.
 
 You need to use the network time because only this option sets the correct time in the Kernel-Clock.
-
-### archive
-
-The following links are archived versions, as the main ones could break.
-
-[https://www.ps4storage.com/functional-cmos-battery-is-inevitably-required-by-ps4-and-ps5-system/](https://web.archive.org/web/20220609110029/https://www.ps4storage.com/functional-cmos-battery-is-inevitably-required-by-ps4-and-ps5-system/)  
-[https://github.com/illusion0001/illusion0001.github.io/blob/04223072dd1ba6cb5deb4ee7953bfc2e1430745f/_patch0/orbis/GTA5-Orbis.yml](https://web.archive.org/web/20240519173341/https://github.com/illusion0001/illusion0001.github.io/blob/04223072dd1ba6cb5deb4ee7953bfc2e1430745f/_patch0/orbis/GTA5-Orbis.yml)  
-[https://pi-hole.net/](https://web.archive.org/web/20240519173456/https://pi-hole.net/)  

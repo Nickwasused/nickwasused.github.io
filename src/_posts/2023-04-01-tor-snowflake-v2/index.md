@@ -5,6 +5,12 @@ background: white
 snippet: This is a guide for installing a Tor Snowflake on your Raspberry Pi as systemd service.
 tags: ["Raspberry Pi", "Tor", "dietpi"]
 outdated: true
+archived: [
+    {"url": "https://snowflake.torproject.org/", 
+    "archived": "https://web.archive.org/web/20240519172246/https://snowflake.torproject.org/"},
+    {"url": "https://go.dev/", 
+    "archived": "https://web.archive.org/web/20240519172501/https://go.dev/"}
+    ]
 ---
 # Notice
 
@@ -165,11 +171,3 @@ Start by creating a config file for Snowflake: `sudo nano /etc/logrotate.d/snowf
 ```
 
 To finalize everything, reboot the system: `sudo reboot`.
-
-
-### archive
-
-The following links are archived versions, as the main ones could break.
-
-[https://snowflake.torproject.org/](https://web.archive.org/web/20240519172246/https://snowflake.torproject.org/)  
-[https://go.dev/](https://web.archive.org/web/20240519172501/https://go.dev/)  

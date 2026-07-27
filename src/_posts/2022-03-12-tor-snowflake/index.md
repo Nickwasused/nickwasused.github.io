@@ -4,6 +4,13 @@ date: 2022-03-12
 snippet: This is a guide for installing a tor snowflake on your Raspberry Pi as systemd service.
 tags: ["Raspberry Pi", "Tor"]
 outdated: true
+archived: [
+    {"url": "https://go.dev/dl/go1.17.8.linux-arm64.tar.gz", 
+    "archived": "https://web.archive.org/web/20240509215400/https://dl.google.com/go/go1.17.8.linux-arm64.tar.gz"},
+    {"url": "https://www.jeremymorgan.com/tutorials/raspberry-pi/install-go-raspberry-pi/", 
+    "archived": "https://web.archive.org/web/20220505171516/https://www.jeremymorgan.com/tutorials/raspberry-pi/install-go-raspberry-pi/"},
+    {"url": "https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/-/wikis/home", 
+    "archived": "https://web.archive.org/web/20220324185808/https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/-/wikis/home"}]
 ---
 # Notice 2
 
@@ -247,11 +254,3 @@ service snowflake start
 
 ### Building Tor Snowflake
 [https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/-/wikis/home](https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/-/wikis/home)
-
-### archive
-
-The following links are archived versions, as the main ones could break.
-
-[https://go.dev/dl/go1.17.8.linux-arm64.tar.gz](https://web.archive.org/web/20240509215400/https://dl.google.com/go/go1.17.8.linux-arm64.tar.gz)  
-[https://www.jeremymorgan.com/tutorials/raspberry-pi/install-go-raspberry-pi/](https://web.archive.org/web/20220505171516/https://www.jeremymorgan.com/tutorials/raspberry-pi/install-go-raspberry-pi/)  
-[https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/-/wikis/home](https://web.archive.org/web/20220324185808/https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/-/wikis/home)  

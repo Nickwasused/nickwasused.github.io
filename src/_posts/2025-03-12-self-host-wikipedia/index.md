@@ -4,6 +4,10 @@ date: 2025-03-12
 background: white
 snippet: My method of self-hosting a copy of Wikipedia.
 tags: ["wikipedia", "kiwix", "self-hosting"]
+archived: [
+    {"url": "https://ounapuu.ee/posts/2021/12/09/self-hosting-wikipedia/", 
+    "archived": "https://web.archive.org/web/20260726162112/https://ounapuu.ee/posts/2021/12/09/self-hosting-wikipedia/"}
+    ]
 ---
 # Update
 
@@ -102,12 +106,3 @@ I have blocked some cloud providers ip-ranges in a firewall.
 ## scraping
 
 Additionally, I have a `robots.txt` for the bots that follow that. I use this: https://robotstxt.com/ai
-
-### tags
-#self-hosting #wikipedia #kiwix
-
-### archive
-
-The following links are archived versions, as the main ones could break.
-
-[https://ounapuu.ee/posts/2021/12/09/self-hosting-wikipedia/](https://web.archive.org/web/20260726162112/https://ounapuu.ee/posts/2021/12/09/self-hosting-wikipedia/)

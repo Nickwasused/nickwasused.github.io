@@ -14,8 +14,6 @@ export default async function(eleventyConfig) {
     eleventyConfig.addPassthroughCopy("src/simple.xslt");
     eleventyConfig.addPassthroughCopy("src/{,!(_site)/**/}*.webp");
     eleventyConfig.addPassthroughCopy("src/{,!(_site)/**/}*.avif");
-    // eleventyConfig.addPassthroughCopy("src/_posts/2024-06-14-discord-archiving/report.htm");
-    eleventyConfig.addPassthroughCopy("src/_posts/2024-06-14-discord-archiving/archive.sh");
     eleventyConfig.addPlugin(pluginRss);
 
     return {

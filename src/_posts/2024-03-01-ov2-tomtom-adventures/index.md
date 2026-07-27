@@ -4,6 +4,22 @@ date: 2024-03-01
 background: white
 snippet: By chance, I have received an outdated version of the TomTom Start 52. 
 tags: ["TomTom", "Ov2", "Maps"]
+archived: [
+    {"url": "https://www.tomtom.com/en_us/navigation/mydrive-connect/", 
+    "archived": "https://web.archive.org/web/20240519171216/https://www.tomtom.com/en_us/navigation/mydrive-connect/"},
+    {"url": "https://gordthompson.github.io/ov2optimizer/", 
+    "archived": "https://web.archive.org/web/20240519171109/https://gordthompson.github.io/ov2optimizer/"},
+    {"url": "https://bp.com", 
+    "archived": "https://web.archive.org/web/20240519171603/https://www.bp.com/"},
+    {"url": "https://tankpreise.uk",
+    "archived": "https://web.archive.org/web/20240519171604/https://tankpreise.uk/"},
+    {"url": "https://mein-auto-tanken.de",
+    "archived": "https://web.archive.org/web/20260727120159/https://mein-auto-tanken.de/"},
+    {"url": "https://gordthompson.github.io/ov2optimizer/ov2FileFormat.html", 
+    "archived": "https://web.archive.org/web/20240519171127/https://gordthompson.github.io/ov2optimizer/ov2FileFormat.html"},
+    {"url": "https://plan.tomtom.com/en/", 
+    "archived": "https://web.archive.org/web/20240519172046/https://plan.tomtom.com/en/"}
+    ]
 ---
 By chance, I have received an outdated version of the [TomTom](https://tomtom.com) Start 52. The device has no Internet connection by itself, only through the TomTom software "[TomTom MyDrive Connect.](https://www.tomtom.com/en_us/navigation/mydrive-connect/)"
 
@@ -133,19 +149,3 @@ To add a `ov2` file to the device, I need to import it [here](https://plan.tomto
 [4] https://gordthompson.github.io/ov2optimizer/ov2FileFormat.html  
 
 You can find the generated `ov2` files [here](https://github.com/bp-stations/station-data/tree/gh-pages/ov2).
-
-
-### archive
-
-The following links are archived versions, as the main ones could break.
-
-[https://www.tomtom.com/en_us/navigation/mydrive-connect/](https://web.archive.org/web/20240519171216/https://www.tomtom.com/en_us/navigation/mydrive-connect/)  
-[https://gordthompson.github.io/ov2optimizer/](https://web.archive.org/web/20240519171109/https://gordthompson.github.io/ov2optimizer/)  
-[https://bp.com](https://web.archive.org/web/20240519171603/https://www.bp.com/)  
-[https://tankpreise.uk](https://web.archive.org/web/20240519171604/https://tankpreise.uk/)  
-[https://gordthompson.github.io/ov2optimizer/ov2FileFormat.html](https://web.archive.org/web/20240519171127/https://gordthompson.github.io/ov2optimizer/ov2FileFormat.html)  
-[https://plan.tomtom.com/en/](https://web.archive.org/web/20240519172046/https://plan.tomtom.com/en/)  
-
-
-### tags
-#tomtom #ov2

@@ -4,8 +4,13 @@ date: 2022-11-14
 background: white
 snippet: This Guide will show you how to install Minecraft onto a debloated Windows 10 installation.
 tags: ["Minecraft", "Windows", "Windows-10"]
+archived: [
+    {"url": "https://minecraft.net/", 
+    "archived": "https://web.archive.org/web/20240519172605/https://www.minecraft.net/en-us"},
+    {"url": "https://www.youtube.com/watch?v=dmBJaZzQZco", 
+    "archived": "https://web.archive.org/web/20240519173002/https://www.youtube.com/watch?v=dmBJaZzQZco"}
+    ]
 ---
-
 # Microsoft
 
 On February 8, 2022, I received an email from Mojang stating that I needed to migrate my Account to a Microsoft one.
@@ -50,10 +55,3 @@ After logging in again, everything was working.
 - log out of the Microsoft Store, the Minecraft Launcher and the Xbox App
 - log back in
 - enjoy the Game
-
-### archive
-
-The following links are archived versions, as the main ones could break.
-
-[https://minecraft.net/](https://web.archive.org/web/20240519172605/https://www.minecraft.net/en-us)  
-[https://www.youtube.com/watch?v=dmBJaZzQZco](https://web.archive.org/web/20240519173002/https://www.youtube.com/watch?v=dmBJaZzQZco)  

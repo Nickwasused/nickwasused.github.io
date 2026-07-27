@@ -1,10 +1,16 @@
 ---
 title: "Install OpenWrt on the TP-Link Archer C7 V5."
 date: 2022-03-12
-background: white
 snippet: This is a guide for installing OpenWrt on a TP-Link Archer C7 V5.
 tags: ["OpenWrt", "TP-Link Archer C7 V5"]
 outdated: true
+archived: [
+    {"url": "https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5", 
+    "archived": "https://web.archive.org/web/20220609111144/https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5"},
+    {"url": "https://downloads.openwrt.org/releases/21.02.2/targets/ath79/generic/openwrt-21.02.2-ath79-generic-tplink_archer-a7-v5-squashfs-factory.bin", 
+    "archived": "https://web.archive.org/web/20220626170133/https://downloads.openwrt.org/releases/21.02.2/targets/ath79/generic/openwrt-21.02.2-ath79-generic-tplink_archer-a7-v5-squashfs-factory.bin"},
+    {"url": "https://emulator.tp-link.com/archer-c7-v5/index.html", 
+    "archived": "https://web.archive.org/web/20220609111427/https://emulator.tp-link.com/archer-c7-v5/index.html"}]
 ---
 # The Technical Details
 [Tech data: TP-Link Archer C7 AC1750 v5](https://web.archive.org/web/20220609111144/https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5)
@@ -45,11 +51,3 @@ Steps 3, 4 and 5:
 After that, you just need to go to, ```http://192.168.1.1``` and there is the Web interface.
 The OpenWrt Web interface LuCI: 
 ![Web interface](./interface.webp "")
-
-### archive
-
-The following links are archived versions, as the main ones could break.
-
-[https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5](https://web.archive.org/web/20220609111144/https://openwrt.org/toh/hwdata/tp-link/tp-link_archer_c7_v5)  
-[https://downloads.openwrt.org/releases/21.02.2/targets/ath79/generic/openwrt-21.02.2-ath79-generic-tplink_archer-a7-v5-squashfs-factory.bin](https://web.archive.org/web/20220626170133/https://downloads.openwrt.org/releases/21.02.2/targets/ath79/generic/openwrt-21.02.2-ath79-generic-tplink_archer-a7-v5-squashfs-factory.bin)  
-[https://emulator.tp-link.com/archer-c7-v5/index.html](https://web.archive.org/web/20220609111427/https://emulator.tp-link.com/archer-c7-v5/index.html)  

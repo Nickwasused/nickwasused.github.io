@@ -1,10 +1,19 @@
 ---
 title: "Block all Twitter advertising accounts from your timeline."
 date: 2022-03-15
-background: white
 snippet: This guide allows you to block all Twitter advertising accounts that have been in your timeline.
 tags: ["Twitter", "Python3"]
 outdated: true
+archived: [
+    {"url": "https://ublockorigin.com/", 
+    "archived": "https://web.archive.org/web/20240519173755/https://ublockorigin.com/"},
+    {"url": "https://developer.twitter.com/", 
+    "archived": "https://web.archive.org/web/20221030110754/https://developer.twitter.com/en"},
+    {"url": "https://github.com/Nickwasused/twitter-data-export-to-blocklist", 
+    "archived": "https://web.archive.org/web/20240519173959/https://github.com/Nickwasused/twitter-data-export-to-blocklis"},
+    {"url": "https://twitter-blocklist-auth.glitch.me/", 
+    "archived": "https://web.archive.org/web/20240308204003/https://twitter-blocklist-auth.glitch.me/"}
+    ]
 ---
 # Notice
 
@@ -85,14 +94,3 @@ Now you can paste the URL you have copied before in the field and click Submit.
 
 After that, the Page will tell you how many Accounts got blocked.
 ![Glitch-final](./glitch-final.webp "")
-
-### archive
-
-The following links are archived versions, as the main ones could break.
-
-[https://ublockorigin.com/](https://web.archive.org/web/20240519173755/https://ublockorigin.com/)  
-[https://developer.twitter.com/](https://web.archive.org/web/20221030110754/https://developer.twitter.com/en)  
-[https://github.com/Nickwasused/twitter-data-export-to-blocklist](https://web.archive.org/web/20240519173959/https://github.com/Nickwasused/twitter-data-export-to-blocklist)  
-[https://www.python.org/](https://web.archive.org/web/20240519112608/https://www.python.org/)  
-[https://pastebin.com](https://web.archive.org/web/20240519105333/https://pastebin.com/)  
-[https://twitter-blocklist-auth.glitch.me/](https://web.archive.org/web/20240308204003/https://twitter-blocklist-auth.glitch.me/)  
