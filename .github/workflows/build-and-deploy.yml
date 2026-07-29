@@ -24,7 +24,7 @@ jobs:
           node-version: 22
 
       - name: install pnpm
-        run: npm i -g pnpm
+        run: npm i -g pnpm sharp
         
       - name: Install packages
         run: |
