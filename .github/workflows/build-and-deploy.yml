@@ -27,7 +27,9 @@ jobs:
         run: npm i -g pnpm
 
       - name: Install packages
-        run: pnpm i --no-frozen-lockfile
+        run: |
+          echo "only-allow-scripts=sharp" >> .npmrc
+          pnpm i --no-frozen-lockfile
 
       - name: run pnpm build
         run: pnpm run build
