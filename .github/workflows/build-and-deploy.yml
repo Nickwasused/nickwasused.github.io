@@ -25,13 +25,10 @@ jobs:
 
       - name: install pnpm
         run: npm i -g pnpm
-
-      - name: rebuild sharp
-        run: pnpm rebuild sharp
         
       - name: Install packages
         run: |
-          pnpm i
+          pnpm i -no-frozen-lockfile && pnpm rebuild sharp
 
       - name: run pnpm build
         run: pnpm run build
