@@ -1,4 +1,5 @@
 import pluginRss from "@11ty/eleventy-plugin-rss";
+import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 
 export default async function(eleventyConfig) {
     eleventyConfig.addFilter("custom_date", function(value) { return value.toLocaleDateString("de-DE", {
@@ -15,6 +16,26 @@ export default async function(eleventyConfig) {
     eleventyConfig.addPassthroughCopy("src/{,!(_site)/**/}*.webp");
     eleventyConfig.addPassthroughCopy("src/{,!(_site)/**/}*.avif");
     eleventyConfig.addPlugin(pluginRss);
+    eleventyConfig.addPlugin(eleventyImageTransformPlugin, {
+      returnType: "object",
+      // output image formats
+      formats: ["avif", "webp", "jpeg"],
+
+      // output image widths
+      widths: ["auto"],
+
+      useCache: false,
+
+      // optional, attributes assigned on <img> nodes override these values
+      htmlOptions: {
+        imgAttributes: {
+          loading: "lazy",
+          decoding: "async"
+        },
+        pictureAttributes: {
+        }
+      },
+    });
 
     return {
         dir: {

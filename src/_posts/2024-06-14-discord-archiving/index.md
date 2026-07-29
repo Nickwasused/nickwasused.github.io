@@ -31,7 +31,8 @@ Steve doesn't like his community anymore:
 
 The [DiscordChatExporter](https://github.com/Tyrrrz/DiscordChatExporter) can export whole Discord servers with threads in `json`. These files can then be uploaded to archive.org.
 With the [DiscordChatExporter-frontend](https://github.com/slatinsky/DiscordChatExporter-frontend) I can then view the server, like within the Discord client, but loading messages takes a little longer.
-![Exported Server Example](./export.avif "")
+
+![Exported Server Example](./export.webp "")
 
 Exported messages are split into chunks of 10000 messages because if an export fails at a large channel, I can continue from that point. But usually, I try to make one continuous export.
 
