@@ -28,6 +28,15 @@ jobs:
 
       - name: Install packages
         run: |
+          
+          pnpm i --no-frozen-lockfile
+
+      - name: approve-builds
+        run: |
+          pnpm approve-builds sharp
+
+      - name: Install packages 2
+        run: |
           pnpm approve-builds sharp
           pnpm i --no-frozen-lockfile
 
