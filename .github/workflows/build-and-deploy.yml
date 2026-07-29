@@ -26,14 +26,13 @@ jobs:
       - name: install pnpm
         run: npm i -g pnpm
 
-      - name: approve-builds
-        run: |
-          pnpm approve-builds sharp
-
+      - name: rebuild sharp
+        run: pnpm rebuild sharp
+        
       - name: Install packages
         run: |
           pnpm i
-          
+
       - name: run pnpm build
         run: pnpm run build
     
