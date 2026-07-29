@@ -28,7 +28,7 @@ jobs:
 
       - name: Install packages
         run: |
-          echo "only-allow-scripts=sharp" >> .npmrc
+          pnpm approve-builds sharp
           pnpm i --no-frozen-lockfile
 
       - name: run pnpm build
