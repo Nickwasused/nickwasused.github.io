@@ -7,14 +7,13 @@ settings:
 importers:
 
   .:
-    dependencies:
-      '@11ty/eleventy-img':
-        specifier: ^6.0.4
-        version: 6.0.4
     devDependencies:
       '@11ty/eleventy':
         specifier: ^3.1.6
         version: 3.1.6
+      '@11ty/eleventy-img':
+        specifier: ^6.0.4
+        version: 6.0.4
       '@11ty/eleventy-plugin-rss':
         specifier: 3.0.0
         version: 3.0.0
